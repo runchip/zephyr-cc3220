@@ -52,7 +52,6 @@
 #include "cpu.h"
 #include "flash.h"
 #include "utils.h"
-#include "pin.h"
 
 
 //*****************************************************************************
@@ -1999,7 +1998,7 @@ void PRCMCC3200MCUInit()
     if(((HWREG(0x4402F0C8) & 0xFF) == 0x2))
     {
         HWREG(0x4402E110) = ((HWREG(0x4402E110) & ~0xC0F) | 0x2);
-        HWREG(0x4402E114) = ((HWREG(0x4402E114) & ~0xC0F) | 0x2);
+        HWREG(0x4402E114) = ((HWREG(0x4402E110) & ~0xC0F) | 0x2);
     }
 
     //
@@ -2010,25 +2009,14 @@ void PRCMCC3200MCUInit()
     //
     // Change UART pins(55,57) mode to PIN_MODE_0 if they are in PIN_MODE_1
     //
-    if (PinModeGet(PIN_55) == PIN_MODE_1)
+    if( (HWREG(0x4402E0A4) & 0xF) == 0x1)
     {
-        PinModeSet(PIN_55,PIN_MODE_0);
-    }
-    if (PinModeGet(PIN_57) == PIN_MODE_1)
-    {
-        PinModeSet(PIN_57,PIN_MODE_0);
+        HWREG(0x4402E0A4) = ((HWREG(0x4402E0A4) & ~0xF));
     }
 
-    //
-    // Change I2C pins(1,2) mode to PIN_MODE_0 if they are in PIN_MODE_1
-    //
-    if (PinModeGet(PIN_01) == PIN_MODE_1)
+    if( (HWREG(0x4402E0A8) & 0xF) == 0x1)
     {
-        PinModeSet(PIN_01,PIN_MODE_0);
-    }
-    if (PinModeGet(PIN_02) == PIN_MODE_1)
-    {
-        PinModeSet(PIN_02,PIN_MODE_0);
+        HWREG(0x4402E0A8) = ((HWREG(0x4402E0A8) & ~0xF));
     }
 
     //
