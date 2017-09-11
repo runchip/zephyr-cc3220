@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016, Texas Instruments Incorporated
+ * Copyright (c) 2015-2017, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -793,16 +793,24 @@ extern void SPI_Params_init(SPI_Params *params);
  *  @brief  Function to perform SPI transactions
  *
  *  If the SPI is in ::SPI_MASTER mode, it will immediately start the
- *  transaction. If the SPI is in ::SPI_SLAVE mode, it prepares itself for a
- *  transaction with a SPI master.
+ *  transaction. If the SPI is in ::SPI_SLAVE mode, it prepares the driver for
+ *  a transaction with a SPI master device. The device will then wait until
+ *  the master begins the transfer.
  *
- *  In ::SPI_MODE_BLOCKING, SPI_transfer will block task execution until the
+ *  In ::SPI_MODE_BLOCKING, %SPI_transfer() will block task execution until the
  *  transaction has completed.
  *
- *  In ::SPI_MODE_CALLBACK, SPI_transfer() does not block task execution and
- *  calls a ::SPI_CallbackFxn. This makes the SPI_tranfer() safe to be used
- *  within a Task, Swi, or Hwi context. The ::SPI_Transaction structure must
- *  stay persistent until the SPI_transfer function has completed!
+ *  In ::SPI_MODE_CALLBACK, %SPI_transfer() does not block task execution, but
+ *  calls a ::SPI_CallbackFxn once the transfer has finished. This makes
+ *  %SPI_tranfer() safe to be used within a Task, Swi, or Hwi context.
+ *
+ *  From calling %SPI_transfer() until transfer completion, the SPI_Transaction
+ *  structure must stay persistent and must not be altered by application code.
+ *  It is also forbidden to modify the content of the SPI_Transaction.txBuffer
+ *  during a transaction, even though the physical transfer might not have
+ *  started yet. Doing this can result in data coruption. This is especially
+ *  important for slave operations where %SPI_transfer() might be called a long
+ *  time before the actual data transfer begins.
  *
  *  @param  handle      A SPI_Handle
  *
@@ -812,6 +820,9 @@ extern void SPI_Params_init(SPI_Params *params);
  *                      otherwise noted in the driver implementations. If a
  *                      transaction timeout has occurred, SPI_Transaction.count
  *                      will contain the number of frames that were transferred.
+ *                      Neither is it allowed to modify the transaction object nor
+ *                      the content of SPI_Transaction.txBuffer until the transfer
+ *                      has completed.
  *
  *  @return true if started successfully; else false
  *

@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 #ifndef __FLOWCONT_H__
@@ -33,3 +33,4 @@ extern void _SlFlowContSet(void *pVoidBuf);
 #endif /* __cplusplus */
 
 #endif /* __FLOWCONT_H__ */
+

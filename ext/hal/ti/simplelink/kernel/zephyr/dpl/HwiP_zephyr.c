@@ -111,7 +111,7 @@ HwiP_Handle HwiP_create(int interruptNum, HwiP_Fxn hwiFxn, HwiP_Params *params)
 }
 
 /* Can't actually de-register an interrupt in Zephyr, so just disable: */
-HwiP_Status HwiP_delete(HwiP_Handle handle)
+void HwiP_delete(HwiP_Handle handle)
 {
 	int interruptNum = (int)handle;
 
@@ -121,13 +121,10 @@ HwiP_Status HwiP_delete(HwiP_Handle handle)
 		 interruptNum);
 
 	irq_disable(interruptNum - 16);
-
-	return (HwiP_OK);
 }
 
 void HwiP_Params_init(HwiP_Params *params)
 {
-	params->name = NULL;
 	params->arg = 0;
 	params->priority = ~0;
 }

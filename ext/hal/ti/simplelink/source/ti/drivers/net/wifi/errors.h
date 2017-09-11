@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 #ifndef __ERROR_H__
@@ -674,9 +674,9 @@ extern "C" {
 /* Provisionins is in progress -  */
 #define SL_RET_CODE_PROVISIONING_IN_PROGRESS   (-2014L)
 
-/* Wrong ping parameters - ping cannot be called with the following parameters:
+/* Wrong ping parameters - ping cannot be called with the following parameters: 
 1. infinite ping packet
-2. report only when finished
+2. report only when finished 
 3. no callback supplied  */
 #define SL_RET_CODE_NET_APP_PING_INVALID_PARAMS   (-2015L)
 

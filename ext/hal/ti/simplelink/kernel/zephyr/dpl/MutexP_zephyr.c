@@ -62,14 +62,12 @@ MutexP_Handle MutexP_create(MutexP_Params *params)
 	return ((MutexP_Handle)mutex);
 }
 
-MutexP_Status MutexP_delete(MutexP_Handle handle)
+void MutexP_delete(MutexP_Handle handle)
 {
 	/* No way in Zephyr to "reset" the lock, so just re-init: */
 	k_mutex_init((struct k_mutex *)handle);
 
 	dpl_mutex_pool_free((struct k_mutex *)handle);
-
-	return (MutexP_OK);
 }
 
 uintptr_t MutexP_lock(MutexP_Handle handle)
@@ -86,7 +84,6 @@ uintptr_t MutexP_lock(MutexP_Handle handle)
 
 void MutexP_Params_init(MutexP_Params *params)
 {
-	params->name = NULL;
 	params->callback = NULL;
 }
 

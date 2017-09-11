@@ -127,9 +127,11 @@ typedef struct Power_NotifyObj_ {
  *  "enablePolicy" setting in the Power manager configuration object, as well
  *  as a previous runtime call to the Power_enablePolicy() function.
  *
+ *  @return The old value of "enablePolicy".
+ *
  *  @sa     Power_enablePolicy
  */
-void Power_disablePolicy(void);
+bool Power_disablePolicy(void);
 
 /*!
  *  @brief  Enable the configured power policy to run when the CPU is idle

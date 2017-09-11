@@ -9,10 +9,10 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
-
+ 
 
 #include <ti/drivers/net/wifi/simplelink.h>
 
@@ -31,7 +31,7 @@ extern "C" {
 #define SL_SYNC_SCAN_THRESHOLD  (( _u32 )2000)
 
 #ifdef SL_TINY
-#define _SlDrvAssert(line )  { while(1); }
+#define _SlDrvAssert(line )  { while(1); }  
 #else
 #define _SlDrvAssert() _SlDrvHandleFatalError(SL_DEVICE_EVENT_FATAL_DRIVER_ABORT, 0, 0)
 #endif
@@ -40,6 +40,10 @@ extern "C" {
 	_SlDrvAssert(); } \
 }
 #define _SL_ERROR(expr, error)      { if(!(expr)){return (error); } }
+
+#define _SL_ASSERT_ERROR(expr, error)            { if(!(expr)){ \
+    _SlDrvAssert(); return (error);} \
+}
 
 #define SL_HANDLING_ASSERT          2
 #define SL_HANDLING_ERROR           1
@@ -201,3 +205,4 @@ extern "C" {
 
 
 #endif /*__SIMPLELINK_TRACE_H__*/
+

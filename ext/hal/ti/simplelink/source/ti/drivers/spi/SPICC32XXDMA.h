@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016, Texas Instruments Incorporated
+ * Copyright (c) 2015-2017, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -147,15 +147,32 @@ extern "C" {
 
 /** @}*/
 
-#define SPICC32XXDMA_PIN_05_CLK     0x0704
-#define SPICC32XXDMA_PIN_06_MISO    0x0705
-#define SPICC32XXDMA_PIN_07_MOSI    0x0706
-#define SPICC32XXDMA_PIN_08_CS      0x0707
-#define SPICC32XXDMA_PIN_45_CLK     0x072C
-#define SPICC32XXDMA_PIN_50_CS      0x0931
-#define SPICC32XXDMA_PIN_52_MOSI    0x0833
-#define SPICC32XXDMA_PIN_53_MISO    0x0734
+/*
+ *  Macros defining possible SPI signal pin mux options
+ *
+ *  The lower 8 bits of the macro refer to the pin, offset by 1, to match
+ *  driverlib pin defines.  For example, SPICC32XXDMA_PIN_05_CLK & 0xff = 4,
+ *  which equals PIN_05 in driverlib pin.h.  By matching the PIN_xx defines in
+ *  driverlib pin.h, we can pass the pin directly to the driverlib functions.
+ *  The upper 8 bits of the macro correspond to the pin mux confg mode
+ *  value for the pin to operate in the SPI mode.
+ *
+ *  PIN_62 is special for the SDSPI driver when using an SD Boosterpack,
+ *  as PIN_62 doesn't have an assigned SPI function yet the SD Boosterpack
+ *  has it tied to the CS signal.
+ */
+#define SPICC32XXDMA_PIN_05_CLK     0x0704 /*!< PIN 5 is used for SPI CLK */
+#define SPICC32XXDMA_PIN_06_MISO    0x0705 /*!< PIN 6 is used for MISO */
+#define SPICC32XXDMA_PIN_07_MOSI    0x0706 /*!< PIN 7 is used for MOSI */
+#define SPICC32XXDMA_PIN_08_CS      0x0707 /*!< PIN 8 is used for CS */
+#define SPICC32XXDMA_PIN_45_CLK     0x072C /*!< PIN 45 is used for SPI CLK */
+#define SPICC32XXDMA_PIN_50_CS      0x0931 /*!< PIN 50 is used for CS */
+#define SPICC32XXDMA_PIN_52_MOSI    0x0833 /*!< PIN 52 is used for MOSI */
+#define SPICC32XXDMA_PIN_53_MISO    0x0734 /*!< PIN 53 is used for MISO */
 
+/*!
+ * @brief Indicates a pin is not to be configured by the SPICC32XXDMA driver.
+ */
 #define SPICC32XXDMA_PIN_NO_CONFIG  0xFFFF
 
 

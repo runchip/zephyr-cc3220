@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -19,7 +19,7 @@
 #include <ti/drivers/net/wifi/simplelink.h>
 
 #ifndef __NETAPP_H__
-#define    __NETAPP_H__
+#define __NETAPP_H__
 
 
 
@@ -29,7 +29,7 @@ extern "C" {
 #endif
 
 /*!
-	\defgroup NetApp
+	\defgroup NetApp 
 	\short Activates networking applications, such as: HTTP Server, DHCP Server, Ping, DNS and mDNS
 
 */
@@ -45,7 +45,7 @@ extern "C" {
 /* Macro declarations                                                        */
 /*****************************************************************************/
 
-/* NetApp user events */
+/* NetApp user events */   
 typedef enum
 {
 	SL_NETAPP_EVENT_IPV4_ACQUIRED = 1,
@@ -62,14 +62,14 @@ typedef enum
 
 } SlNetAppEventId_e;
 
-
+  
 #define SL_NETAPP_MDNS_OPTIONS_IS_UNIQUE_BIT	                0x1
 #define SL_NETAPP_MDNS_OPTIONS_ADD_SERVICE_BIT		            ((_u32)0x1 << 31)
-#define SL_NETAPP_MDNS_OPTIONS_IS_NOT_PERSISTENT                (_u32)(1 << 30)
-#define SL_NETAPP_MDNS_OPTION_UPDATE_TEXT                       (_u32)(1 << 29)
+#define SL_NETAPP_MDNS_OPTIONS_IS_NOT_PERSISTENT                ((_u32)0x1 << 30)
+#define SL_NETAPP_MDNS_OPTION_UPDATE_TEXT                       ((_u32)0x1 << 29)
 #define SL_NETAPP_MDNS_IPV4_ONLY_SERVICE                        (_u32)(0) /* default mode:zero bits 27,28*/
-#define SL_NETAPP_MDNS_IPV6_ONLY_SERVICE                        (_u32)(1<<28)
-#define SL_NETAPP_MDNS_IPV6_IPV4_SERVICE                        (_u32)(1<<27)
+#define SL_NETAPP_MDNS_IPV6_ONLY_SERVICE                        ((_u32)0x1 << 28)
+#define SL_NETAPP_MDNS_IPV6_IPV4_SERVICE                        ((_u32)0x1 << 27)
 
 
 /*ERROR code*/
@@ -86,7 +86,7 @@ typedef enum
 #define SL_NETAPP_MAX_DOMAIN_NAME_LEN    (24+1)
 
 #define SL_NETAPP_MAX_ACTION_LEN                                (30)
-#define SL_NETAPP_MAX_TOKEN_NAME_LEN                            (20)
+#define SL_NETAPP_MAX_TOKEN_NAME_LEN                            (20)  
 
 
 #define SL_NETAPP_MAX_TOKEN_VALUE_LEN         SL_NETAPP_MAX_INPUT_STRING
@@ -137,10 +137,10 @@ typedef enum
 #define SL_NETAPP_DNS_CLIENT_ID                      (0x20)
 #define SL_NETAPP_STATUS		                     (0x40)
 
-/* NetApp application set/get options */
-#define SL_NETAPP_DHCP_SRV_BASIC_OPT                 (0)
+/* NetApp application set/get options */             
+#define SL_NETAPP_DHCP_SRV_BASIC_OPT                 (0)             
 
-/* HTTP server set/get options */
+/* HTTP server set/get options */                    
 #define SL_NETAPP_HTTP_PRIMARY_PORT_NUMBER					(0)
 #define SL_NETAPP_HTTP_AUTH_CHECK							(1)
 #define SL_NETAPP_HTTP_AUTH_NAME							(2)
@@ -155,7 +155,7 @@ typedef enum
 #define SL_NETAPP_HTTP_CA_CERTIFICATE_FILE_NAME				(11)
 #define SL_NETAPP_HTTP_TEMP_REGISTER_MDNS_SERVICE_NAME		(12)
 #define SL_NETAPP_HTTP_TEMP_UNREGISTER_MDNS_SERVICE_NAME    (13)
-
+                                                     
 #define SL_NETAPP_MDNS_CONT_QUERY_OPT            (1)
 #define SL_NETAPP_MDNS_QEVETN_MASK_OPT           (2)
 #define SL_NETAPP_MDNS_TIMING_PARAMS_OPT         (3)
@@ -198,7 +198,7 @@ typedef enum
 }SlIpV6AcquiredAsyncType_e;
 
 
-typedef struct
+typedef struct  
 {
     _u32 Ip[4];
     _u32 Dns[4];
@@ -248,7 +248,7 @@ typedef union
 {
   SlIpV4AcquiredAsync_t		IpAcquiredV4;		   /* SL_NETAPP_EVENT_IPV4_ACQUIRED */
   SlIpV6AcquiredAsync_t		IpAcquiredV6;		   /* SL_NETAPP_EVENT_IPV6_ACQUIRED */
-  _u32						Sd;					   /* SL_SOCKET_TX_FAILED_EVENT*/
+  _u32						Sd;					   /* SL_SOCKET_TX_FAILED_EVENT*/ 
   SlIpLeasedAsync_t			IpLeased;			   /* SL_NETAPP_EVENT_DHCPV4_LEASED   */
   SlIpReleasedAsync_t		IpReleased;			   /* SL_NETAPP_EVENT_DHCPV4_RELEASED */
   SlIpV4Lost_t				IpV4Lost;			   /* SL_NETAPP_EVENT_IPV4_LOST */
@@ -370,10 +370,10 @@ typedef enum
 	SL_NETAPP_REQUEST_METADATA_TYPE_ACCEPT_ENCODING,
 	SL_NETAPP_REQUEST_METADATA_TYPE_ACCEPT_LANGUAGE,
 	SL_NETAPP_REQUEST_METADATA_TYPE_CONTENT_LANGUAGE,
-	SL_NETAPP_REQUEST_METADATA_TYPE_ORIGIN,
+	SL_NETAPP_REQUEST_METADATA_TYPE_ORIGIN,          
     SL_NETAPP_REQUEST_METADATA_TYPE_ORIGIN_CONTROL_ACCESS,
 	SL_NETAPP_REQUEST_METADATA_TYPE_HTTP_NONE
-
+	
 } SlNetAppMetadataHTTPTypes_e;
 
 typedef enum
@@ -436,7 +436,7 @@ typedef struct
     _u32   lease_time;
     _u32   ipv4_addr_start;
     _u32   ipv4_addr_last;
-}SlNetAppDhcpServerBasicOpt_t;
+}SlNetAppDhcpServerBasicOpt_t; 
 
 /* mDNS parameters */
 typedef enum
@@ -532,7 +532,7 @@ typedef struct
 {
    _u16   MaxResponseTime;
    _u16   NumOfRetries;
-}SlNetAppDnsClientTime_t;
+}SlNetAppDnsClientTime_t; 
 
 /*****************************************************************************/
 /* Types declarations                                               */
@@ -550,9 +550,9 @@ typedef void (*P_SL_DEV_PING_CALLBACK)(SlNetAppPingReport_t*);
     Gets and starts network application for the current WLAN mode
 
     \param[in] AppBitMap      Application bitmap, could be one or combination of the following:
-                              - SL_NETAPP_HTTP_SERVER_ID
-                              - SL_NETAPP_DHCP_SERVER_ID
-                              - SL_NETAPP_MDNS_ID
+                              - SL_NETAPP_HTTP_SERVER_ID   
+                              - SL_NETAPP_DHCP_SERVER_ID   
+                              - SL_NETAPP_MDNS_ID       
 							  - SL_NETAPP_DNS_SERVER_ID
 
 	\par	Persistent 	- <b>System Persistent</b>
@@ -561,8 +561,8 @@ typedef void (*P_SL_DEV_PING_CALLBACK)(SlNetAppPingReport_t*);
     \sa                       sl_NetAppStop
     \note                     This command activates the application for the current WLAN mode (AP or STA)
     \warning
-    \par                 Example
-
+    \par                 Example  
+    
 	- Starting internal HTTP server + DHCP server:
 	\code
     sl_NetAppStart(SL_NETAPP_HTTP_SERVER_ID | SL_NETAPP_DHCP_SERVER_ID)
@@ -577,10 +577,10 @@ _i16 sl_NetAppStart(const _u32 AppBitMap);
     Gets and stops network application for the current WLAN mode
 
     \param[in] AppBitMap    Application id, could be one of the following: \n
-                            - SL_NETAPP_HTTP_SERVER_ID
-                            - SL_NETAPP_DHCP_SERVER_ID
-                            - SL_NETAPP_MDNS_ID
-							- SL_NETAPP_DNS_SERVER_ID
+                            - SL_NETAPP_HTTP_SERVER_ID 
+                            - SL_NETAPP_DHCP_SERVER_ID 
+                            - SL_NETAPP_MDNS_ID 
+							- SL_NETAPP_DNS_SERVER_ID 
 
 	\par	Persistent 	- <b>System Persistent</b>
 
@@ -590,11 +590,11 @@ _i16 sl_NetAppStart(const _u32 AppBitMap);
     \note               This command disables the application for the current active WLAN mode (AP or STA)
     \warning
     \par                Example
-
-
+    
+	
 	- Stopping internal HTTP server:
-	\code
-    sl_NetAppStop(SL_NETAPP_HTTP_SERVER_ID);
+	\code                
+    sl_NetAppStop(SL_NETAPP_HTTP_SERVER_ID); 
     \endcode
 */
 #if _SL_INCLUDE_FUNC(sl_NetAppStop)
@@ -616,11 +616,11 @@ _i16 sl_NetAppStop(const _u32 AppBitMap);
                                 SL_POOL_IS_EMPTY may be return in case there are no resources in the system\n
 									In this case try again later or increase MAX_CONCURRENT_ACTIONS
                                 Possible DNS error codes:
-                                - SL_NETAPP_DNS_QUERY_NO_RESPONSE
-                                - SL_NETAPP_DNS_NO_SERVER
-                                - SL_NETAPP_DNS_QUERY_FAILED
-                                - SL_NETAPP_DNS_MALFORMED_PACKET
-                                - SL_NETAPP_DNS_MISMATCHED_RESPONSE
+                                - SL_NETAPP_DNS_QUERY_NO_RESPONSE       
+                                - SL_NETAPP_DNS_NO_SERVER               
+                                - SL_NETAPP_DNS_QUERY_FAILED            
+                                - SL_NETAPP_DNS_MALFORMED_PACKET        
+                                - SL_NETAPP_DNS_MISMATCHED_RESPONSE     
 
     \sa
     \note   Only one sl_NetAppDnsGetHostByName can be handled at a time.\n
@@ -631,10 +631,10 @@ _i16 sl_NetAppStop(const _u32 AppBitMap);
             In this case, MAX_CONCURRENT_ACTIONS can be increased (result in memory increase) or try
             again later to issue the command.
     \warning
-           In case an IP address in a string format is set as input, without any prefix (e.g. "1.2.3.4") the device will not
-           try to access the DNS and it will return the input address on the 'out_ip_addr' field
+           In case an IP address in a string format is set as input, without any prefix (e.g. "1.2.3.4") the device will not 
+           try to access the DNS and it will return the input address on the 'out_ip_addr' field 
     \par  Example
-
+    
 	- Getting host by name:
 	\code
     _u32 DestinationIP;
@@ -690,19 +690,19 @@ _i16 sl_NetAppDnsGetHostByName(_i8 * pHostName,const  _u16 NameLen, _u32*  OutIp
         \param[out]   pText     Contains the text of the service full or partial
 
         \return       Zero on success,\n
-                      SL_POOL_IS_EMPTY may be return in case there are no resources in the system,
+                      SL_POOL_IS_EMPTY may be return in case there are no resources in the system, 
                       In this case try again later or increase MAX_CONCURRENT_ACTIONS\n
                       In case No service is found error SL_NETAPP_DNS_NO_ANSWER will be returned
 		\sa			  sl_NetAppDnsGetHostByName
         \note         The returns attributes belongs to the first service found.
                       There may be other services with the same service name that will response to the query.
                       The results of these responses are saved in the peer cache of the Device and should be read by another API.\n
-
+                          
                       Only one sl_NetAppDnsGetHostByService can be handled at a time.\n
                       Calling this API while the same command is called from another thread, may result
                       in one of the two scenarios:
                       1. The command will wait (internal) until the previous command finish, and then be executed.
-                      2. There are not enough resources and SL_POOL_IS_EMPTY error will return.
+                      2. There are not enough resources and SL_POOL_IS_EMPTY error will return. 
                       In this case, MAX_CONCURRENT_ACTIONS can be increased (result in memory increase) or try
                       again later to issue the command.
 
@@ -712,7 +712,7 @@ _i16 sl_NetAppDnsGetHostByName(_i8 * pHostName,const  _u16 NameLen, _u32*  OutIp
 _i16 sl_NetAppDnsGetHostByService(_i8  *pServiceName, /*  string containing all (or only part): name + subtype + service */
                                   const _u8  ServiceLen,
                                   const _u8  Family,        /*  4-IPv4 , 16-IPv6  */
-                                  _u32 pAddr[],
+                                  _u32 pAddr[], 
                                   _u32 *pPort,
                                   _u16 *pTextLen,     /*  in: max len , out: actual len */
                                   _i8  *pText
@@ -729,24 +729,24 @@ _i16 sl_NetAppDnsGetHostByService(_i8  *pServiceName, /*  string containing all 
             - Full service parameters.
             - Short service parameters (port and IP only) especially for tiny hosts.
 
-        The different types of struct are made to give the
+        The different types of struct are made to give the 
         possibility to save memory in the host.\n
 
         The user can also chose how many max services to get and start point index
         NWP peer cache.\n
         For example:
-            1.    Get max of 3 full services from index 0.
+            1.    Get max of 3 full services from index 0. 
 				- Up to 3 full services from index 0 are inserted into pBuffer (services that are in indexes 0,1,2).
             2.    Get max of 4 full services from index 3.
 				- Up to 4 full services from index 3 are inserted into pBuffer (services that are in indexes 3,4,5,6).
             3.    Get max of 2 int services from index 6.
 				- Up to 2 int services from index 6 are inserted into pBuffer (services that are in indexes 6,7).
         See below - command parameters.
-
+                    
         \param[in] IndexOffset - The start index in the peer cache that from it the first service is returned.
-        \param[in] MaxServiceCount - The Max services that can be returned if existed or if not exceed the max index
+        \param[in] MaxServiceCount - The Max services that can be returned if existed or if not exceed the max index 
                       in the peer cache
-        \param[in] Flags - an ENUM number that means which service struct to use (means which types of service to fill)
+        \param[in] Flags - an ENUM number that means which service struct to use (means which types of service to fill)                                            
 						- use SL_NETAPP_FULL_SERVICE_WITH_TEXT_IPV4_TYPE  for SlNetAppGetFullServiceWithTextIpv4List_t
 						- use SL_NETAPP_FULL_SERVICE_IPV4_TYPE for SlNetAppGetFullServiceIpv4List_t
 						- use SL_NETAPP_SHORT_SERVICE_IPV4_TYP SlNetAppGetShortServiceIpv4List_t
@@ -754,19 +754,19 @@ _i16 sl_NetAppDnsGetHostByService(_i8  *pServiceName, /*  string containing all 
 						- use SL_NETAPP_SHORT_SERVICE_IPV6_TYPE SlNetAppGetShortServiceIpv6List_t
 						- use SL_NETAPP_FULL_SERVICE_WITH_TEXT_IPV6_TYPE  SlNetAppGetFullServiceWithTextIpv6List_t
 
-       \param[out]  pBuffer - The Services are inserted into this buffer. In the struct form according to the bit that is set in the Flags
+       \param[out]  pBuffer - The Services are inserted into this buffer. In the struct form according to the bit that is set in the Flags 
                       input parameter.
 
         \param[in] BufferLength - The allocated buffer length (pointed by pBuffer).
-
-        \return    ServiceFoundCount - The number of the services that were inserted into the buffer.\n
+ 
+        \return    ServiceFoundCount - The number of the services that were inserted into the buffer.\n 
 					Zero means no service is found negative number means an error
         \sa           sl_NetAppMDNSRegisterService
-        \note
-        \warning
+        \note        
+        \warning 
                     If the out pBuffer size is bigger than an RX packet(1480), than
                     an error is returned because there is no place in the RX packet.\n
-                    The size is a multiply of MaxServiceCount and size of service struct(that is set
+                    The size is a multiply of MaxServiceCount and size of service struct(that is set 
                     according to flag value).
 */
 
@@ -787,13 +787,13 @@ _i16 sl_NetAppGetServiceList(const _u8   IndexOffset,
         The mDNS service that is to be unregistered is a service that the application no longer wishes to provide. \n
         The service name should be the full service name according to RFC
         of the DNS-SD - meaning the value in name field in the SRV answer.
-
+                    
         Examples for service names:
         1. PC1._ipp._tcp.local
         2. PC2_server._ftp._tcp.local
 
         \param[in]    pServiceName              Full service name. \n
-        \param[in]    ServiceNameLen            The length of the service.
+        \param[in]    ServiceNameLen            The length of the service. 
         \param[in]    Options            bitwise parameters: \n
 										   - SL_NETAPP_MDNS_OPTIONS_IS_UNIQUE_BIT     bit 0  - service is unique per interface (means that the service needs to be unique)
 										   - SL_NETAPP_MDNS_IPV6_IPV4_SERVICE         bit 27  - add this service to IPv6 interface, if exist (default is IPv4 service only)
@@ -803,10 +803,10 @@ _i16 sl_NetAppGetServiceList(const _u8   IndexOffset,
 										   - SL_NETAPP_MDNS_OPTIONS_ADD_SERVICE_BIT   bit 31  - for internal use if the service should be added or deleted (set means ADD).
 
 
-        \return    Zero on success, or negative error code on failure
+        \return    Zero on success, or negative error code on failure 
         \sa          sl_NetAppMDNSRegisterService
-        \note
-        \warning
+        \note        
+        \warning 
         The size of the service length should be smaller than 255.
 */
 #if _SL_INCLUDE_FUNC(sl_NetAppMDNSUnRegisterService)
@@ -875,10 +875,10 @@ _i16 sl_NetAppMDNSUnRegisterService(const _i8 *pServiceName,const _u8 ServiceNam
 		Options = SL_NETAPP_MDNS_OPTION_UPDATE_TEXT | SL_NETAPP_MDNS_OPTIONS_IS_NOT_PERSISTENT;
 		sl_NetAppMDNSRegisterService(AddService,sizeof(AddService),"Service 5;payper=A4;size=10",strlen("Service 5;payper=A4;size=10"),1000,120,Options);
 
-    \endcode
+    \endcode 
 */
 #if _SL_INCLUDE_FUNC(sl_NetAppMDNSRegisterService)
-_i16 sl_NetAppMDNSRegisterService( const _i8*  pServiceName,
+_i16 sl_NetAppMDNSRegisterService( const _i8*  pServiceName, 
                                    const _u8   ServiceNameLen,
                                    const _i8*  pText,
                                    const _u8   TextLen,
@@ -892,8 +892,8 @@ _i16 sl_NetAppMDNSRegisterService( const _i8*  pServiceName,
 
     Ping uses the ICMP protocol's mandatory ECHO_REQUEST
 
-    \param[in]   pPingParams     Pointer to the ping request structure:
-                                 - If flags parameter is set to 0, ping will report back once all requested pings are done (as defined by TotalNumberOfAttempts).
+    \param[in]   pPingParams     Pointer to the ping request structure: 
+                                 - If flags parameter is set to 0, ping will report back once all requested pings are done (as defined by TotalNumberOfAttempts). 
                                  - If flags parameter is set to 1, ping will report back after every ping, for TotalNumberOfAttempts.
                                  - If flags parameter is set to 2, ping will stop after the first successful ping, and report back for the successful ping, as well as any preceding failed ones. \n
 								 - If flags parameter is set to 4, for ipv4 -  don`t fragment the ping packet. This flag can be set with other flags.
@@ -908,39 +908,39 @@ _i16 sl_NetAppMDNSRegisterService( const _i8*  pServiceName,
                SL_POOL_IS_EMPTY may be return in case there are no resources in the system
                In this case try again later or increase MAX_CONCURRENT_ACTIONS
 
-    \sa
+    \sa       
     \note      Only one sl_NetAppPing can be handled at a time.
               Calling this API while the same command is called from another thread, may result
                   in one of the two scenarios:
               1. The command will wait (internal) until the previous command finish, and then be executed.
-              2. There are not enough resources and SL_POOL_IS_EMPTY error will return.
+              2. There are not enough resources and SL_POOL_IS_EMPTY error will return. 
               In this case, MAX_CONCURRENT_ACTIONS can be increased (result in memory increase) or try
               again later to issue the command.
-    \warning
+    \warning  
     \par      Example:
-
-	- Sending 20 ping requests and reporting results to a callback routine when
+    
+	- Sending 20 ping requests and reporting results to a callback routine when 
       all requests are sent:
-	\code
+	\code     
 		// callback routine
 		void pingRes(SlNetAppPingReport_t* pReport)
 		{
-		// handle ping results
+		// handle ping results 
 		}
-
+              
 		// ping activation
 		void PingTest()
 		{
 			SlNetAppPingReport_t report;
 			SlNetAppPingCommand_t pingCommand;
-
+                 
 			pingCommand.Ip = SL_IPV4_VAL(10,1,1,200);     // destination IP address is 10.1.1.200
-			pingCommand.PingSize = 150;                   // size of ping, in bytes
+			pingCommand.PingSize = 150;                   // size of ping, in bytes 
 			pingCommand.PingIntervalTime = 100;           // delay between pings, in milliseconds
 			pingCommand.PingRequestTimeout = 1000;        // timeout for every ping in milliseconds
-			pingCommand.TotalNumberOfAttempts = 20;       // max number of ping requests. 0 - forever
+			pingCommand.TotalNumberOfAttempts = 20;       // max number of ping requests. 0 - forever 
 			pingCommand.Flags = 0;                        // report only when finished
-
+  
 			sl_NetAppPing( &pingCommand, SL_AF_INET, &report, pingRes ) ;
 		}
     \endcode
@@ -958,7 +958,7 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 /*!
     \brief     Setting network application configurations
 
-    \param[in] AppId          Application id, could be one of the following:
+    \param[in] AppId          Application id, could be one of the following: 
                               - SL_NETAPP_HTTP_SERVER_ID
                               - SL_NETAPP_DHCP_SERVER_ID (AP Role only)
                               - SL_NETAPP_MDNS_ID
@@ -987,7 +987,7 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 								- For SL_NETAPP_MDNS_ID:
 									- SL_NETAPP_MDNS_CONT_QUERY_OPT
 									- SL_NETAPP_MDNS_QEVETN_MASK_OPT
-									- SL_NETAPP_MDNS_TIMING_PARAMS_OPT
+									- SL_NETAPP_MDNS_TIMING_PARAMS_OPT 
 								- For SL_NETAPP_DEVICE_ID:
 									- SL_NETAPP_DEVICE_URN
 									- SL_NETAPP_DEVICE_DOMAIN
@@ -997,16 +997,16 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 
     \param[in] pOptionValue    Pointer to the option structure
 
-	\par Persistent
+	\par Persistent 			    
 	\par
-								<b>Reset</b>:
+								<b>Reset</b>:                
 													- SL_NETAPP_DHCP_SERVER_BASIC_OPT \n
 	\par
-								<b>Non- Persistent</b>:
+								<b>Non- Persistent</b>:					
 													- SL_NETAPP_HTTP_TEMP_REGISTER_MDNS_SERVICE_NAME
 													- SL_NETAPP_HTTP_TEMP_UNREGISTER_MDNS_SERVICE_NAME \n
 	\par
-								<b>System Persistent</b>:
+								<b>System Persistent</b>: 
 													- SL_NETAPP_HTTP_PRIMARY_PORT_NUMBER
 													- SL_NETAPP_HTTP_AUTH_CHECK
 													- SL_NETAPP_HTTP_AUTH_NAME
@@ -1021,7 +1021,7 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 													- SL_NETAPP_HTTP_CA_CERTIFICATE_FILENAME
 													- SL_NETAPP_MDNS_CONT_QUERY_OPT
 													- SL_NETAPP_MDNS_QEVETN_MASK_OPT
-													- SL_NETAPP_MDNS_TIMING_PARAMS_OPT
+													- SL_NETAPP_MDNS_TIMING_PARAMS_OPT 
 													- SL_NETAPP_DEV_CONF_OPT_DEVICE_URN
 													- SL_NETAPP_DEV_CONF_OPT_DOMAIN_NAME
 
@@ -1030,11 +1030,11 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
     \note
     \warning
     \par Example
-
+    
 	- Setting DHCP Server (AP mode) parameters example:
-	\code
-        SlNetAppDhcpServerBasicOpt_t dhcpParams;
-        _u8 outLen = sizeof(SlNetAppDhcpServerBasicOpt_t);
+	\code             
+        SlNetAppDhcpServerBasicOpt_t dhcpParams; 
+        _u8 outLen = sizeof(SlNetAppDhcpServerBasicOpt_t); 
         dhcpParams.lease_time      = 4096;                         // lease time (in seconds) of the IP Address
         dhcpParams.ipv4_addr_start =  SL_IPV4_VAL(192,168,1,10);   // first IP Address for allocation. IP Address should be set as Hex number - i.e. 0A0B0C01 for (10.11.12.1)
         dhcpParams.ipv4_addr_last  =  SL_IPV4_VAL(192,168,1,16);   // last IP Address for allocation. IP Address should be set as Hex number - i.e. 0A0B0C01 for (10.11.12.1)
@@ -1045,9 +1045,9 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 	<br>
 
 	- Setting Device URN name: <br>
-	Device name, maximum length of 32 characters
+	Device name, maximum length of 32 characters 
     Device name affects URN name, and WPS file "device name" in WPS I.E (STA-WPS / P2P)
-    In case no device URN name set, the default name is "mysimplelink"
+    In case no device URN name set, the default name is "mysimplelink" 
 	In case of setting the device name with length 0, device will return to default name "mysimplelink"
     Allowed characters in device name are: 'a - z' , 'A - Z' , '0-9' and '-'
     \code
@@ -1055,36 +1055,36 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
         sl_NetAppSet (SL_NETAPP_DEVICE_ID, SL_NETAPP_DEVICE_URN, strlen(my_device), (_u8 *) my_device);
     \endcode
 	<br>
-
-	- Register new temporary HTTP service name for MDNS (not persistent):
+	
+	- Register new temporary HTTP service name for MDNS (not persistent):  
 	\code
 		_u8 *my_http_temp_name = "New - Bonjour Service Name";
-		sl_NetAppSet (SL_NETAPP_HTTP_SERVER_ID, SL_NETAPP_HTTP_TEMP_REGISTER_MDNS_SERVICE_NAME, strlen(my_http_temp_name), (_u8 *) my_http_temp_name);
+		sl_NetAppSet (SL_NETAPP_HTTP_SERVER_ID, SL_NETAPP_HTTP_TEMP_REGISTER_MDNS_SERVICE_NAME, strlen(my_http_temp_name), (_u8 *) my_http_temp_name); 
 	\endcode
 	<br>
 
 	- Remove registration of current HTTP internal MDNS service (not persistent) :
 	\code
 		_u8 *old_http_name  = "0800285A7891@mysimplelink-022";
-		sl_NetAppSet (SL_NETAPP_HTTP_SERVER_ID, SL_NETAPP_HTTP_TEMP_UNREGISTER_MDNS_SERVICE_NAME, strlen(old_http_name), (_u8 *) old_http_name);
+		sl_NetAppSet (SL_NETAPP_HTTP_SERVER_ID, SL_NETAPP_HTTP_TEMP_UNREGISTER_MDNS_SERVICE_NAME, strlen(old_http_name), (_u8 *) old_http_name); 
 	\endcode
 	<br>
 
 	-   Set DNS client time example: <br>
-	    Set DNS client (sl_NetAppDnsGetHostByName) timeout, two parameters max_response_time and number_retries.
+	    Set DNS client (sl_NetAppDnsGetHostByName) timeout, two parameters max_response_time and number_retries. 
 		number_retries: Max number of DNS request before sl_NetAppDnsGetHostByName failed, (up to 100 retries).
 		max_response_time: DNS request timeout changed every retry, it`s start with 100 millisecond and increased every retry up to max_response_time milliseconds, (up to 2 seconds)
     \code
 		SlNetAppDnsClientTime_t time;
-	time.MaxResponseTime = 2000;
+     	time.MaxResponseTime = 2000;
 		time.NumOfRetries = 30;
-		sl_NetAppSet (SL_NETAPP_DNS_CLIENT_ID, SL_NETAPP_DNS_CLIENT_TIME, sizeof(time), (_u8 *)&time);
+		sl_NetAppSet (SL_NETAPP_DNS_CLIENT_ID, SL_NETAPP_DNS_CLIENT_TIME, sizeof(time), (_u8 *)&time); 
 
     \endcode
 	<br>
 
 	- Start MDNS continuous querys: <br>
-	In a continuous mDNS query mode, the device keeps sending queries to the network according to a specific service name.
+	In a continuous mDNS query mode, the device keeps sending queries to the network according to a specific service name. 
 	The query will be sent in IPv4 and IPv6 (if enabled) format. To see the completed list of responding services sl_NetAppGetServiceList() need to be called
 	\code
 		const signed char AddService[40]			= "Printer._ipp._tcp.local";
@@ -1105,11 +1105,11 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 	\code
 		SlNetAppServiceAdvertiseTimingParameters_t Timing;
 		_i16 Status;
-
+		
 		Timing.t = 200; // 2 seconds
 		Timing.p = 2; // 2 repetitions
 		Timing.k = 2; // Telescopic factor 2
-		Timing.RetransInterval = 0;
+		Timing.RetransInterval = 0; 
 		Timing.Maxinterval = 0xFFFFFFFF;
 		Timing.max_time = 5;
 
@@ -1119,12 +1119,12 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 	<br>
 
 	- User-defined service types to monitor: <br>
-	  In cases that the user decides not to get responses from certain
+	  In cases that the user decides not to get responses from certain 
 	  types of services it should set the adapt bit in the event mask that is related to:
 	\code
-
-		// bit 0:  _ipp
-		// bit 1:  _device-info
+        
+		// bit 0:  _ipp  
+		// bit 1:  _device-info 
 		// bit 2:  _http
 		// bit 3:  _https
 		// bit 4:  _workstation
@@ -1144,10 +1144,10 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams,const _u8 Family, Sl
 		// bit 18: _xmpp-client
 		// bit 19: _raop
 
-
+		
 		_u32 EventMask;
 		_i16 Status;
-
+		
 		EventMask = BIT0 | BIT1 | BIT18;
 		Status = sl_NetAppSet(SL_NETAPP_MDNS_ID, SL_NETAPP_MDNS_QEVETN_MASK_OPT,sizeof(EventMask),&EventMask)
 
@@ -1215,34 +1215,34 @@ _i16 sl_NetAppSet(const _u8 AppId ,const _u8 Option,const _u8 OptionLen,const _u
          SlNetAppDhcpServerBasicOpt_t dhcpParams;
          _u8 outLen = sizeof(SlNetAppDhcpServerBasicOpt_t);
          sl_NetAppGet(SL_NETAPP_DHCP_SERVER_ID, SL_NETAPP_SET_DHCP_SRV_BASIC_OPT, &outLen, (_u8* )&dhcpParams);
-
-         printf("DHCP Start IP %d.%d.%d.%d End IP %d.%d.%d.%d Lease time seconds %d\n",
+ 
+         printf("DHCP Start IP %d.%d.%d.%d End IP %d.%d.%d.%d Lease time seconds %d\n",                                                           
             SL_IPV4_BYTE(dhcpParams.ipv4_addr_start,3),SL_IPV4_BYTE(dhcpParams.ipv4_addr_start,2),
-            SL_IPV4_BYTE(dhcpParams.ipv4_addr_start,1),SL_IPV4_BYTE(dhcpParams.ipv4_addr_start,0),
+            SL_IPV4_BYTE(dhcpParams.ipv4_addr_start,1),SL_IPV4_BYTE(dhcpParams.ipv4_addr_start,0), 
             SL_IPV4_BYTE(dhcpParams.ipv4_addr_last,3),SL_IPV4_BYTE(dhcpParams.ipv4_addr_last,2),
-            SL_IPV4_BYTE(dhcpParams.ipv4_addr_last,1),SL_IPV4_BYTE(dhcpParams.ipv4_addr_last,0),
-            dhcpParams.lease_time);
+            SL_IPV4_BYTE(dhcpParams.ipv4_addr_last,1),SL_IPV4_BYTE(dhcpParams.ipv4_addr_last,0),         
+            dhcpParams.lease_time);    
     \endcode
 	<br>
 
 	- Getting device URN name: <br>
-    Maximum length of 32 characters of device name.
+    Maximum length of 32 characters of device name. 
     Device name affects URN name, own SSID name in AP mode, and WPS file "device name" in WPS I.E (STA-WPS / P2P)
-    in case no device URN name set, the default name is "mysimplelink"
+    in case no device URN name set, the default name is "mysimplelink" 
     \code
          _u8 my_device_name[SL_NETAPP_MAX_DEVICE_URN_LEN];
-         sl_NetAppGet (SL_NETAPP_DEVICE_ID, SL_NETAPP_DEVICE_URN, strlen(my_device_name), (_u8 *)my_device_name);
+         sl_NetAppGet (SL_NETAPP_DEVICE_ID, SL_NETAPP_DEVICE_URN, strlen(my_device_name), (_u8 *)my_device_name); 
     \endcode
 	<br>
-
+    
 	- Getting DNS client time: <br>
-	  Get DNS client (sl_NetAppDnsGetHostByName) timeout, two parameters max_response_time and number_retries.
+	  Get DNS client (sl_NetAppDnsGetHostByName) timeout, two parameters max_response_time and number_retries. 
 	  number_retries: Max number of DNS request before sl_NetAppDnsGetHostByName failed.
 	  max_response_time: DNS request timeout changed every retry, it`s start with 100 millisecond and increased every retry up to max_response_time milliseconds
 	\code
 		SlNetAppDnsClientTime_t time;
 		_u8 pOptionLen  = sizeof(time);
-		sl_NetAppGet (SL_NETAPP_DNS_CLIENT_ID, SL_NETAPP_DNS_CLIENT_TIME, &pOptionLen, (_u8 *)&time);
+		sl_NetAppGet (SL_NETAPP_DNS_CLIENT_ID, SL_NETAPP_DNS_CLIENT_TIME, &pOptionLen, (_u8 *)&time); 
     \endcode
 	<br>
 
@@ -1251,7 +1251,7 @@ _i16 sl_NetAppSet(const _u8 AppId ,const _u8 Option,const _u8 OptionLen,const _u
 	\code
 		_u32 AppBitMap;
 		_u8 pOptionLen  = sizeof(AppBitMap);
-		sl_NetAppGet (SL_NETAPP_STATUS, SL_NETAPP_STATUS_ACTIVE_APP, &pOptionLen, (_u8 *)&AppBitMap);
+		sl_NetAppGet (SL_NETAPP_STATUS, SL_NETAPP_STATUS_ACTIVE_APP, &pOptionLen, (_u8 *)&AppBitMap); 
 
     \endcode
 
@@ -1274,7 +1274,7 @@ _i16 sl_NetAppGet(const _u8 AppId, const _u8 Option,_u8 *pOptionLen, _u8 *pOptio
 
     \return    Zero on success, or negative error code on failure
 
-    \sa		sl_NetAppRecv
+    \sa		sl_NetAppRecv 
     \note
     \warning
 */
@@ -1289,13 +1289,13 @@ _u16 sl_NetAppSend( _u16 Handle, _u16 DataLen, _u8 *pData, _u32 Flags);
     \param[in,out]  *DataLen   Max buffer size (in) / Actual data received (out)
     \param[out]     *pData     Data received
     \param[in,out]  *Flags     Can have the following values:
-                                        - SL_NETAPP_REQUEST_RESPONSE_FLAGS_CONTINUATION (out)
+                                        - SL_NETAPP_REQUEST_RESPONSE_FLAGS_CONTINUATION (out) 
 										- More data is pending in the network procesor. Application should continue reading the data by calling sl_NetAppRecv again
-
+										
     \return    Zero on success, or negative error code on failure
 
-    \sa		sl_NetAppSend
-    \note
+    \sa		sl_NetAppSend 
+    \note    
     \warning    handle is received in the sl_NetAppRequestHandler callback. Handle is valid untill all data is receive from the network processor.
 */
 #if _SL_INCLUDE_FUNC(sl_NetAppRecv)
@@ -1316,3 +1316,4 @@ _SlReturnVal_t sl_NetAppRecv( _u16 Handle, _u16 *DataLen, _u8 *pData, _u32 *Flag
 #endif /*  __cplusplus */
 
 #endif    /*  __NETAPP_H__ */
+

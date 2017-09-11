@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -200,9 +200,6 @@ _i32 sl_FsOpen(const _u8 *pFileName,const _u32 ModeAndMaxSize, _u32 *pToken)
     {
         return SL_ERROR_FS_UNVALID_FILE_MODE;
     }
-
-
-
 
     if(pToken != NULL)
     {
@@ -846,3 +843,4 @@ _i32  sl_FsGetFileList(_i32* pIndex, _u8 Count, _u8 MaxEntryLen , _u8* pBuff, Sl
     return  (_i32)((_i32)Msg.Rsp.NumOfEntriesOrError);
 }
 #endif
+

@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 /******************************************************************************
 * 	cc_pal.c
@@ -50,7 +50,7 @@
 
 /* ANA_DCDC_PARAMS0 - (HIB1P2_BASE + HIB1P2_O_ANA_DCDC_PARAMETERS0)
 	- Bits 31:28 - Reserved
-	- Bits 27    - Override PWM mode (==> PFM)
+	- Bits 27    - Override PWM mode (==> PFM) 
 	- Bits 26:00 - Reserved
 */
 #define ANA_DCDC_PARAMS0                (HIB1P2_BASE + HIB1P2_O_ANA_DCDC_PARAMETERS0)
@@ -95,6 +95,7 @@
 /* A2N_INT_STS_RAW -                    (COMMON_REG_BASE + COMMON_REG_O_APPS_INT_STS_RAW)  */
 #define A2N_INT_STS_RAW                 (COMMON_REG_BASE + COMMON_REG_O_APPS_INT_STS_RAW)
 
+#define uSEC_DELAY(x)                   (ROM_UtilsDelayDirect(x*80/3))
 #define MAX_DMA_RECV_TRANSACTION_SIZE   (4096)
 #define SPI_RATE_20M                    (20000000)
 
@@ -140,16 +141,16 @@ int spi_Close(Fd_t fd)
 
 
 int spi_Read(Fd_t fd, unsigned char *pBuff, int len)
-{
+{    
     SPI_Transaction transact_details;
     int read_size = 0;
-
+    
     /* check if the link SPI has been initialized successfully */
     if(fd < 0)
     {
         return -1;
     }
-
+    
 	transact_details.txBuf = NULL;
 	transact_details.arg = NULL;
 	while(len > 0)
@@ -200,11 +201,11 @@ int spi_Write(Fd_t fd, unsigned char *pBuff, int len)
 {
     SPI_Transaction transact_details;
     int write_size = 0;
-
+    
     /* check if the link SPI has been initialized successfully */
     if(fd < 0)
     {
-	return -1;
+    	return -1;
     }
 
 	transact_details.rxBuf = NULL;
@@ -255,16 +256,18 @@ int NwpRegisterInterruptHandler(P_EVENT_HANDLER InterruptHdl , void* pValue)
 
 	HwiP_Params nwp_iParams;
 
+	HwiP_Params_init(&nwp_iParams);
+
 	HwiP_clearInterrupt(INT_NWPIC);
 
 	if(!InterruptHdl)
 	{
-		return(HwiP_delete(g_intHandle));
+		HwiP_delete(g_intHandle);
+		return OS_OK;
 	}
 	else
 	{
 		nwp_iParams.priority = INT_PRIORITY_LVL_1 ;
-		nwp_iParams.name = "host_irq" ;
 
 	}
 		g_intHandle = HwiP_create(INT_NWPIC , (HwiP_Fxn)(InterruptHdl) , &nwp_iParams);
@@ -319,9 +322,9 @@ void NwpPowerOff(void)
     if((nwp_lpds_wake_cfg != NWP_LPDS_WAKEUPCFG_APPS2NWP) &&     /* Check for NWP POR condition - APPS2NWP is reset condition */
                 !(sl_stop_ind & NWP_SPARE_REG_5_SLSTOP))         /* Check if sl_stop was executed */
     {
-	HWREG(0xE000E104) = 0x200;               /* Enable the out of band interrupt, this is not a wake-up source*/
-	HWREG(A2N_INT_TRIG) = 0x1;               /* Trigger out of band interrupt  */
-	HWREG(WAKENWP) = WAKENWP_WAKEREQ;        /* Wake-up the NWP */
+    	HWREG(0xE000E104) = 0x200;               /* Enable the out of band interrupt, this is not a wake-up source*/
+    	HWREG(A2N_INT_TRIG) = 0x1;               /* Trigger out of band interrupt  */
+    	HWREG(WAKENWP) = WAKENWP_WAKEREQ;        /* Wake-up the NWP */
 
 	    _SlDrvStartMeasureTimeout(&SlTimeoutInfo, NWP_N2A_INT_ACK_TIMEOUT_MSEC);
 
@@ -330,17 +333,17 @@ void NwpPowerOff(void)
 		* for service pack 3.1.99.1 or higher, this condition is fulfilled in less than 1 mSec.
 		* Otherwise, in some cases it may require up to 3000 mSec of waiting.  */
 
-	apps_int_sts_raw = HWREG(A2N_INT_STS_RAW);
-	while(!(apps_int_sts_raw & 0x1))
-	{
-		if(_SlDrvIsTimeoutExpired(&SlTimeoutInfo))
-		{
-			break;
-		}
-		apps_int_sts_raw = HWREG(A2N_INT_STS_RAW);
-	}
+    	apps_int_sts_raw = HWREG(A2N_INT_STS_RAW);
+    	while(!(apps_int_sts_raw & 0x1))
+    	{
+        	if(_SlDrvIsTimeoutExpired(&SlTimeoutInfo))
+        	{
+        		break;
+        	}
+    		apps_int_sts_raw = HWREG(A2N_INT_STS_RAW);
+    	}
 
-	WAIT_NWP_SHUTDOWN_READY;
+    	WAIT_NWP_SHUTDOWN_READY;
    }
 
    /* Clear Out of band interrupt, Acked by the NWP */
@@ -355,7 +358,8 @@ void NwpPowerOff(void)
    /* sl_stop ECO for PG1.32 devices */
    HWREG(NWP_SPARE_REG_5) |= NWP_SPARE_REG_5_SLSTOP;
 
-   ClockP_usleep(1000);
+   /* Wait for 20 uSec, which is the minimal time between on-off cycle */
+   uSEC_DELAY(20);
 }
 
 
@@ -366,8 +370,8 @@ int Semaphore_create_handle(SemaphoreP_Handle* pSemHandle)
     SemaphoreP_Params_init(&params);
 #ifndef SL_PLATFORM_MULTI_THREADED
     params.callback = tiDriverSpawnCallback;
-#endif
-	(*(pSemHandle)) = SemaphoreP_create(0, &params);
+#endif    
+	(*(pSemHandle)) = SemaphoreP_create(1, &params);
 
 	if(!(*(pSemHandle)))
 	{
@@ -375,6 +379,18 @@ int Semaphore_create_handle(SemaphoreP_Handle* pSemHandle)
 	}
 
 	return SemaphoreP_OK;
+}
+
+int SemaphoreP_delete_handle(SemaphoreP_Handle* pSemHandle)
+{
+    SemaphoreP_delete(*(pSemHandle));
+    return SemaphoreP_OK;
+}
+
+int SemaphoreP_post_handle(SemaphoreP_Handle* pSemHandle)
+{
+    SemaphoreP_post(*(pSemHandle));
+    return SemaphoreP_OK;
 }
 
 
@@ -385,7 +401,7 @@ int Mutex_create_handle(MutexP_Handle* pMutexHandle)
     MutexP_Params_init(&params);
 #ifndef SL_PLATFORM_MULTI_THREADED
     params.callback = tiDriverSpawnCallback;
-#endif
+#endif    
 
 	(*(pMutexHandle)) = MutexP_create(&params);
 
@@ -397,6 +413,11 @@ int Mutex_create_handle(MutexP_Handle* pMutexHandle)
 	return MutexP_OK;
 }
 
+int  MutexP_delete_handle(MutexP_Handle* pMutexHandle)
+{
+    MutexP_delete(*(pMutexHandle));
+    return(MutexP_OK);
+}
 
 int Mutex_unlock(MutexP_Handle pMutexHandle)
 {
@@ -427,11 +448,11 @@ void NwpWaitForShutDownInd()
 
     while(nwp_wakup_ind != NWP_LPDS_WAKEUPCFG_APPS2NWP)
     {
-	if(_SlDrvIsTimeoutExpired(&SlTimeoutInfo))
-	{
-		return;
-	}
-	nwp_wakup_ind = HWREG(NWP_LPDS_WAKEUPCFG);
+    	if(_SlDrvIsTimeoutExpired(&SlTimeoutInfo))
+    	{
+    		return;
+    	}
+    	nwp_wakup_ind = HWREG(NWP_LPDS_WAKEUPCFG);
     }
 
     return ;

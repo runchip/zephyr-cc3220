@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 /*****************************************************************************/
@@ -24,7 +24,6 @@
 #include "nonos.h"
 
 _SlNonOsCB_t g__SlNonOsCB;
-
 
 _SlNonOsRetVal_t _SlNonOsSpawn(_SlSpawnEntryFunc_t pEntry , void* pValue , _u32 flags)
 {
@@ -91,8 +90,9 @@ void tiDriverSpawnCallback(void)
      */
     if (FALSE == g_pCB->WaitForCmdResp)
     {
-	(void)_SlNonOsHandleSpawnTask();
+    	(void)_SlNonOsHandleSpawnTask();
     }
 }
 
 #endif
+

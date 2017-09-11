@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 #ifndef __NONOS_H__
@@ -70,21 +70,21 @@ typedef _u32 _SlNonOsTime_t;
 
 #define SL_OS_WAIT_FOREVER      NONOS_WAIT_FOREVER
 
-#define SL_OS_RET_CODE_OK       NONOS_RET_OK
+#define SL_OS_RET_CODE_OK       NONOS_RET_OK       
 
 #define SL_OS_NO_WAIT           NONOS_NO_WAIT
 
 
 /*!
 	\brief 	This function call the pEntry callback from a different context
-
-	\param	pEntry		-	pointer to the entry callback function
-
+	
+	\param	pEntry		-	pointer to the entry callback function 
+	
 	\param	pValue		- 	pointer to any type of memory structure that would be
 							passed to pEntry callback from the execution thread.
-
+							
 	\param	flags		- 	execution flags - reserved for future usage
-
+	
 	\return upon successful registration of the spawn the function return 0
 			(the function is not blocked till the end of the execution of the function
 			and could be returned before the execution is actually completed)

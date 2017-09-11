@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 /*****************************************************************************/
@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /*!
-	\defgroup Device
+	\defgroup Device 
 	\short Controls the behaviour of the CC31xx/CC32xx device (start/stop, events masking and obtaining specific device status)
 
 */
@@ -42,8 +42,8 @@ extern "C" {
 /*****************************************************************************/
 /* Macro declarations                                                        */
 /*****************************************************************************/
-/* Convert event id to event mask to be used in sl_DeviceEventMaskSet and sl_DeviceEventMaskGet */
-#define SL_DEVICE_EVENT_BIT(EventId)        (SL_WLAN_VAL_2_MASK(EventId,1) )
+/* Convert event id to event mask to be used in sl_DeviceEventMaskSet and sl_DeviceEventMaskGet */     
+#define SL_DEVICE_EVENT_BIT(EventId)        (SL_WLAN_VAL_2_MASK(EventId,1) )     
 
 
 
@@ -71,7 +71,7 @@ typedef enum
     SL_DEVICE_SOURCE_OTHER,
     SL_DEVICE_SOURCE_WLAN,
     SL_DEVICE_SOURCE_NETCFG,
-    SL_DEVICE_SOURCE_NETAPP,
+    SL_DEVICE_SOURCE_NETAPP, 
     SL_DEVICE_SOURCE_SECURITY,
 
     SL_DEVICE_SOURCE_LAST = 0xFF /* last one */
@@ -126,7 +126,7 @@ typedef struct
 
 
 typedef union
-{
+{	
 	SlDeviceFatalDeviceAssert_t		DeviceAssert;
 	SlDeviceFatalNoCmdAck_t			NoCmdAck;
 	SlDeviceFatalCmdTimeout_t		CmdTimeout;
@@ -143,21 +143,21 @@ typedef struct
 
 /*
     Declare the different IDs for sl_DeviceGet and sl_DeviceSet
- */
+ */  
 #define SL_DEVICE_GENERAL				          (1)
 #define SL_DEVICE_IOT				  			  (4)
 #define SL_DEVICE_STATUS                          (2)
 
 /*
     Declare the different Options for SL_DEVICE_GENERAL in sl_DeviceGet and sl_DeviceSet
- */
+ */  
 #define SL_DEVICE_GENERAL_DATE_TIME (11)
 #define SL_DEVICE_GENERAL_PERSISTENT (5)
 #define SL_DEVICE_GENERAL_VERSION   (12)
 
 /*
     Declare the different Options for SL_DEVICE_IOT in sl_DeviceGet and sl_DeviceSet
-*/
+*/  
 #define SL_DEVICE_IOT_UDID			  (41)
 
 
@@ -178,7 +178,7 @@ typedef struct
 /******************  DEVICE CLASS status ****************/
 #define SL_DEVICE_EVENT_DROPPED_DEVICE_ASYNC_GENERAL_ERROR       (0x00000001L)
 #define SL_DEVICE_STATUS_DEVICE_SMART_CONFIG_ACTIVE              (0x80000000L)
-
+  
 /******************  WLAN CLASS status ****************/
 #define SL_DEVICE_EVENT_DROPPED_WLAN_WLANASYNCONNECTEDRESPONSE        (0x00000001L)
 #define SL_DEVICE_EVENT_DROPPED_WLAN_WLANASYNCDISCONNECTEDRESPONSE    (0x00000002L)
@@ -189,7 +189,7 @@ typedef struct
 #define SL_DEVICE_EVENT_DROPPED_WLAN_P2P_NEG_REQ_RECEIVED             (0x00000040L)
 #define SL_DEVICE_EVENT_DROPPED_WLAN_RX_FILTERS                       (0x00000080L)
 #define SL_DEVICE_STATUS_WLAN_STA_CONNECTED                           (0x80000000L)
-
+                      
 /******************  NETAPP CLASS status ****************/
 #define SL_DEVICE_EVENT_DROPPED_NETAPP_IPACQUIRED                      (0x00000001L)
 #define SL_DEVICE_EVENT_DROPPED_NETAPP_IPACQUIRED_V6                   (0x00000002L)
@@ -199,12 +199,12 @@ typedef struct
 #define SL_DEVICE_EVENT_DROPPED_NETAPP_DHCP_ACQUIRE_TIMEOUT			   (0x00000020L)
 #define SL_DEVICE_EVENT_DROPPED_NETAPP_IP_COLLISION                    (0x00000040L)
 #define SL_DEVICE_EVENT_DROPPED_NETAPP_IPV6_LOST					   (0x00000080L)
-
+                      
 /******************  BSD CLASS status ****************/
 #define SL_DEVICE_EVENT_DROPPED_SOCKET_TXFAILEDASYNCRESPONSE        (0x00000001L)
-
+  
 /******************  FS CLASS  ****************/
-
+  
 
 
 /*****************************************************************************/
@@ -212,7 +212,7 @@ typedef struct
 /*****************************************************************************/
 
 #ifdef SL_IF_TYPE_UART
-typedef struct
+typedef struct  
 {
     _u32             BaudRate;
     _u8              FlowControlEnable;
@@ -245,7 +245,7 @@ typedef struct
 }SlDeviceVersion_t;
 
 
-typedef struct
+typedef struct  
 {
        /* time */
     _u32                tm_sec;
@@ -256,15 +256,15 @@ typedef struct
     _u32                tm_mon; /* 1-12 */
     _u32                tm_year; /*  YYYY 4 digits  */
     _u32                tm_week_day; /* not required */
-    _u32                tm_year_day; /* not required */
-    _u32                reserved[3];
+    _u32                tm_year_day; /* not required */ 
+    _u32                reserved[3];  
 }SlDateTime_t;
 
 
 /******************************************************************************/
 /* Type declarations                                                          */
 /******************************************************************************/
-typedef struct
+typedef struct  
 {
     _u32    ChipId;
     _u32    MoreData;
@@ -278,31 +278,31 @@ typedef void (*P_INIT_CALLBACK)(_u32 Status, SlDeviceInitInfo_t *DeviceInitInfo)
 
 /*!
     \brief Start the SimpleLink device
-
-    This function initialize the communication interface, set the enable pin
+    
+    This function initialize the communication interface, set the enable pin 
     of the device, and call to the init complete callback.
 
-    \param[in]      pIfHdl              Opened Interface Object. In case the interface
+    \param[in]      pIfHdl              Opened Interface Object. In case the interface 
                                         must be opened outside the SimpleLink Driver, the
                                         user might give the handler to be used in \n
-                                        any access of the communication interface with the
+                                        any access of the communication interface with the 
                                         device (UART/SPI). \n
                                         The SimpleLink driver will open an interface port
                                         only if this parameter is null! \n
-    \param[in]      pDevName            The name of the device to open. Could be used when
-                                        the pIfHdl is null, to transfer information to the
+    \param[in]      pDevName            The name of the device to open. Could be used when 
+                                        the pIfHdl is null, to transfer information to the 
                                         open interface function \n
                                         This pointer could be used to pass additional information to
                                         sl_IfOpen in case it is required (e.g. UART com port name)
     \param[in]      pInitCallBack       Pointer to function that would be called
                                         on completion of the initialization process.\n
-                                        If this parameter is NULL the function is
-                                        blocked until the device initialization
-                                        is completed, otherwise the function returns
+                                        If this parameter is NULL the function is 
+                                        blocked until the device initialization 
+                                        is completed, otherwise the function returns 
                                         immediately.
 
     \return         Returns the current active role (STA/AP/P2P) or an error code:
-                    - ROLE_STA, ROLE_AP, ROLE_P2P in case of success,
+                    - ROLE_STA, ROLE_AP, ROLE_P2P in case of success, 
                       otherwise in failure one of the following is return:
                     - SL_ERROR_ROLE_STA_ERR  (Failure to load MAC/PHY in STA role)
                     - SL_ERROR_ROLE_AP_ERR  (Failure to load MAC/PHY in AP role)
@@ -321,11 +321,11 @@ typedef void (*P_INIT_CALLBACK)(_u32 Status, SlDeviceInitInfo_t *DeviceInitInfo)
     \par            Example:
 
 	- Open interface without callback routine. The interface name and handler are
-      handled by the sl_IfOpen routine:
-    \code
+      handled by the sl_IfOpen routine: 
+    \code            
 		if( sl_Start(NULL, NULL, NULL) < 0 )
 		{
-			LOG("Error opening interface to device\n");
+			LOG("Error opening interface to device\n"); 
 		}
     \endcode
 	<br>
@@ -336,8 +336,8 @@ typedef void (*P_INIT_CALLBACK)(_u32 Status, SlDeviceInitInfo_t *DeviceInitInfo)
 		{
 			LOG("Handle SimpleLink Interface acording to ststus %d\n", status);
 		}
-
-		void main(void)
+					
+		void main(void) 
 		{
 			if  (sl_Start(NULL, NULL, SimpleLinkInitCallback) < 0)
 			{
@@ -355,21 +355,21 @@ _i16 sl_Start(const void* pIfHdl, _i8*  pDevName, const P_INIT_CALLBACK pInitCal
     \brief Stop the SimpleLink device
 
     This function clears the enable pin of the device, closes the communication \n
-    interface and invokes the stop complete callback
+    interface and invokes the stop complete callback 
 
-    \param[in]      Timeout                       Stop timeout in msec. Should be used to give the device time to finish \n
+    \param[in]      Timeout                       Stop timeout in msec. Should be used to give the device time to finish \n 
                                                   any transmission/reception that is not completed when the function was called. \n
                     Additional options:
                     - 0                             Enter to hibernate immediately \n
                     - 0xFFFF                        Host waits for device's response before \n
-                                                    hibernating, without timeout protection \n
+                                                    hibernating, without timeout protection \n      
                     - 0 < Timeout[msec] < 0xFFFF    Host waits for device's response before \n
                                                     hibernating, with a defined timeout protection \n
                                                     This timeout defines the max time to wait. The NWP \n
                                                     response can be sent earlier than this timeout.
 
-    \return         Zero on success, or a negative value if an error occurred
-
+    \return         Zero on success, or a negative value if an error occurred     
+ 
     \sa             sl_Start
 
     \note           This API will shutdown the device and invoke the "i/f close" function regardless \n
@@ -377,7 +377,7 @@ _i16 sl_Start(const void* pIfHdl, _i8*  pDevName, const P_INIT_CALLBACK pInitCal
                     It is up to the platform interface library to properly handle interface close \n
                     routine \n
                     Belongs to \ref basic_api \n
-    \warning
+    \warning     
 */
 #if _SL_INCLUDE_FUNC(sl_Stop)
 _i16 sl_Stop(const _u16 Timeout);
@@ -387,30 +387,30 @@ _i16 sl_Stop(const _u16 Timeout);
 /*!
     \brief     Setting device configurations
 
-    \param[in] DeviceSetId   configuration id:
+    \param[in] DeviceSetId   configuration id:  
 												- SL_DEVICE_GENERAL
 
-    \param[in] Option        configurations option:
+    \param[in] Option        configurations option: 
 													- SL_DEVICE_GENERAL_DATE_TIME
 													- SL_DEVICE_GENERAL_PERSISTENT
     \param[in] ConfigLen     configurations len
     \param[in] pValues       configurations values
-
+	
     \return    Zero on success, or a negative value if an error occurred
     \par Persistent
 		SL_DEVICE_GENERAL_DATE_TIME - Non-Persistent (Kept during hibernate)
 		SL_DEVICE_GENERAL_PERSISTENT - Persistent
-    \sa
-    \note
-    \warning
+    \sa         
+    \note 
+    \warning     
     \par   Examples:
 
 	- Setting device time and date example:
     \code
          SlDateTime_t dateTime= {0};
          dateTime.tm_day =   (_u32)23;          // Day of month (DD format) range 1-31
-         dateTime.tm_mon =   (_u32)6;           // Month (MM format) in the range of 1-12
-         dateTime.tm_year =  (_u32)2014;        // Year (YYYY format)
+         dateTime.tm_mon =   (_u32)6;           // Month (MM format) in the range of 1-12 
+         dateTime.tm_year =  (_u32)2014;        // Year (YYYY format) 
          dateTime.tm_hour =  (_u32)17;          // Hours in the range of 0-23
          dateTime.tm_min =   (_u32)55;          // Minutes in the range of 0-59
          dateTime.tm_sec =   (_u32)22;          // Seconds in the range of  0-59
@@ -422,8 +422,8 @@ _i16 sl_Stop(const _u16 Timeout);
 	<br>
 
 	- Setting system persistent configuration: <br>
-	  Sets the default system-wide configuration persistence mode.
-	  In case true, all APIs that follow 'system configured' persistence (see persistence attribute noted per API) shall maintain the configured settings.
+	  Sets the default system-wide configuration persistence mode. 
+	  In case true, all APIs that follow 'system configured' persistence (see persistence attribute noted per API) shall maintain the configured settings. 
 	  In case false, all calls to APIs that follow 'system configured' persistence shall be volatile. Configuration should revert to default after reset or power recycle
 	\code
 		_u8 persistent = 1;
@@ -447,29 +447,29 @@ _i16 sl_DeviceSet(const _u8 DeviceSetId ,const _u8 Option,const _u16 ConfigLen,c
     \param[out] pOption   Get configurations option:
 												- SL_DEVICE_STATUS:
 													- SL_DEVICE_EVENT_CLASS_DEVICE
-													- SL_DEVICE_EVENT_CLASS_WLAN
-													- SL_DEVICE_EVENT_CLASS_BSD
+													- SL_DEVICE_EVENT_CLASS_WLAN  
+													- SL_DEVICE_EVENT_CLASS_BSD   
 													- SL_DEVICE_EVENT_CLASS_NETAPP
 													- SL_DEVICE_EVENT_CLASS_NETCFG
-													- SL_DEVICE_EVENT_CLASS_FS
+													- SL_DEVICE_EVENT_CLASS_FS 
 												- SL_DEVICE_GENERAL:
 													- SL_DEVICE_GENERAL_VERSION
-													- SL_DEVICE_GENERAL_DATE_TIME
-													- SL_DEVICE_GENERAL_PERSISTENT
+													- SL_DEVICE_GENERAL_DATE_TIME  
+													- SL_DEVICE_GENERAL_PERSISTENT   
 												- SL_DEVICE_IOT:
 													- SL_DEVICE_IOT_UDID
-
+										
     \param[out] pConfigLen   The length of the allocated memory as input, when the
                              function complete, the value of this parameter would be
-                             the len that actually read from the device.\n
-                             If the device return length that is longer from the input
+                             the len that actually read from the device.\n 
+                             If the device return length that is longer from the input 
                              value, the function will cut the end of the returned structure
                              and will return SL_ESMALLBUF
     \param[out] pValues      Get requested configurations values
     \return     Zero on success, or a negative value if an error occurred
-    \sa
-    \note
-    \warning
+    \sa         
+    \note 
+    \warning  
     \par        Examples
 
 	- Getting WLAN class status (status is always cleared on read):
@@ -513,20 +513,20 @@ _i16 sl_DeviceSet(const _u8 DeviceSetId ,const _u8 Option,const _u16 ConfigLen,c
 
 	- Getting Device time and date:
 	\code
-         SlDateTime_t dateTime =  {0};
-         _i16 configLen = sizeof(SlDateTime_t);
+         SlDateTime_t dateTime =  {0};  
+         _i16 configLen = sizeof(SlDateTime_t); 
          _i8 configOpt = SL_DEVICE_GENERAL_DATE_TIME;
-         sl_DeviceGet(SL_DEVICE_GENERAL,&configOpt, &configLen,(_u8 *)(&dateTime));
-
+         sl_DeviceGet(SL_DEVICE_GENERAL,&configOpt, &configLen,(_u8 *)(&dateTime)); 
+         
          printf("Day %d,Mon %d,Year %d,Hour %,Min %d,Sec %d\n",dateTime.tm_day,dateTime.tm_mon,dateTime.tm_year,
                  dateTime.tm_hour,dateTime.tm_min,dateTime.tm_sec);
      \endcode
 
 	- Getting persistency system configuration:
     \code
-        _i16 configLen = sizeof(_u8);
+        _i16 configLen = sizeof(_u8); 
         _i8 configOpt = SL_DEVICE_GENERAL_PERSISTENT;
-        sl_DeviceGet(SL_DEVICE_GENERAL,&configOpt, &configLen,&persistent);
+        sl_DeviceGet(SL_DEVICE_GENERAL,&configOpt, &configLen,&persistent); 
     \endcode
 
 */
@@ -537,27 +537,27 @@ _i16 sl_DeviceGet(const _u8 DeviceGetId, _u8 *pOption,_u16 *pConfigLen, _u8 *pVa
 
 /*!
     \brief          Set asynchronous event mask
-
-    Mask asynchronous events from the device.\n
+    
+    Mask asynchronous events from the device.\n 
 	Masked events do not generate asynchronous messages from the device.\n
     By default - all events are active
 
 
 
-    \param[in]      EventClass          The classification groups that the
+    \param[in]      EventClass          The classification groups that the 
                                         mask is referred to. Need to be one of
                                         the following:
                                         - SL_DEVICE_EVENT_CLASS_DEVICE
-                                        - SL_DEVICE_EVENT_CLASS_WLAN
-                                        - SL_DEVICE_EVENT_CLASS_BSD
+                                        - SL_DEVICE_EVENT_CLASS_WLAN  
+                                        - SL_DEVICE_EVENT_CLASS_BSD   
                                         - SL_DEVICE_EVENT_CLASS_NETAPP
                                         - SL_DEVICE_EVENT_CLASS_NETCFG
-                                        - SL_DEVICE_EVENT_CLASS_FS
+                                        - SL_DEVICE_EVENT_CLASS_FS 
 
 
     \param[in]      Mask               Event Mask bitmap. Valid mask are (per group):
                                         - SL_DEVICE_EVENT_CLASS_WLAN user events
-                                          - SL_WLAN_EVENT_CONNECT
+                                          - SL_WLAN_EVENT_CONNECT    
 										  - SL_WLAN_EVENT_P2P_CONNECT
                                           - SL_WLAN_EVENT_DISCONNECT
 										  - SL_WLAN_EVENT_P2P_DISCONNECT
@@ -576,11 +576,11 @@ _i16 sl_DeviceGet(const _u8 DeviceGetId, _u8 *pOption,_u16 *pConfigLen, _u8 *pVa
                                           - SL_DEVICE_EVENT_ERROR
 
                                         - SL_DEVICE_EVENT_CLASS_BSD user events
-                                          - SL_SOCKET_TX_FAILED_EVENT
-                                          - SL_SOCKET_ASYNC_EVENT
+                                          - SL_SOCKET_TX_FAILED_EVENT     
+                                          - SL_SOCKET_ASYNC_EVENT 
 
                                         - SL_DEVICE_EVENT_CLASS_NETAPP user events
-                                          - SL_NETAPP_EVENT_IPV4_ACQUIRED
+                                          - SL_NETAPP_EVENT_IPV4_ACQUIRED 
                                           - SL_NETAPP_EVENT_IPV6_ACQUIRED
 										  - SL_NETAPP_EVENT_DHCPV4_LEASED
 										  - SL_NETAPP_EVENT_DHCPV4_RELEASED
@@ -589,16 +589,16 @@ _i16 sl_DeviceGet(const _u8 DeviceGetId, _u8 *pOption,_u16 *pConfigLen, _u8 *pVa
 										  - SL_NETAPP_EVENT_DHCP_IPV4_ACQUIRE_TIMEOUT
 										  - SL_NETAPP_EVENT_IPV6_LOST
 
-
-    \return          Zero on success, or a negative value if an error occurred
+     
+    \return          Zero on success, or a negative value if an error occurred        
 	\par Persistent  System Persistent
     \sa              sl_DeviceEventMaskGet
 
     \note            Belongs to \ref ext_api \n
-    \warning
+    \warning     
     \par             Example
 
-	- Masking connection/disconnection async events from WLAN class:
+	- Masking connection/disconnection async events from WLAN class: 
     \code
 		sl_DeviceEventMaskSet(SL_DEVICE_EVENT_CLASS_WLAN, (SL_DEVICE_EVENT_BIT(SL_WLAN_EVENT_CONNECT) | SL_DEVICE_EVENT_BIT(SL_WLAN_EVENT_DISCONNECT) ) );
     \endcode
@@ -609,31 +609,31 @@ _i16 sl_DeviceEventMaskSet(const _u8 EventClass ,const _u32 Mask);
 
 /*!
     \brief Get current event mask of the device
-
-    Return the events bit mask from the device. In case event is
-    masked, the device will not send that event.
-
-    \param[in]      EventClass          The classification groups that the
+    
+    Return the events bit mask from the device. In case event is 
+    masked, the device will not send that event.  
+    
+    \param[in]      EventClass          The classification groups that the 
                                         mask is referred to. Need to be one of
                                         the following:
                                         - SL_DEVICE_EVENT_CLASS_GLOBAL
                                         - SL_DEVICE_EVENT_CLASS_DEVICE
-                                        - SL_DEVICE_EVENT_CLASS_WLAN
-                                        - SL_DEVICE_EVENT_CLASS_BSD
+                                        - SL_DEVICE_EVENT_CLASS_WLAN  
+                                        - SL_DEVICE_EVENT_CLASS_BSD   
                                         - SL_DEVICE_EVENT_CLASS_NETAPP
                                         - SL_DEVICE_EVENT_CLASS_NETCFG
-                                        - SL_DEVICE_EVENT_CLASS_FS
+                                        - SL_DEVICE_EVENT_CLASS_FS 
 
-    \param[out]      pMask              Pointer to mask bitmap where the
+    \param[out]      pMask              Pointer to mask bitmap where the 
                                         value should be stored. Bitmasks are the same as in \ref sl_DeviceEventMaskSet
-
-    \return         Zero on success, or a negative value if an error occurred
-
-    \sa             sl_DeviceEventMaskSet
+     
+    \return         Zero on success, or a negative value if an error occurred       
+     
+    \sa             sl_DeviceEventMaskSet         
 
     \note           Belongs to \ref ext_api
 
-    \warning
+    \warning     
     \par           Example
 
 	- Getting an event mask for WLAN class:
@@ -653,18 +653,18 @@ _i16 sl_DeviceEventMaskGet(const _u8 EventClass,_u32 *pMask);
     This function must be called from the main loop or from dedicated thread in
     the following cases:
         - Non-Os Platform - should be called from the mail loop
-        - Multi Threaded Platform when the user does not implement the external spawn functions -
+        - Multi Threaded Platform when the user does not implement the external spawn functions - 
            should be called from dedicated thread allocated to the SimpleLink driver.
            In this mode the function never return.
 
-	\par parameters
-			None
-
+	\par parameters			
+			None 
+	
     \return         None
     \sa
     \note           Belongs to \ref basic_api
 
-    \warning        This function must be called from a thread that is start running before
+    \warning        This function must be called from a thread that is start running before 
                     any call to other SimpleLink API
 */
 #if _SL_INCLUDE_FUNC(sl_Task)
@@ -675,14 +675,14 @@ void* sl_Task(void* pEntry);
 
 
 /*!
-    \brief Setting the internal uart mode
+    \brief Setting the internal uart mode 
 
-    \param[in]      pUartParams          Pointer to the uart configuration parameter set:
+    \param[in]      pUartParams          Pointer to the uart configuration parameter set: 
                                          - baudrate     - up to 711 Kbps
-                                         - flow control - enable/disable
+                                         - flow control - enable/disable 
                                          - comm port    - the comm port number
-
-    \return         On success zero is returned, otherwise - Failed.
+    
+    \return         On success zero is returned, otherwise - Failed.   
     \sa
     \note           Belongs to \ref basic_api
 
@@ -707,3 +707,5 @@ _i16 sl_DeviceUartSetMode(const SlDeviceUartIfParams_t* pUartParams);
 #endif /*  __cplusplus */
 
 #endif  /*  __DEVICE_H__ */
+
+

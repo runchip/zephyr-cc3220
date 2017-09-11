@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -28,7 +28,7 @@ extern "C" {
 #endif
 
 /*!
-	\defgroup FileSystem
+	\defgroup FileSystem 
 	\short Provides file system capabilities to TI's CC31XX that can be used by both the CC31XX device and the user
 
 */
@@ -365,9 +365,9 @@ typedef struct
                                         SL_FS_CREATE|SL_FS_OVERWRITE| SL_FS_CREATE_MAX_SIZE( MaxSize ),
                                          NULL);
      \endcode
-
+	
 	 \note 			Some of the flags are creation flags and can only be set when the file is created. When opening the file for write the creation flags are ignored. For more information, refer to chapter 8 in the user manual.
-
+	          
 */
 
 #if _SL_INCLUDE_FUNC(sl_FsOpen)
@@ -389,8 +389,8 @@ _i32 sl_FsOpen(const _u8 *pFileName,const _u32 AccessModeAndMaxSize,_u32 *pToken
 	                Creating signature : OpenSSL> dgst -binary -sha1 -sign <file-location>\<private_key>.pem -out <file-location>\<output>.sig <file-location>\<input>.txt
     \warning
     \par            Examples
-
-	- Closing file:
+    
+	- Closing file: 
 	\code
 		_i16 RetVal;
 		RetVal = sl_FsClose(FileHandle,0,0,0);
@@ -399,12 +399,12 @@ _i32 sl_FsOpen(const _u8 *pFileName,const _u32 AccessModeAndMaxSize,_u32 *pToken
 
 	- Aborting file:
     \code
-
+	
 		_u8  Signature;
 		Signature = 'A';
 		sl_FsClose(FileHandle,0,&Signature, 1);
     \endcode
-
+	
 	\note			In case the file was opened as not secure file or as secure-not signed, any certificate or signature provided are ignored, those fields should be set to NULL.
 */
 #if _SL_INCLUDE_FUNC(sl_FsClose)
@@ -425,7 +425,7 @@ _i16 sl_FsClose(const _i32 FileHdl,const _u8* pCeritificateFileName,const _u8* p
     \note           belongs to \ref basic_api
     \warning
     \par            Example
-
+    
 	- Reading File:
 	\code
     Status = sl_FsRead(FileHandle, 0, &readBuff[0], readSize);
@@ -449,7 +449,7 @@ _i32 sl_FsRead(const _i32 FileHdl,_u32 Offset ,_u8*  pData,_u32 Len);
     \note           belongs to \ref basic_api
     \warning
     \par            Example
-
+    
 	- Writing file:
 	\code
     Status = sl_FsWrite(FileHandle, 0, &buff[0], readSize);
@@ -466,13 +466,13 @@ _i32 sl_FsWrite(const _i32 FileHdl,_u32 Offset,_u8*  pData,_u32 Len);
     \param[in]      Token        File token. if irrelevant set to 0.
     \param[out]     pFsFileInfo Returns the File's Information (SlFsFileInfo_t)
 								- Flags
-								- File size
-								- Allocated size
+								- File size 
+								- Allocated size 
 								- Tokens
 
     \return         Zero on success, negative error code on failure \n
 					When file not exists : SL_ERROR_FS_FILE_NOT_EXISTS
-    \note
+    \note           
 					- If the return value is SL_ERROR_FS_FILE_HAS_NOT_BEEN_CLOSE_CORRECTLY or  SL_ERROR_FS_FILE_IS_ALREADY_OPENED information about the file is valid.
 					- Belongs to \ref basic_api
 
@@ -530,11 +530,11 @@ _i16 sl_FsDel(const _u8 *pFileName,const _u32 Token);
     \param[out]     pOutputData Buffer for the output data
     \param[out]     OutputDataLen Length of the output data buffer
     \param[out]     pNewToken 	The new valid file token, if irrelevant can be set to NULL.
-    \return
+    \return         
 					- Zero on success, or a negative value if an error occurred
 					- For SL_FS_CTL_BUNDLE_ROLLBACK, On success bundle the new bundle state is returned (see SlFsBundleState_e) else negative error number
 					- For SL_FS_CTL_BUNDLE_COMMIT, On success the new bundle state is returned (see SlFsBundleState_e) else negative error number
-
+    
     \sa
     \note           belongs to \ref ext_api
     \warning
@@ -601,9 +601,9 @@ _i16 sl_FsDel(const _u8 *pFileName,const _u32 Token);
 		}
     \endcode
     <br>
-
+	
 	- SL_FS_CTL_BUNDLE_ROLLBACK:
-	\code
+	\code	
 		//return 0 for O.K else negative
 		_i32 BundleRollback()
 		{
@@ -646,8 +646,8 @@ _i32   sl_FsCtl(  SlFsCtl_e Command,  _u32 Token,  _u8 *pFileName, const _u8 *pD
     \sa
     \note           belongs to \ref ext_api
     \warning
-    \par            Example
-
+    \par            Example 
+    
 	- FS programming:
 	\code
 
@@ -871,3 +871,4 @@ _i32  sl_FsGetFileList(_i32* pIndex, _u8 Count, _u8 MaxEntryLen , _u8* pBuff, Sl
 #endif /*  __cplusplus */
 
 #endif /*  __FS_H__ */
+

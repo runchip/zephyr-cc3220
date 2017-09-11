@@ -83,17 +83,15 @@ SemaphoreP_Handle SemaphoreP_create(unsigned int count,
 	return (SemaphoreP_Handle)sem;
 }
 
-SemaphoreP_Status SemaphoreP_delete(SemaphoreP_Handle handle)
+void SemaphoreP_delete(SemaphoreP_Handle handle)
 {
 	k_sem_reset((struct k_sem *)handle);
-
-	return dpl_sem_pool_free((struct k_sem *)handle);
+	dpl_sem_pool_free((struct k_sem *)handle);
 }
 
 void SemaphoreP_Params_init(SemaphoreP_Params *params)
 {
 	params->mode = SemaphoreP_Mode_COUNTING;
-	params->name = NULL;
 	params->callback = NULL;
 }
 
@@ -124,9 +122,7 @@ SemaphoreP_Status SemaphoreP_pend(SemaphoreP_Handle handle, uint32_t timeout)
 	return retval;
 }
 
-SemaphoreP_Status SemaphoreP_post(SemaphoreP_Handle handle)
+void SemaphoreP_post(SemaphoreP_Handle handle)
 {
 	k_sem_give((struct k_sem *)handle);
-
-	return SemaphoreP_OK;
 }

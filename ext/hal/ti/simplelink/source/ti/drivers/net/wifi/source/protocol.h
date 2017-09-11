@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -77,7 +77,7 @@ typedef struct
     _u8               TxPoolCnt;
     _u8               DevStatus;
 	_u16              MinMaxPayload;
-    _u16              SocketTXFailure;
+    _u16              SocketTXFailure;  
     _u16              SocketNonBlocking;
 }_SlResponseHeader_t;
 
@@ -95,7 +95,7 @@ typedef struct
 } T_SCMD;
 
 /* _SlResponseHeader_t DevStatus bits */
-#define _SL_DEV_STATUS_BIT_WLAN_CONN					0x01
+#define _SL_DEV_STATUS_BIT_WLAN_CONN					0x01 
 #define _SL_DEV_STATUS_BIT_DROPPED_EVENTS				0x02
 #define _SL_DEV_STATUS_BIT_LOCKED						0x04
 #define _SL_DEV_STATUS_BIT_PROVISIONING_ACTIVE			0x08
@@ -105,9 +105,9 @@ typedef struct
 
 
 /* Internal driver bits status  (g_SlDeviceStatus) */
-#define _SL_DRV_STATUS_BIT_RESTART_REQUIRED       0x100
+#define _SL_DRV_STATUS_BIT_RESTART_REQUIRED       0x100   
 #define _SL_DRV_STATUS_BIT_DEVICE_STARTED         0x200
-#define _SL_DRV_STATUS_BIT_STOP_IN_PROGRESS       0x400
+#define _SL_DRV_STATUS_BIT_STOP_IN_PROGRESS       0x400 
 #define _SL_DRV_STATUS_BIT_START_IN_PROGRESS      0x800
 
 /****************************************************************************
@@ -602,7 +602,7 @@ typedef struct
 {
 	_u32  						  GroupIdBitmask;
 	_u8                           Cipher;
-	_u8                           PublicKeyLen;
+	_u8                           PublicKeyLen;		
 	_u8							  Padding[2];
 } SlWlanSmartConfigParams_t;
 

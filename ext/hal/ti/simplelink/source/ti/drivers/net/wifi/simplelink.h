@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -27,7 +27,7 @@
  ultra-low memory footprint, all without compromising the capabilities and robustness
  of the final application.
 
-
+ 
 
  \section modules_sec Module Names
  To make it simple, TI's SimpleLink CC31xx/CC32xx platform capabilities were divided into modules by topic (Silo).\n
@@ -54,7 +54,7 @@
 			- <b>Optionally Persistent</b>-	Effective immediately and kept after reset according to a parameter in the API call\n
 			- <b>Reset</b> 				-	Persistent but effective only after reset\n
 			\n
-			For all Set/Get function in this guide, the type of persistency per relevant parameters will be
+			For all Set/Get function in this guide, the type of persistency per relevant parameters will be 
 			described as part of the function description\n
 
  \section         proting_sec     Porting Guide
@@ -94,7 +94,7 @@ Please see the rest of the page for more details about the different steps.
 
  \subsection    porting_step2   Step 2 - Select the capabilities set required for your application
 
- Texas Instruments built 3 different predefined sets of capabilities that would fit most of
+ Texas Instruments built 3 different predefined sets of capabilities that would fit most of 
  the target applications.\n
  It is recommended to try and choose one of this predefined capabilities set before going to
  build your own customized set. If you find compatible set you can skip the rest of this step.
@@ -112,18 +112,18 @@ Please see the rest of the page for more details about the different steps.
 
  The CC3120 has two external hardware lines that can be used to enable/disable the device.
  - <b>nReset</b>
- - <b>nHib</b> - provides mechanism to enter the device into the least current consumption mode. In
+ - <b>nHib</b> - provides mechanism to enter the device into the least current consumption mode. In 
  this mode the RTC value is kept.
-
+ 
  The driver manipulates the enable/disable line automatically during sl_Start / sl_Stop.\n
- Not connecting one these lines means that the driver could start only once (sl_Stop will not
- work correctly and might lead to failure latter on) and the internal provisioning mechanism
+ Not connecting one these lines means that the driver could start only once (sl_Stop will not 
+ work correctly and might lead to failure latter on) and the internal provisioning mechanism 
  could not be used.\n
 
  To bind these lines the following defines should be defined correctly:
  - <b>sl_DeviceEnable</b>
  - <b>sl_DeviceDisable</b>
-
+ 
  If some initializations required before the enable/disable macros are called the user can use also the following <i>optional</i> define
  - <b>sl_DeviceEnablePreamble</b>
 
@@ -134,7 +134,7 @@ Please see the rest of the page for more details about the different steps.
 	- UART
 
  The device detects automatically the active interface during initialization. After the detection, the second interface could not be used.\n
-
+ 
  To wrap the driver for the communication channel the following functions should be implemented:
  -# sl_IfOpen
  -# sl_IfClose
@@ -142,18 +142,18 @@ Please see the rest of the page for more details about the different steps.
  -# sl_IfWrite
  -# sl_IfRegIntHdlr
 
- The way these functions are implemented has direct effect on the performances of the SimpleLink
+ The way these functions are implemented has direct effect on the performances of the SimpleLink 
  device on this target platform. DMA and Jitter Buffer should be considered.\n
-
+ 
  In some platforms the user need to mask the IRQ line when this interrupt could be masked. \n
- The driver can call the mask/unmask whenever is needed. To allow this functionality the
+ The driver can call the mask/unmask whenever is needed. To allow this functionality the 
  user should implement also the following defines:
 	- sl_IfMaskIntHdlr
 	- sl_IfUnMaskIntHdlr
 
  By default the driver is writing the command in few transactions to allow zero-copy mechanism. \n
- To enable a Jitter buffer for improving the communication line utilization, the can implement
- also the following defines:
+ To enable a Jitter buffer for improving the communication line utilization, the can implement 
+ also the following defines:	
 	- sl_IfStartWriteSequence
 	- sl_IfEndWriteSequence
 
@@ -216,7 +216,7 @@ Please see the rest of the page for more details about the different steps.
 			- <b>Persistent</b> 		-	Effective immediately and kept after reset regardless the system persistent mode\n
 			- <b>Optionally Persistent</b>-	Effective immediately and kept after reset according to a parameter in the API call\n
 			- <b>Reset</b> 				-	Persistent but effective only after reset\n
-
+	 
     \section sw_license License
 
  *
@@ -280,7 +280,7 @@ extern "C"
 #endif
 
 /*!
-	\defgroup UserEvents
+	\defgroup UserEvents 
 	\short Function prototypes for event callback handlers
 
 */
@@ -311,11 +311,11 @@ extern "C"
 /*****************************************************************************/
 /* Macro declarations for Host Driver version                                */
 /*****************************************************************************/
-#define SL_DRIVER_VERSION   "2.0.1.15"
+#define SL_DRIVER_VERSION   "2.0.1.19"
 #define SL_MAJOR_VERSION_NUM    2L
 #define SL_MINOR_VERSION_NUM    0L
 #define SL_VERSION_NUM          1L
-#define SL_SUB_VERSION_NUM      15L
+#define SL_SUB_VERSION_NUM      19L
 
 
 /*****************************************************************************/
@@ -377,7 +377,7 @@ extern "C"
 #define sl_Memcpy(dest, src, len)      memcpy(dest, src, (size_t)len)
 #define sl_Memmove(dest, src, len)     memmove(dest, src, (size_t)len)
 
-
+  
 #ifndef SL_TINY
 #define SL_MAX_SOCKETS      (_u8)(16)
 #else
@@ -399,10 +399,6 @@ extern "C"
 
 #ifndef TRUE
 #define TRUE        (!FALSE)
-#endif
-
-#ifndef OK
-#define OK          (0)
 #endif
 
 typedef _u16  _SlOpcode_t;
@@ -874,7 +870,7 @@ typedef _i16   _SlReturnVal_t;
     #define EXT_LIB_REGISTERED_FATAL_ERROR_EVENTS
   #endif
 
-
+  
   /* NetApp requests events registration */
   #if SL_CONCAT2(SL_EXT_LIB_5, _NOTIFY_NETAPP_REQUEST_EVENT)
   extern _SlEventPropogationStatus_e SL_CONCAT2(SL_EXT_LIB_5, _NetAppRequestEventHdl) (SlNetAppRequest_t*, SlNetAppResponse_t *);
@@ -959,7 +955,7 @@ typedef _SlReturnVal_t (*_SlSpawnEntryFunc_t)(void* pValue);
 				Indicates that the command sent to the device had no ack
 		Use pSlDeviceFatal->Data.NoCmdAck fields
 					- Code: An idication of the cmd opcode
-
+	 
 		For pSlDeviceFatal->Id = SL_DEVICE_EVENT_FATAL_CMD_TIMEOUT
 				Indicates that the command got a timeout while waiting for its async response
 		Use pSlDeviceFatal->Data.CmdTimeout fields
@@ -972,7 +968,7 @@ typedef _SlReturnVal_t (*_SlSpawnEntryFunc_t)(void* pValue);
 					- None.
 
 		For pSlDeviceFatal->Id = SL_DEVICE_EVENT_FATAL_SYNC_LOSS
-				Indicates a sync loss with the device
+				Indicates a sync loss with the device 
 		Use pSlDeviceFatal->Data.DeviceAssert fields
 					- None.
 	\endcode
@@ -1002,7 +998,7 @@ extern void slcb_DeviceFatalErrorEvtHdlr(SlDeviceFatal_t *pSlFatalErrorEvent);
           Use pSlDeviceEvent->Data.ResetRequest fields
                   - Status: An error code indication from the device
                   - Source: The sender originator which is based on SlDeviceSource_e enum
-
+          
 		  For pSlDeviceEvent->Id = SL_DEVICE_EVENT_ERROR
           Use pSlDeviceEvent->Data.Error fields
                   - Code: An error code indication from the device
@@ -1014,7 +1010,7 @@ extern void slcb_DeviceFatalErrorEvtHdlr(SlDeviceFatal_t *pSlFatalErrorEvent);
 				   pSlDeviceEvent->Data.Error.Code,  // the error code
 				   pSlDeviceEvent->Data.Error.Source); // the error source
     \endcode
-
+   
 */
 #if (defined(slcb_DeviceGeneralEvtHdlr))
 extern void slcb_DeviceGeneralEvtHdlr(SlDeviceEvent_t *pSlDeviceEvent);
@@ -1147,7 +1143,7 @@ extern void slcb_WlanEvtHdlr(SlWlanEvent_t* pSlWlanEvent);
                        - mac
                        - reason
 	\endcode
-
+	
 */
 #if (defined(slcb_NetAppEvtHdlr))
 extern void slcb_NetAppEvtHdlr(SlNetAppEvent_t* pSlNetAppEvent);
@@ -1170,9 +1166,9 @@ extern void slcb_NetAppEvtHdlr(SlNetAppEvent_t* pSlNetAppEvent);
              For pSlSockEvent->Event = SL_SOCKET_ASYNC_EVENT
              Use pSlSockEvent->SockAsyncData fields
                      - sd
-                     - type
-						- SL_SSL_ACCEPT
-						- SL_WLAN_RX_FRAGMENTATION_TOO_BIG
+                     - type 
+						- SL_SSL_ACCEPT  
+						- SL_WLAN_RX_FRAGMENTATION_TOO_BIG 
 						- SL_OTHER_SIDE_CLOSE_SSL_DATA_NOT_ENCRYPTED
                      - val
 	\endcode
@@ -1237,12 +1233,12 @@ extern void slcb_NetAppRequestHdlr(SlNetAppRequest_t *pNetAppRequest, SlNetAppRe
 #endif
 
 /*!
-    \brief A handler for freeing the memory of the NetApp response.
+    \brief A handler for freeing the memory of the NetApp response. 
 
     \param[in,out] buffer		Pointer to the buffer to free
 
 	\return None
-	\sa
+	\sa		
     \note
 	\warning
 	\par	Example
@@ -1257,14 +1253,14 @@ extern void slcb_NetAppRequestMemFree (_u8 *buffer);
 /*!
     \brief 		Get the timer counter value (timestamp).\n
 				The timer must count from zero to its MAX value.
-				For non-os application, this routine must be implemented.
-	\par parameters
+				For non-os application, this routine must be implemented.  
+	\par parameters	 	
 		None
-	\return		Returns 32-bit timer counter value (ticks unit)
+	\return		Returns 32-bit timer counter value (ticks unit) 
     \sa
-	\note
+	\note		 
     \note       belongs to \ref porting_sec
-    \warning
+    \warning        
 */
 #if defined (slcb_GetTimestamp)
 extern _u32 slcb_GetTimestamp(void);
@@ -1273,15 +1269,15 @@ extern _u32 slcb_GetTimestamp(void);
 
 /*!
     \brief 		Socket trigger routine.
-				This routine will notify the application that a netwrok activity has
+				This routine will notify the application that a netwrok activity has 
 				been completed on the required socket/s.
-
+	
     \param[out] pSlSockTriggerEvent   pointer to SlSockTriggerEvent_t data
 	\return		None.
     \sa
-	\note
+	\note		 
     \note       belongs to \ref porting_sec
-    \warning
+    \warning        
 */
 #if (defined(slcb_SocketTriggerEventHandler))
 extern void slcb_SocketTriggerEventHandler(SlSockTriggerEvent_t* pSlSockTriggerEvent);
@@ -1299,3 +1295,4 @@ extern void slcb_SocketTriggerEventHandler(SlSockTriggerEvent_t* pSlSockTriggerE
 #endif /* __cplusplus */
 
 #endif    /*  __SIMPLELINK_H__ */
+

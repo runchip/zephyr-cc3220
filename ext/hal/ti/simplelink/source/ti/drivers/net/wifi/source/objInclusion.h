@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -24,9 +24,9 @@ extern "C" {
 #endif
 
 /******************************************************************************
-
+ 
  For future use
-
+	
 *******************************************************************************/
 
 #define __inln        	/* if inline functions requiered: #define __inln inline */
@@ -37,8 +37,8 @@ extern "C" {
 
 /******************************************************************************
 
- Qualifiers for package customizations
-
+ Qualifiers for package customizations 
+	
 *******************************************************************************/
 
 #if defined (SL_DEVICE)
@@ -77,7 +77,7 @@ extern "C" {
 #else
 #define __nap__ext   0
 #endif
-
+  
 #if defined (SL_INC_NET_CFG_PKG)
 #define __ncg        1
 #else
@@ -164,7 +164,7 @@ extern "C" {
 #define _SL_INC_sl_NetAppMDNSRegisterService		__nap__ext
 #define _SL_INC_sl_NetAppMDNSUnRegisterService		__nap__ext
 #define _SL_INC_sl_NetAppGetServiceList	            __nap__ext
-
+	
 
 #define _SL_INC_sl_DnsGetHostByAddr     __nap__ext
 #define _SL_INC_sl_NetAppPing           __nap__ext
@@ -235,7 +235,7 @@ extern "C" {
 #define _SL_INC_sl_Htonl                __sck
 
 #define _SL_INC_sl_Htons                __sck
-
+  
 /* wlan */
 #define _SL_INC_sl_WlanConnect          __wln__ext
 
@@ -291,7 +291,7 @@ extern "C" {
 
 #define _SL_INC_sl_StatusGet            __dev
 
-#ifdef SL_IF_TYPE_UART
+#ifdef SL_IF_TYPE_UART  
 #define _SL_INC_sl_DeviceUartSetMode	__dev__ext
 #endif
 
@@ -305,7 +305,7 @@ extern "C" {
 
 /* netutil */
 #define _SL_INC_sl_NetUtilGet			    __dev__ext
-
+ 
 #define _SL_INC_sl_NetUtilSet			    __dev__ext
 
 #define _SL_INC_sl_NetUtilCmd			    __dev__ext

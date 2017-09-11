@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -18,7 +18,7 @@
 /*****************************************************************************/
 #include <ti/drivers/net/wifi/simplelink.h>
 
-
+    
 #ifndef __NETCFG_H__
 #define __NETCFG_H__
 
@@ -28,7 +28,7 @@ extern "C" {
 #endif
 
 /*!
-	\defgroup NetCfg
+	\defgroup NetCfg 
 	\short Controls the configuration of the device addresses (i.e. IP and MAC addresses)
 
 */
@@ -101,13 +101,13 @@ typedef enum
 }SlNetCfg_e;
 
 typedef struct
-{
+{    
   _u32 DnsSecondServerAddr;
 }SlNetCfgIpV4DnsClientArgs_t;
 
 
 typedef struct
-{
+{    
     _u32  Ip;
     _u32  Gateway;
     _u32  Mask;
@@ -154,8 +154,8 @@ typedef struct
 	_u32  IpV6Flags; /* bit 0: Indicate if the address is valid for use in the network (IPv6 DAD completed) . If not, try again later or set a different address. 1=Valid. Relevant for sl_NetCfgGet only. */
 }SlNetCfgIpV6Args_t;
 
-#define _SL_NETCFG_IPV6_ADDR_BIT_STATUS					0x01
-#define SL_IS_IPV6_ADDR_VALID(IpV6Flags)              (IpV6Flags & _SL_NETCFG_IPV6_ADDR_BIT_STATUS)
+#define _SL_NETCFG_IPV6_ADDR_BIT_STATUS					0x01 
+#define SL_IS_IPV6_ADDR_VALID(IpV6Flags)              (IpV6Flags & _SL_NETCFG_IPV6_ADDR_BIT_STATUS) 
 
 #define NET_CFG_STA_INFO_STATUS_DHCP_ADDR   1
 
@@ -164,7 +164,7 @@ typedef struct
     _u32 Ip;
     _u8  MacAddr[6];
     _u16 Status;
-    _u8  Name[32];
+    _u8  Name[32]; 
 } SlNetCfgStaInfo_t;
 
 
@@ -175,7 +175,7 @@ typedef struct
 /*!
     \brief     Setting network configurations
 
-    \param[in] ConfigId   Configuration id:
+    \param[in] ConfigId   Configuration id: 
 											- SL_NETCFG_IF
 										    - SL_NETCFG_IPV4_STA_ADDR_MODE
 											- SL_NETCFG_IPV6_ADDR_LOCAL
@@ -183,28 +183,28 @@ typedef struct
 											- SL_NETCFG_IPV4_AP_ADDR_MODE
 											- SL_NETCFG_MAC_ADDRESS_SET
 											- SL_NETCFG_AP_STATION_DISCONNECT
-    \param[in] ConfigOpt  Configurations option:
-												  - SL_NETCFG_IF_STATE
-												  - SL_NETCFG_ADDR_DHCP
-												  - SL_NETCFG_ADDR_DHCP_LLA
-												  - SL_NETCFG_ADDR_RELEASE_IP
-												  - SL_NETCFG_ADDR_STATIC
-												  - SL_NETCFG_ADDR_STATELESS
-												  - SL_NETCFG_ADDR_STATEFUL
-												  - SL_NETCFG_ADDR_RELEASE_IP_SET
-												  - SL_NETCFG_ADDR_RELEASE_IP_OFF
+    \param[in] ConfigOpt  Configurations option: 
+												  - SL_NETCFG_IF_STATE            
+												  - SL_NETCFG_ADDR_DHCP           
+												  - SL_NETCFG_ADDR_DHCP_LLA       
+												  - SL_NETCFG_ADDR_RELEASE_IP     
+												  - SL_NETCFG_ADDR_STATIC	      
+												  - SL_NETCFG_ADDR_STATELESS      
+												  - SL_NETCFG_ADDR_STATEFUL       
+												  - SL_NETCFG_ADDR_RELEASE_IP_SET 
+												  - SL_NETCFG_ADDR_RELEASE_IP_OFF 
     \param[in] ConfigLen  Configurations len
     \param[in] pValues    Configurations values
-    \par 				  Persistent
-	\par
-							<b>Reset</b>:
+    \par 				  Persistent 			    
+	\par 
+							<b>Reset</b>:                
 													- SL_IPV4_AP_P2P_GO_STATIC_ENABLE
 													- SL_NETCFG_MAC_ADDRESS_SET
 	\par
-							<b>Non- Persistent</b>:
+							<b>Non- Persistent</b>:                 
 													- SL_NETCFG_AP_STATION_DISCONNECT
 	\par
-							<b>System Persistent</b>:
+							<b>System Persistent</b>: 
 													- SL_NETCFG_IPV4_STA_ADDR_MODE
 													- SL_NETCFG_IF_STATE
 													- SL_NETCFG_IPV6_ADDR_LOCAL
@@ -212,11 +212,11 @@ typedef struct
 
     \return    Zero on success, or -1 for failure
     \sa			sl_NetCfgGet
-    \note
-    \warning
+    \note 
+    \warning  
 
     \par   Examples
-
+    
 	- SL_NETCFG_MAC_ADDRESS_SET: <br>
 	  Setting MAC address to the Device.
       The new MAC address will override the default MAC address and it be saved in the FileSystem.
@@ -236,18 +236,18 @@ typedef struct
 	<br>
 
     - <b>SL_NETCFG_IPV4_STA_ADDR_MODE</b><br>:
-
+    
 	- SL_NETCFG_ADDR_STATIC: <br>
 	Setting a static IP address to the device working in STA mode or P2P client.
     The IP address will be stored in the FileSystem.
-	\code
+	\code 
         SlNetCfgIpV4Args_t ipV4;
-        ipV4.Ip          = (_u32)SL_IPV4_VAL(10,1,1,201);            // _u32 IP address
+        ipV4.Ip          = (_u32)SL_IPV4_VAL(10,1,1,201);            // _u32 IP address 
         ipV4.IpMask      = (_u32)SL_IPV4_VAL(255,255,255,0);         // _u32 Subnet mask for this STA/P2P
         ipV4.IpGateway   = (_u32)SL_IPV4_VAL(10,1,1,1);              // _u32 Default gateway address
         ipV4.IpDnsServer = (_u32)SL_IPV4_VAL(8,16,32,64);            // _u32 DNS server address
 
-        sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_STATIC,sizeof(SlNetCfgIpV4Args_t),(_u8 *)&ipV4);
+        sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_STATIC,sizeof(SlNetCfgIpV4Args_t),(_u8 *)&ipV4); 
         sl_Stop(0);
         sl_Start(NULL,NULL,NULL);
     \endcode
@@ -257,7 +257,7 @@ typedef struct
 	Setting IP address by DHCP to FileSystem using WLAN sta mode or P2P client.
     This should be done once if using Serial Flash.
     This is the system's default mode for acquiring an IP address after WLAN connection.
-    \code
+    \code 
         sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_DHCP,0,0);
         sl_Stop(0);
         sl_Start(NULL,NULL,NULL);
@@ -267,7 +267,7 @@ typedef struct
 	- SL_NETCFG_ADDR_DHCP_LLA: <br>
 	Setting DHCP LLA will runs LLA mechanism in case DHCP fails to acquire an address
     SL_NETCFG_DHCP_OPT_RELEASE_IP_BEFORE_DISCONNECT - If set, enables sending a DHCP release frame to the server if user issues a WLAN disconnect command.
-	\code
+	\code 
         sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_DHCP_LLA,0,0);
         sl_Stop(0);
         sl_Start(NULL,NULL,NULL);
@@ -277,7 +277,7 @@ typedef struct
 	- SL_NETCFG_ADDR_RELEASE_IP_SET: <br>
     Setting release ip before disconnect enables sending a DHCP release frame to the server if user issues a WLAN disconnect command.
 	\code
-        sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_RELEASE_IP_SET,0,0);
+        sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_RELEASE_IP_SET,0,0); 
         sl_Stop(0);
         sl_Start(NULL,NULL,NULL);
     \endcode
@@ -285,8 +285,8 @@ typedef struct
 
 	- SL_NETCFG_ADDR_RELEASE_IP_OFF:<br>
 	Setting release ip before disconnect disables sending a DHCP release frame to the server if user issues a WLAN disconnect command.
-	\code
-        sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_RELEASE_IP_OFF,0,0);
+	\code 
+        sl_NetCfgSet(SL_NETCFG_IPV4_STA_ADDR_MODE,SL_NETCFG_ADDR_RELEASE_IP_OFF,0,0); 
         sl_Stop(0);
         sl_Start(NULL,NULL,NULL);
     \endcode
@@ -295,9 +295,9 @@ typedef struct
 	- SL_NETCFG_IPV4_AP_ADDR_MODE:<br>
 	Setting a static IP address to the device working in AP mode or P2P go.
     The IP address will be stored in the FileSystem. Requires restart.
-    \code
+    \code                                                             
         SlNetCfgIpV4Args_t ipV4;
-        ipV4.Ip          = (_u32)SL_IPV4_VAL(10,1,1,201);            // _u32 IP address
+        ipV4.Ip          = (_u32)SL_IPV4_VAL(10,1,1,201);            // _u32 IP address 
         ipV4.IpMask      = (_u32)SL_IPV4_VAL(255,255,255,0);         // _u32 Subnet mask for this AP/P2P
         ipV4.IpGateway   = (_u32)SL_IPV4_VAL(10,1,1,1);              // _u32 Default gateway address
         ipV4.IpDnsServer = (_u32)SL_IPV4_VAL(8,16,32,64);            // _u32 DNS server address
@@ -323,8 +323,8 @@ typedef struct
 	- SL_NETCFG_IPV6_ADDR_LOCAL: <br>
 	Setting a IPv6 Local static address to the device working in STA mode.
     The IP address will be stored in the FileSystem. Requires restart.
-	\code
-		SlNetCfgIpV6Args_t ipV6;
+	\code       
+  		SlNetCfgIpV6Args_t ipV6;
 		_u32 IfBitmap = 0;
 
 	    IfBitmap = SL_NETCFG_IF_IPV6_STA_LOCAL;
@@ -344,7 +344,7 @@ typedef struct
 	- SL_NETCFG_IPV6_ADDR_LOCAL: <br>
 	Setting a IPv6 Local stateless address to the device working in STA mode.
     The IP address will be stored in the FileSystem. Requires restart.
-    \code
+    \code       
 		_u32 IfBitmap = 0;
 	    IfBitmap = SL_NETCFG_IF_IPV6_STA_LOCAL;
 		sl_NetCfgSet(SL_NETCFG_IF,SL_NETCFG_IF_STATE,sizeof(IfBitmap),&IfBitmap);
@@ -371,7 +371,7 @@ typedef struct
     - SL_NETCFG_IPV6_ADDR_GLOBAL:<br>
 	Setting a IPv6 Global static address to the device working in STA mode.
     The IP address will be stored in the FileSystem. Requires restart.
-	\code
+	\code       
 		SlNetCfgIpV6Args_t ipV6;
 		_u32 IfBitmap = 0;
 
@@ -410,25 +410,25 @@ typedef struct
 	Disconnet AP station by mac address.
     The AP connected stations list can be read by sl_NetCfgGet with options: SL_AP_STATIONS_NUM_CONNECTED, SL_AP_STATIONS_INFO_LIST
     \code
-        _u8  ap_sta_mac[6] = { 0x00, 0x22, 0x33, 0x44, 0x55, 0x66 };
+        _u8  ap_sta_mac[6] = { 0x00, 0x22, 0x33, 0x44, 0x55, 0x66 };     
         sl_NetCfgSet(SL_NETCFG_AP_STATION_DISCONNECT,1,SL_MAC_ADDR_LEN,(_u8 *)ap_sta_mac);
-    \endcode
+    \endcode 
 	<br>
 
 	- SL_NETCFG_IPV4_DNS_CLIENT:<br>
 	Set secondary DNS address (DHCP and static configuration) not persistent
-	\code
+	\code                                                                        
 		_i32 Status;
 		SlNetCfgIpV4DnsClientArgs_t DnsOpt;
 		DnsOpt.DnsSecondServerAddr  =  SL_IPV4_VAL(8,8,8,8); ;
 		Status = sl_NetCfgSet(SL_NETCFG_IPV4_DNS_CLIENT,0,sizeof(SlNetCfgIpV4DnsClientArgs_t),(unsigned char *)&DnsOpt);
 		if( Status )
 		{
-				// error
+				// error 
 		}
     \endcode
 
-
+   
 */
 #if _SL_INCLUDE_FUNC(sl_NetCfgSet)
 _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,const _u8 *pValues);
@@ -437,23 +437,23 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
 
 /*!
     \brief     Getting network configurations
-
+   
     \param[in] ConfigId      Configuration id
 
-    \param[out] pConfigOpt   Get configurations option
+    \param[out] pConfigOpt   Get configurations option 
 
     \param[out] pConfigLen   The length of the allocated memory as input, when the
                                         function complete, the value of this parameter would be
-                             the len that actually read from the device.\n
-                                        If the device return length that is longer from the input
+                             the len that actually read from the device.\n 
+                                        If the device return length that is longer from the input 
                                         value, the function will cut the end of the returned structure
                                         and will return ESMALLBUF
 
     \param[out] pValues - get configurations values
     \return    Zero on success, or -1 on failure
-    \sa      	sl_NetCfgSet
-    \note
-    \warning
+    \sa      	sl_NetCfgSet   
+    \note 
+    \warning     
     \par   Examples
 
 	- SL_NETCFG_MAC_ADDRESS_GET: <br>
@@ -465,23 +465,23 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
        _u16 macAddressLen = SL_MAC_ADDR_LEN;
 	   _u16 ConfigOpt = 0;
        sl_NetCfgGet(SL_NETCFG_MAC_ADDRESS_GET,&ConfigOpt,&macAddressLen,(_u8 *)macAddressVal);
-
+    
     \endcode
 	<br>
 
 	- SL_NETCFG_IPV4_STA_ADDR_MODE: <br>
-	  Get IP address from WLAN station or P2P client. A DHCP flag is returned to indicate if the IP address is static or from DHCP.
+	  Get IP address from WLAN station or P2P client. A DHCP flag is returned to indicate if the IP address is static or from DHCP. 
     \code
         _u16 len = sizeof(SlNetCfgIpV4Args_t);
         _u16 ConfigOpt = 0;   //return value could be one of the following: SL_NETCFG_ADDR_DHCP / SL_NETCFG_ADDR_DHCP_LLA / SL_NETCFG_ADDR_STATIC
         SlNetCfgIpV4Args_t ipV4 = {0};
         sl_NetCfgGet(SL_NETCFG_IPV4_STA_ADDR_MODE,&ConfigOpt,&len,(_u8 *)&ipV4);
-
+                                          
 		printf("DHCP is %s IP %d.%d.%d.%d MASK %d.%d.%d.%d GW %d.%d.%d.%d DNS %d.%d.%d.%d\n",
-            (ConfigOpt == SL_NETCFG_ADDR_DHCP) ? "ON" : "OFF",
-            SL_IPV4_BYTE(ipV4.Ip,3),SL_IPV4_BYTE(ipV4.Ip,2),SL_IPV4_BYTE(ipV4.Ip,1),SL_IPV4_BYTE(ipV4.Ip,0),
-            SL_IPV4_BYTE(ipV4.IpMask,3),SL_IPV4_BYTE(ipV4.IpMask,2),SL_IPV4_BYTE(ipV4.IpMask,1),SL_IPV4_BYTE(ipV4.IpMask,0),
-            SL_IPV4_BYTE(ipV4.IpGateway,3),SL_IPV4_BYTE(ipV4.IpGateway,2),SL_IPV4_BYTE(ipV4.IpGateway,1),SL_IPV4_BYTE(ipV4.IpGateway,0),
+            (ConfigOpt == SL_NETCFG_ADDR_DHCP) ? "ON" : "OFF",                                                           
+            SL_IPV4_BYTE(ipV4.Ip,3),SL_IPV4_BYTE(ipV4.Ip,2),SL_IPV4_BYTE(ipV4.Ip,1),SL_IPV4_BYTE(ipV4.Ip,0), 
+            SL_IPV4_BYTE(ipV4.IpMask,3),SL_IPV4_BYTE(ipV4.IpMask,2),SL_IPV4_BYTE(ipV4.IpMask,1),SL_IPV4_BYTE(ipV4.IpMask,0),         
+            SL_IPV4_BYTE(ipV4.IpGateway,3),SL_IPV4_BYTE(ipV4.IpGateway,2),SL_IPV4_BYTE(ipV4.IpGateway,1),SL_IPV4_BYTE(ipV4.IpGateway,0),                 
             SL_IPV4_BYTE(ipV4.IpDnsServer,3),SL_IPV4_BYTE(ipV4.IpDnsServer,2),SL_IPV4_BYTE(ipV4.IpDnsServer,1),SL_IPV4_BYTE(ipV4.IpDnsServer,0));
 
     \endcode
@@ -494,12 +494,12 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
         _u16 ConfigOpt = 0;  //return value could be one of the following: SL_NETCFG_ADDR_DHCP / SL_NETCFG_ADDR_DHCP_LLA / SL_NETCFG_ADDR_STATIC
         SlNetCfgIpV4Args_t ipV4 = {0};
         sl_NetCfgGet(SL_NETCFG_IPV4_AP_ADDR_MODE,&ConfigOpt,&len,(_u8 *)&ipV4);
-
+                                          
 		printf("DHCP is %s IP %d.%d.%d.%d MASK %d.%d.%d.%d GW %d.%d.%d.%d DNS %d.%d.%d.%d\n",
-            (ConfigOpt == SL_NETCFG_ADDR_DHCP) ? "ON" : "OFF",
-            SL_IPV4_BYTE(ipV4.Ip,3),SL_IPV4_BYTE(ipV4.Ip,2),SL_IPV4_BYTE(ipV4.Ip,1),SL_IPV4_BYTE(ipV4.Ip,0),
-            SL_IPV4_BYTE(ipV4.IpMask,3),SL_IPV4_BYTE(ipV4.IpMask,2),SL_IPV4_BYTE(ipV4.IpMask,1),SL_IPV4_BYTE(ipV4.IpMask,0),
-            SL_IPV4_BYTE(ipV4.IpGateway,3),SL_IPV4_BYTE(ipV4.IpGateway,2),SL_IPV4_BYTE(ipV4.IpGateway,1),SL_IPV4_BYTE(ipV4.IpGateway,0),
+            (ConfigOpt == SL_NETCFG_ADDR_DHCP) ? "ON" : "OFF",                                                           
+            SL_IPV4_BYTE(ipV4.Ip,3),SL_IPV4_BYTE(ipV4.Ip,2),SL_IPV4_BYTE(ipV4.Ip,1),SL_IPV4_BYTE(ipV4.Ip,0), 
+            SL_IPV4_BYTE(ipV4.IpMask,3),SL_IPV4_BYTE(ipV4.IpMask,2),SL_IPV4_BYTE(ipV4.IpMask,1),SL_IPV4_BYTE(ipV4.IpMask,0),         
+            SL_IPV4_BYTE(ipV4.IpGateway,3),SL_IPV4_BYTE(ipV4.IpGateway,2),SL_IPV4_BYTE(ipV4.IpGateway,1),SL_IPV4_BYTE(ipV4.IpGateway,0),                 
             SL_IPV4_BYTE(ipV4.IpDnsServer,3),SL_IPV4_BYTE(ipV4.IpDnsServer,2),SL_IPV4_BYTE(ipV4.IpDnsServer,1),SL_IPV4_BYTE(ipV4.IpDnsServer,0));
     \endcode
 	<br>
@@ -515,12 +515,12 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
 	<br>
 
 	- SL_NETCFG_IPV6_ADDR_LOCAL: <br>
-	Get IPV6 Local address (ipV6.ipV6IsValid holds the address status. 1=Valid, ipv6 DAD completed and address is valid for use)
+	Get IPV6 Local address (ipV6.ipV6IsValid holds the address status. 1=Valid, ipv6 DAD completed and address is valid for use) 
 	\code
 		SlNetCfgIpV6Args_t ipV6;
         _u16 len = sizeof(SlNetCfgIpV6Args_t);
         _u16 ConfigOpt = 0;  //return value could be one of the following: SL_NETCFG_ADDR_STATIC / SL_NETCFG_ADDR_STATELESS / SL_NETCFG_ADDR_STATEFUL
-
+       
 		sl_NetCfgGet(SL_NETCFG_IPV6_ADDR_LOCAL,&ConfigOpt,&len,(_u8 *)&ipV6);
 		if (SL_IS_IPV6_ADDR_VALID(ipV6.IpV6Flags))
 		{
@@ -535,12 +535,12 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
 	<br>
 
 	- SL_NETCFG_IPV6_ADDR_GLOBAL:<br>
-	Get IPV6 Global address (ipV6.ipV6IsValid holds the address status. 1=Valid, ipv6 DAD completed and address is valid for use)
+	Get IPV6 Global address (ipV6.ipV6IsValid holds the address status. 1=Valid, ipv6 DAD completed and address is valid for use) 
 	\code
 		SlNetCfgIpV6Args_t ipV6;
         _u16 len = sizeof(SlNetCfgIpV6Args_t);
         _u16 ConfigOpt = 0;  //return value could be one of the following: SL_NETCFG_ADDR_STATIC  / SL_NETCFG_ADDR_STATEFUL
-
+       
 		if (SL_IS_IPV6_ADDR_VALID(ipV6.IpV6Flags))
 		{
 			printf("Ipv6 Global Address is valid: %8x:%8x:%8x:%8x\n", ipV6.Ip[0],ipV6.Ip[0],ipV6.Ip[0],ipV6.Ip[0]);
@@ -554,7 +554,7 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
 	<br>
 
 	- SL_NETCFG_AP_STATIONS_NUM_CONNECTED: <br>
-	  Get AP numbber of connected stations.
+	  Get AP numbber of connected stations.   
     \code
         _u8 num_ap_connected_sta;
         _u16 len = sizeof(num_ap_connected_sta);
@@ -565,9 +565,9 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
 	<br>
 
 	- SL_NETCFG_AP_STATIONS_INFO_LIST: <br>
-	  Get AP full list of connected stationss.
+ 	  Get AP full list of connected stationss.
     \code
-        SlNetCfgStaInfo_t ApStaList[4];
+        SlNetCfgStaInfo_t ApStaList[4]; 
         _u16 sta_info_len;
         _u16 start_sta_index = 0;
         int actual_num_sta;
@@ -576,7 +576,7 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
         start_sta_index = 0;
         sta_info_len = sizeof(ApStaList);
         sl_NetCfgGet(SL_NETCFG_AP_STATIONS_INFO_LIST, &start_sta_index, &sta_info_len, (_u8 *)ApStaList);
-
+        
         actual_num_sta = sta_info_len / sizeof(SlNetCfgStaInfo_t);
         printf("-Print SL_NETCFG_AP_STATIONS_INFO_LIST actual num_stations = %d (upon sta_info_len = %d)\n", actual_num_sta, sta_info_len);
 
@@ -593,8 +593,8 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
 	<br>
 
 	- SL_NETCFG_IPV4_DNS_CLIENT: <br>
-	  Set secondary DNS address (DHCP and static configuration)
-	\code
+	  Set secondary DNS address (DHCP and static configuration) 
+	\code                                                               
 		_u16 ConfigOpt = 0;
 		_i32 Status;
 		_u16 pConfigLen = sizeof(SlNetCfgIpV4DnsClientArgs_t);
@@ -602,13 +602,13 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
 		Status = sl_NetCfgGet(SL_NETCFG_IPV4_DNS_CLIENT,&ConfigOpt,&pConfigLen,&DnsOpt);
 		if( Status )
 		{
-				// error
+				// error 
 		}
     \endcode
 
     - SL_NETCFG_IPV4_DHCP_CLIENT: <br>
-	  Get DHCP Client info
-	\code
+	  Get DHCP Client info 
+	\code                                                               
 		_u16 ConfigOpt = 0;
         _u16 pConfigLen = sizeof(SlNetCfgIpv4DhcpClient_t);
         SlNetCfgIpv4DhcpClient_t dhcpCl;
@@ -621,7 +621,7 @@ _i16 sl_NetCfgSet(const _u16 ConfigId,const _u16 ConfigOpt,const _u16 ConfigLen,
         }
 
     \endcode
-
+   
 */
 #if _SL_INCLUDE_FUNC(sl_NetCfgGet)
 _i16 sl_NetCfgGet(const _u16 ConfigId ,_u16 *pConfigOpt, _u16 *pConfigLen, _u8 *pValues);
@@ -640,3 +640,4 @@ _i16 sl_NetCfgGet(const _u16 ConfigId ,_u16 *pConfigOpt, _u16 *pConfigLen, _u8 *
 #endif /*  __cplusplus */
 
 #endif    /*  __NETCFG_H__ */
+

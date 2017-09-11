@@ -9,9 +9,9 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
-
+    
 
 
 /*****************************************************************************/
@@ -37,7 +37,7 @@ static void _SlNetAppCopyPingResultsToReport(SlPingReportResponse_t *pResults,Sl
 #endif
 
 
-_i16 _SlNetAppMDNSRegisterUnregisterService(const _i8* 		pServiceName,
+_i16 _SlNetAppMDNSRegisterUnregisterService(const _i8* 		pServiceName, 
 											const _u8   ServiceNameLen,
 											const _i8* 		pText,
 											const _u8   TextLen,
@@ -190,7 +190,7 @@ _i16 sl_NetAppGetServiceList(const _u8  IndexOffest,
 
     _SlDrvResetCmdExt(&CmdExt);
     CmdExt.RxPayloadLen = (_i16)BufferSize;
-    CmdExt.pRxPayload = (_u8 *)pBuffer;
+    CmdExt.pRxPayload = (_u8 *)pBuffer; 
 
     Msg.Cmd.IndexOffest		= IndexOffest;
     Msg.Cmd.MaxServiceCount = MaxServiceCount;
@@ -264,13 +264,13 @@ static const _SlCmdCtrl_t _SlRegisterServiceCtrl =
                     Add/delete  service
 					The function manipulates the command that register the service and call
 					to the NWP in order to add/delete the service to/from the mDNS package and to/from the DB.
-
+                    
 					This register service is a service offered by the application.
 					This unregister service is a service offered by the application before.
-
+                     
 					The service name should be full service name according to RFC
                     of the DNS-SD - means the value in name field in SRV answer.
-
+                    
 					Example for service name:
                     1. PC1._ipp._tcp.local
                     2. PC2_server._ftp._tcp.local
@@ -279,7 +279,7 @@ static const _SlCmdCtrl_t _SlRegisterServiceCtrl =
                     it is unique before starting to announce the service on the network.
                     Instance is the instance portion of the service name.
 
-
+ 
 
 
     PARAMETERS:
@@ -322,12 +322,12 @@ static const _SlCmdCtrl_t _SlRegisterServiceCtrl =
 
 
 	  RETURNS:        Status - the immediate response of the command status.
-							   0 means success.
+							   0 means success. 
 
 
 
 ******************************************************************************/
-_i16 _SlNetAppMDNSRegisterUnregisterService(	const _i8* 		pServiceName,
+_i16 _SlNetAppMDNSRegisterUnregisterService(	const _i8* 		pServiceName, 
 											const _u8   ServiceNameLen,
 											const _i8* 		pText,
 											const _u8   TextLen,
@@ -372,8 +372,8 @@ _i16 _SlNetAppMDNSRegisterUnregisterService(	const _i8* 		pServiceName,
 	/*Build the payload part of the command
 	 Copy the service name and text to one buffer.
 	 NOTE - pay attention
-				The size of the service length + the text length should be smaller than 255,
-				Until the simplelink drive supports to variable length through SPI command. */
+	 			The size of the service length + the text length should be smaller than 255,
+	 			Until the simplelink drive supports to variable length through SPI command. */
 	if(TextLen + ServiceNameLen > (SL_NETAPP_MDNS_MAX_SERVICE_NAME_AND_TEXT_LENGTH - 1 )) /*-1 is for giving a place to set null termination at the end of the text*/
 	{
 		return -1;
@@ -381,41 +381,41 @@ _i16 _SlNetAppMDNSRegisterUnregisterService(	const _i8* 		pServiceName,
 
     _SlDrvMemZero(ServiceNameAndTextBuffer, (_u16)SL_NETAPP_MDNS_MAX_SERVICE_NAME_AND_TEXT_LENGTH);
 
-
+	
 	/*Copy the service name*/
 	sl_Memcpy(ServiceNameAndTextBuffer,
-		      pServiceName,
+		      pServiceName,   
 			  ServiceNameLen);
 
 	if(TextLen > 0 )
 	{
-
+		
 		TextPtr = &ServiceNameAndTextBuffer[ServiceNameLen];
 		/*Copy the text just after the service name*/
 		sl_Memcpy(TextPtr,
-				  pText,
+				  pText,   
 				  TextLen);
 
-
+  
 	}
 
     _SlDrvResetCmdExt(&CmdExt);
     CmdExt.TxPayload1Len = (TextLen + ServiceNameLen);
     CmdExt.pTxPayload1   = (_u8 *)ServiceNameAndTextBuffer;
 
-
+	
 	VERIFY_RET_OK(_SlDrvCmdOp((_SlCmdCtrl_t *)&_SlRegisterServiceCtrl, &Msg, &CmdExt));
 
 	return (_i16)Msg.Rsp.status;
 
-
+	
 }
 #endif
 
 /**********************************************************************************************/
 #if _SL_INCLUDE_FUNC(sl_NetAppMDNSRegisterService)
 
-_i16 sl_NetAppMDNSRegisterService(	const _i8* 	pServiceName,
+_i16 sl_NetAppMDNSRegisterService(	const _i8* 	pServiceName, 
 									const _u8   ServiceNameLen,
 									const _i8* 	pText,
 									const _u8   TextLen,
@@ -451,7 +451,7 @@ _i16 sl_NetAppMDNSRegisterService(	const _i8* 	pServiceName,
 	  and ServiceNameLen values. */
 	Options |=  SL_NETAPP_MDNS_OPTIONS_ADD_SERVICE_BIT;
 
-    return  _SlNetAppMDNSRegisterUnregisterService(	pServiceName,
+    return  _SlNetAppMDNSRegisterUnregisterService(	pServiceName, 
 											        ServiceNameLen,
 													pText,
 													TextLen,
@@ -459,7 +459,7 @@ _i16 sl_NetAppMDNSRegisterService(	const _i8* 	pServiceName,
 													TTL,
 													Options);
 
-
+	
 }
 #endif
 /**********************************************************************************************/
@@ -469,7 +469,7 @@ _i16 sl_NetAppMDNSRegisterService(	const _i8* 	pServiceName,
 /**********************************************************************************************/
 #if _SL_INCLUDE_FUNC(sl_NetAppMDNSUnRegisterService)
 
-_i16 sl_NetAppMDNSUnRegisterService(	const _i8* 		pServiceName,
+_i16 sl_NetAppMDNSUnRegisterService(	const _i8* 		pServiceName, 
 									const _u8   ServiceNameLen,_u32 Options)
 
 
@@ -480,7 +480,7 @@ _i16 sl_NetAppMDNSUnRegisterService(	const _i8* 		pServiceName,
     VERIFY_API_ALLOWED(SL_OPCODE_SILO_NETAPP);
 
 	/*
-
+	
 	NOTE - pay attention
 
 			The size of the service length  should be smaller than 255,
@@ -494,10 +494,10 @@ _i16 sl_NetAppMDNSUnRegisterService(	const _i8* 		pServiceName,
 	  bit 31 in option is taken for this purpose. if it is set it means in NWP that the service should be added
 	  if it is cleared it means that the service should be deleted and there is only meaning to pServiceName
 	  and ServiceNameLen values.*/
-
+	
 	Options &=  (~SL_NETAPP_MDNS_OPTIONS_ADD_SERVICE_BIT);
 
-    return  _SlNetAppMDNSRegisterUnregisterService(	pServiceName,
+    return  _SlNetAppMDNSRegisterUnregisterService(	pServiceName, 
 											        ServiceNameLen,
 													NULL,
 													0,
@@ -505,7 +505,7 @@ _i16 sl_NetAppMDNSUnRegisterService(	const _i8* 		pServiceName,
 													0,
 													Options);
 
-
+	
 }
 #endif
 /**********************************************************************************************/
@@ -523,7 +523,7 @@ _i16 sl_NetAppMDNSUnRegisterService(	const _i8* 		pServiceName,
 *
  */
 
-typedef struct
+typedef struct 
 {
 	 _u8   ServiceLen;
 	 _u8   AddrLen;
@@ -544,11 +544,11 @@ typedef struct
 												the text is cut to inout_TextLen value.
 										Output: Contain the length of the text that is returned. Can be full text or part
 												of the text (see above).
-
+															   
 *
  */
 
-typedef struct
+typedef struct 
 {
 	_u16   Status;
 	_u16   TextLen;
@@ -557,7 +557,7 @@ typedef struct
 }_GetHostByServiceIPv6AsyncResponse_t;
 
 /*
- * The below struct contains pointers to the output parameters that the user gives
+ * The below struct contains pointers to the output parameters that the user gives 
  *
  */
 typedef struct
@@ -592,7 +592,7 @@ static const _SlCmdCtrl_t _SlGetHostByServiceCtrl =
 _i16 sl_NetAppDnsGetHostByService(_i8 		*pServiceName,	/* string containing all (or only part): name + subtype + service */
 								  const _u8  ServiceLen,
 								  const _u8  Family,			/* 4-IPv4 , 16-IPv6 */
-								  _u32  pAddr[],
+								  _u32  pAddr[], 
 								  _u32  *pPort,
 								  _u16 *pTextLen, /* in: max len , out: actual len */
 								  _i8          *pText
@@ -606,6 +606,7 @@ _i16 sl_NetAppDnsGetHostByService(_i8 		*pServiceName,	/* string containing all 
     /* verify that this api is allowed. if not allowed then
     ignore the API execution and return immediately with an error */
     VERIFY_API_ALLOWED(SL_OPCODE_SILO_NETAPP);
+    _SlDrvMemZero(&AsyncRsp, sizeof(_GetHostByServiceAsyncResponse_t));
 
 /*
 	Note:
@@ -622,7 +623,7 @@ _i16 sl_NetAppDnsGetHostByService(_i8 		*pServiceName,	/* string containing all 
 
 	4.No rolling option!!! - only PTR type is sent.
 
-
+ 
 */
 	/*build the attribute part of the command.
 	  It contains the constant parameters of the command */
@@ -653,24 +654,24 @@ _i16 sl_NetAppDnsGetHostByService(_i8 		*pServiceName,	/* string containing all 
         return SL_POOL_IS_EMPTY;
     }
 
-
-	if (SL_AF_INET6 == Family)
+    
+	if (SL_AF_INET6 == Family)  
 	{
 		g_pCB->ObjPool[ObjIdx].AdditionalData |= SL_NETAPP_FAMILY_MASK;
 	}
     /* Send the command */
 	VERIFY_RET_OK(_SlDrvCmdOp((_SlCmdCtrl_t *)&_SlGetHostByServiceCtrl, &Msg, &CmdExt));
 
-
-
+ 
+	 
     /* If the immediate reponse is O.K. than  wait for aSYNC event response. */
 	if(SL_RET_CODE_OK == Msg.Rsp.status)
-    {
+    {        
 		SL_DRV_SYNC_OBJ_WAIT_FOREVER(&g_pCB->ObjPool[ObjIdx].SyncObj);
-
+        
 		/* If we are - it means that Async event was sent.
 		   The results are copied in the Async handle return functions */
-
+		
 		Msg.Rsp.status = AsyncRsp.Status;
     }
 
@@ -687,8 +688,8 @@ _i16 sl_NetAppDnsGetHostByService(_i8 		*pServiceName,	/* string containing all 
     CALLER          NWP - Async event on sl_DnsGetHostByService with IPv4 Family
 
 
-    DESCRIPTION:
-
+    DESCRIPTION: 
+					
 					Async event on sl_DnsGetHostByService command with IPv4 Family.
 					Return service attributes like IP address, port and text according to service name.
 					The user sets a service name Full/Part (see example below), and should get the:
@@ -709,7 +710,7 @@ _i16 sl_NetAppDnsGetHostByService(_i8 		*pServiceName,	/* string containing all 
 					the query. The results of these responses are saved in the peer cache of the NWP, and
 					should be read by another API.
 
-
+	
 	    PARAMETERS:
 
                   pVoidBuf - is point to opcode of the event.
@@ -724,7 +725,7 @@ _i16 sl_NetAppDnsGetHostByService(_i8 		*pServiceName,	/* string containing all 
 															  the text is cut to inout_TextLen value.
 													  Output: Contain the length of the text that is returned. Can be full text or part
 														      of the text (see above).
-
+															   
 				   4.out_pText						- Contain the text of the service (full or part see above- inout_TextLen description).
 
   *
@@ -755,9 +756,9 @@ _SlReturnVal_t _SlNetAppHandleAsync_DnsGetHostByService(void *pVoidBuf)
         Res->out_pAddr[2]	= pMsgArgs->Address[2];
         Res->out_pAddr[3]	= pMsgArgs->Address[3];
     }
-
+   
     TextLen = pMsgArgs->TextLen;
-
+    
     /*It is 4 bytes so we avoid from memcpy*/
     Res->out_pAddr[0]	= pMsgArgs->Address[0];   /* Copy first cell data from IPv4/6 address to Host user's pAddr */
     Res->out_pPort[0]	= pMsgArgs->Port;
@@ -791,7 +792,7 @@ _SlReturnVal_t _SlNetAppHandleAsync_DnsGetHostByService(void *pVoidBuf)
 
 
 		SL_DRV_SYNC_OBJ_SIGNAL(&g_pCB->ObjPool[g_pCB->FunctionParams.AsyncExt.ActionIndex].SyncObj);
-
+		
     return SL_OS_RET_CODE_OK;
 }
 
@@ -863,21 +864,21 @@ _i16 sl_NetAppDnsGetHostByName(_i8 * pHostName,const  _u16 NameLen, _u32*  OutIp
 	{
 		g_pCB->ObjPool[ObjIdx].AdditionalData |= SL_NETAPP_FAMILY_MASK;
 	}
-
+	
     SL_DRV_PROTECTION_OBJ_UNLOCK();
 
     VERIFY_RET_OK(_SlDrvCmdOp((_SlCmdCtrl_t *)&_SlGetHostByNameCtrl, &Msg, &ExtCtrl));
 
     if(SL_RET_CODE_OK == Msg.Rsp.status)
     {
-	SL_DRV_SYNC_OBJ_WAIT_FOREVER(&g_pCB->ObjPool[ObjIdx].SyncObj);
-
+    	SL_DRV_SYNC_OBJ_WAIT_FOREVER(&g_pCB->ObjPool[ObjIdx].SyncObj);
+        
         Msg.Rsp.status = (_i16)AsyncRsp.IpV4.Status;
 
         if(SL_OS_RET_CODE_OK == (_i16)Msg.Rsp.status)
         {
             sl_Memcpy((_i8 *)OutIpAddr,
-                      (_i8 *)&AsyncRsp.IpV4.Ip0,
+                      (_i8 *)&AsyncRsp.IpV4.Ip0, 
                       (SL_AF_INET == Family) ? SL_IPV4_ADDRESS_SIZE : SL_IPV6_ADDRESS_SIZE);
         }
     }
@@ -908,7 +909,7 @@ _SlReturnVal_t _SlNetAppHandleAsync_DnsGetHostByName(void *pVoidBuf)
 	{
 		sl_Memcpy(g_pCB->ObjPool[g_pCB->FunctionParams.AsyncExt.ActionIndex].pRespArgs, pMsgArgs, sizeof(NetAppGetHostByNameIPv4AsyncResponse_t));
 	}
-
+    
 	SL_DRV_SYNC_OBJ_SIGNAL(&g_pCB->ObjPool[g_pCB->FunctionParams.AsyncExt.ActionIndex].SyncObj);
     SL_DRV_PROTECTION_OBJ_UNLOCK();
     return SL_OS_RET_CODE_OK;
@@ -933,7 +934,7 @@ _SlReturnVal_t _SlNetAppHandleAsync_PingResponse(void *pVoidBuf)
 {
     SlPingReportResponse_t     *pMsgArgs   = (SlPingReportResponse_t *)_SL_RESP_ARGS_START(pVoidBuf);
     SlNetAppPingReport_t        pingReport;
-
+    
     if(pPingCallBackFunc)
     {
         _SlNetAppCopyPingResultsToReport(pMsgArgs,&pingReport);
@@ -941,9 +942,9 @@ _SlReturnVal_t _SlNetAppHandleAsync_PingResponse(void *pVoidBuf)
     }
     else
     {
-
+       
         SL_DRV_PROTECTION_OBJ_LOCK_FOREVER();
-
+        
         VERIFY_SOCKET_CB(NULL != g_pCB->PingCB.PingAsync.pAsyncRsp);
 
 		if (NULL != g_pCB->ObjPool[g_pCB->FunctionParams.AsyncExt.ActionIndex].pRespArgs)
@@ -1008,27 +1009,27 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams, const _u8 Family, S
 		Msg.Cmd.TotalNumberOfAttempts   = pPingParams->TotalNumberOfAttempts;
 		Msg.Cmd.Flags                   = pPingParams->Flags;
 
-
+    
 		/* calculate the ping timeout according to the parmas + the guard interval */
 		PingTimeout = SL_NETAPP_PING_GUARD_INTERVAL + (pPingParams->PingIntervalTime * pPingParams->TotalNumberOfAttempts);
 
 		if (Msg.Cmd.Ip != 0)
 		{
-
-			/*	If the following conditions are met, return an error
-				Wrong ping parameters - ping cannot be called with the following parameters:
+		
+			/*	If the following conditions are met, return an error 
+				Wrong ping parameters - ping cannot be called with the following parameters: 
 				1. infinite ping packet
-				2. report only when finished
+				2. report only when finished 
 				3. no callback supplied  */
 			if ((pPingCallback == NULL) && (pPingParams->Flags == 0) && (pPingParams->TotalNumberOfAttempts == 0))
 			{
 				return SL_RET_CODE_NET_APP_PING_INVALID_PARAMS;
 			}
-
+	
 			if( pPingCallback )
-			{
+			{	
 				pPingCallBackFunc = pPingCallback;
-			}
+			} 
 			else
 			{
 			   /* Use Obj to issue the command, if not available try later */
@@ -1058,11 +1059,11 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams, const _u8 Family, S
 		if(CMD_PING_TEST_RUNNING == (_i16)Msg.Rsp.Status || CMD_PING_TEST_STOPPED == (_i16)Msg.Rsp.Status )
 		{
 			/* block waiting for results if no callback function is used */
-			if( NULL == pPingCallback )
+			if( NULL == pPingCallback ) 
 			{
-#ifdef SL_TINY
+#ifdef SL_TINY        
 				_SlDrvSyncObjWaitForever(&g_pCB->ObjPool[ObjIdx].SyncObj);
-#else
+#else       
 				SL_DRV_SYNC_OBJ_WAIT_TIMEOUT(&g_pCB->ObjPool[ObjIdx].SyncObj,
 										PingTimeout,
 										SL_OPCODE_NETAPP_PINGREPORTREQUESTRESPONSE
@@ -1074,17 +1075,17 @@ _i16 sl_NetAppPing(const SlNetAppPingCommand_t* pPingParams, const _u8 Family, S
 					_SlNetAppCopyPingResultsToReport(&PingRsp,pReport);
 				}
 				_SlDrvReleasePoolObj(ObjIdx);
-
+				
 			}
 		}
 		else
 		{   /* ping failure, no async response */
-			if( NULL == pPingCallback )
-			{
+			if( NULL == pPingCallback ) 
+			{	
 				_SlDrvReleasePoolObj(ObjIdx);
 			}
 		}
-
+	
 	}
     return (_i16)Msg.Rsp.Status;
 }
@@ -1163,7 +1164,7 @@ _u16 _SlNetAppSendTokenValue(SlNetAppHttpServerData_t * Token_value)
 	Msg.Cmd.TokenValueLen = Token_value->ValueLen;
 	Msg.Cmd.TokenNameLen = Token_value->NameLen;
 	sl_Memcpy(&Msg.Cmd.TokenName[0], Token_value->pTokenName, Token_value->NameLen);
-
+	
 
 	VERIFY_RET_OK(_SlDrvCmdSend_noLock((_SlCmdCtrl_t *)&_SlNetAppSendTokenValueCmdCtrl, &Msg, &CmdExt));
 
@@ -1174,7 +1175,7 @@ _u16 _SlNetAppSendTokenValue(SlNetAppHttpServerData_t * Token_value)
 /*****************************************************************************/
 /* sl_NetAppSendResponse */
 /*****************************************************************************/
-#ifndef SL_TINY
+#ifndef SL_TINY 
 typedef union
 {
     SlProtocolNetAppResponse_t Cmd;
@@ -1195,7 +1196,7 @@ _u16 _SlNetAppSendResponse( _u16 handle, SlNetAppResponse_t *NetAppResponse)
     _SlCmdExt_t		              CmdExt;
     _SlReturnVal_t                RetVal;
     _u16 dataLen;
-
+   
 	_SlDrvMemZero(&CmdExt, (_u16)sizeof(_SlCmdExt_t));
 
     dataLen = NetAppResponse->ResponseData.MetadataLen + NetAppResponse->ResponseData.PayloadLen;
@@ -1209,14 +1210,14 @@ _u16 _SlNetAppSendResponse( _u16 handle, SlNetAppResponse_t *NetAppResponse)
 			CmdExt.TxPayload1Len =  NetAppResponse->ResponseData.MetadataLen;
 
 			CmdExt.pTxPayload2 = NetAppResponse->ResponseData.pPayload;
-			CmdExt.TxPayload2Len = NetAppResponse->ResponseData.PayloadLen;
+			CmdExt.TxPayload2Len = NetAppResponse->ResponseData.PayloadLen;    
         }
         else
         {
             CmdExt.pTxPayload1 = NULL;
 			CmdExt.pTxPayload2 = NULL;
         }
-
+ 
         CmdExt.RxPayloadLen = 0;
         CmdExt.pRxPayload = NULL;
 
@@ -1293,7 +1294,7 @@ _SlReturnVal_t sl_NetAppRecv( _u16 Handle, _u16 *DataLen, _u8 *pData, _u32 *Flag
 
     /* Save the AsyncRsp and cmdExt information for the SL_OPCODE_NETAPP_RECEIVE async event */
     AsyncRsp.Handle = Handle; /* Handle we are waiting for */
-    AsyncRsp.Flags = 0;
+    AsyncRsp.Flags = 0; 
     AsyncRsp.PayloadLen = 0; /* 0 will indicate an error in the SL_OPCODE_NETAPP_RECEIVE async event and that no data arrived. */
 
     _SlDrvProtectionObjLockWaitForever();
@@ -1397,14 +1398,14 @@ _u16 sl_NetAppSend( _u16 Handle, _u16 DataLen, _u8* pData, _u32 Flags)
 
 	_SlDrvMemZero(&CmdExt, (_u16)sizeof(_SlCmdExt_t));
 
-    if  ((((Flags & SL_NETAPP_REQUEST_RESPONSE_FLAGS_METADATA) == SL_NETAPP_REQUEST_RESPONSE_FLAGS_METADATA) && (DataLen <= SL_NETAPP_REQUEST_MAX_METADATA_LEN)) ||
+    if  ((((Flags & SL_NETAPP_REQUEST_RESPONSE_FLAGS_METADATA) == SL_NETAPP_REQUEST_RESPONSE_FLAGS_METADATA) && (DataLen <= SL_NETAPP_REQUEST_MAX_METADATA_LEN)) || 
             (((Flags & SL_NETAPP_REQUEST_RESPONSE_FLAGS_METADATA) == 0) && (DataLen <= SL_NETAPP_REQUEST_MAX_DATA_LEN)))
     {
 	    CmdExt.TxPayload1Len = (DataLen+3) & (~3);
 	    CmdExt.pTxPayload1 = (_u8 *) pData;
 
 	    Msg.Cmd.Handle = Handle;
-        Msg.Cmd.DataLen = DataLen;
+        Msg.Cmd.DataLen = DataLen;    
         Msg.Cmd.Flags = Flags;
 
 	    VERIFY_RET_OK(_SlDrvCmdOp((_SlCmdCtrl_t *)&_SlNetAppSendCmdCtrl, &Msg, &CmdExt));
@@ -1457,9 +1458,9 @@ _i16 sl_NetAppGet(const _u8 AppId, const _u8 Option,_u8 *pOptionLen, _u8 *pOptio
     Msg.Cmd.AppId    = AppId;
     Msg.Cmd.ConfigOpt   = Option;
     VERIFY_RET_OK(_SlDrvCmdOp((_SlCmdCtrl_t *)&_SlNetAppGetCmdCtrl, &Msg, &CmdExt));
+    
 
-
-       if (CmdExt.RxPayloadLen < CmdExt.ActualRxPayloadLen)
+       if (CmdExt.RxPayloadLen < CmdExt.ActualRxPayloadLen) 
        {
               *pOptionLen = (_u8)CmdExt.RxPayloadLen;
               return SL_ESMALLBUF;
@@ -1468,7 +1469,7 @@ _i16 sl_NetAppGet(const _u8 AppId, const _u8 Option,_u8 *pOptionLen, _u8 *pOptio
        {
               *pOptionLen = (_u8)CmdExt.ActualRxPayloadLen;
        }
-
+  
     return (_i16)Msg.Rsp.Status;
 }
 #endif
@@ -1493,7 +1494,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
         case SL_OPCODE_NETAPP_DNSGETHOSTBYNAMEASYNCRESPONSE_V6:
             _SlNetAppHandleAsync_DnsGetHostByName(pArgs);
             break;
-#ifndef SL_TINY
+#ifndef SL_TINY            
         case SL_OPCODE_NETAPP_MDNSGETHOSTBYSERVICEASYNCRESPONSE:
         case SL_OPCODE_NETAPP_MDNSGETHOSTBYSERVICEASYNCRESPONSE_V6:
             _SlNetAppHandleAsync_DnsGetHostByService(pArgs);
@@ -1504,7 +1505,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
 #endif
 
 		case SL_OPCODE_NETAPP_HTTPGETTOKENVALUE:
-		{
+		{              
 #if defined(slcb_NetAppHttpServerHdlr) || defined(EXT_LIB_REGISTERED_HTTP_SERVER_EVENTS)
                     _u8 *pTokenName;
                     SlNetAppHttpServerData_t Token_value;
@@ -1528,7 +1529,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
                     Token_value.ValueLen = httpServerResponse.ResponseData.TokenValue.Len;
                     Token_value.NameLen = httpServerEvent.EventData.HttpTokenName.Len;
                     Token_value.pTokenValue = httpServerResponse.ResponseData.TokenValue.pData;
-
+                        
                     _SlNetAppSendTokenValue(&Token_value);
 #else
 
@@ -1541,7 +1542,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
                     Token_value.ValueLen = 0;
                     Token_value.NameLen = httpGetToken->TokenNameLen;
                     Token_value.pTokenValue = NULL;
-
+                        
                     _SlNetAppSendTokenValue(&Token_value);
 #endif
 		}
@@ -1574,7 +1575,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
 #endif
 		}
 		break;
-#ifndef SL_TINY
+#ifndef SL_TINY  
         case SL_OPCODE_NETAPP_REQUEST:
 
             {
@@ -1584,7 +1585,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
                 SlNetAppResponse_t NetAppResponse;
                 _u16 status;
 
-
+	        
                 /* Points to the Netapp request Arguments */
                 SlProtocolNetAppRequest_t *protocol_NetAppRequest = (SlProtocolNetAppRequest_t*)_SL_RESP_ARGS_START(pHdr);
 
@@ -1599,7 +1600,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
                 NetAppRequest.requestData.MetadataLen = protocol_NetAppRequest->MetadataLen;
 
                 /* Preare the Payload */
-                pData+=protocol_NetAppRequest->MetadataLen;
+                pData+=protocol_NetAppRequest->MetadataLen; 
                 NetAppRequest.requestData.pPayload = pData; /* Just pass the pointer */
                 NetAppRequest.requestData.PayloadLen = protocol_NetAppRequest->PayloadLen;
 
@@ -1651,9 +1652,9 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
 
                 SlNetAppResponse_t NetAppResponse;
 
-
+			
                 /* Points to the Netapp request Arguments */
-                SlProtocolNetAppRequest_t *protocol_NetAppRequest = (SlProtocolNetAppRequest_t *)_SL_RESP_ARGS_START(pHdr);
+                SlProtocolNetAppRequest_t *protocol_NetAppRequest = (SlProtocolNetAppRequest_t *)_SL_RESP_ARGS_START(pHdr); 
 
                 /* Prepare the response */
                 NetAppResponse.Status = SL_NETAPP_HTTP_RESPONSE_404_NOT_FOUND;
@@ -1671,7 +1672,7 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
         break;
 #endif
 
-
+        
         default:
             SL_ERROR_TRACE2(MSG_305, "ASSERT: _SlNetAppEventHandler : invalid opcode = 0x%x = %1", pHdr->GenHeader.Opcode, pHdr->GenHeader.Opcode);
             VERIFY_PROTOCOL(0);
@@ -1679,3 +1680,4 @@ _SlReturnVal_t _SlNetAppEventHandler(void* pArgs)
 
 	return SL_OS_RET_CODE_OK;
 }
+

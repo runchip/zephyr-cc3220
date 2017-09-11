@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -31,7 +31,9 @@ void _SlFlowContSet(void *pVoidBuf)
 
     if (pFlowCtrlAsyncEvent->MinTxPayloadSize != 0)
     {
-       g_pCB->FlowContCB.MinTxPayloadSize = pFlowCtrlAsyncEvent->MinTxPayloadSize;
+       g_pCB->FlowContCB.MinTxPayloadSize = pFlowCtrlAsyncEvent->MinTxPayloadSize; 
     }
-
+    
 }
+
+

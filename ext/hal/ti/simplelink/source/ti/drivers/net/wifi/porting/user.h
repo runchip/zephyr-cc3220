@@ -9,13 +9,13 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 /******************************************************************************
 *	user.h - CC31xx/CC32xx Host Driver Implementation
 ******************************************************************************/
 
-
+    
 #ifndef __USER_H__
 #define __USER_H__
 
@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-
+  
 #include <string.h>
 #include <ti/drivers/net/wifi/porting/cc_pal.h>
 
@@ -43,10 +43,10 @@ typedef signed int _SlFd_t;
     \sa
 
     \note       In case there are not enough resources for the actions needed in the system,
-			error is received: POOL_IS_EMPTY
+	        	error is received: POOL_IS_EMPTY
 			    one option is to increase MAX_CONCURRENT_ACTIONS
 				(improves performance but results in memory consumption)
-			Other option is to call the API later (decrease performance)
+		     	Other option is to call the API later (decrease performance)
 
     \warning    In case of setting to one, recommend to use non-blocking recv\recvfrom to allow
 				multiple socket recv
@@ -60,8 +60,8 @@ typedef signed int _SlFd_t;
 /*!
 	\def		CPU_FREQ_IN_MHZ
     \brief      Defines CPU frequency for Host side, for better accuracy of busy loops, if any
-    \sa
-    \note
+    \sa             
+    \note       
 
     \warning    If not set the default CPU frequency is set to 200MHz
                 This option will be deprecated in future release
@@ -105,21 +105,21 @@ typedef signed int _SlFd_t;
 /*!
 	\def		SL_INC_ARG_CHECK
 
-    \brief      Defines whether the SimpleLink driver perform argument check
+    \brief      Defines whether the SimpleLink driver perform argument check 
                 or not
-
-                When defined, the SimpleLink driver perform argument check on
-                function call. Removing this define could reduce some code
-                size and improve slightly the performances but may impact in
+                    
+                When defined, the SimpleLink driver perform argument check on 
+                function call. Removing this define could reduce some code 
+                size and improve slightly the performances but may impact in 
                 unpredictable behavior in case of invalid arguments
 
-    \sa
+    \sa             
 
     \note       belongs to \ref configuration_sec
 
-    \warning    Removing argument check may cause unpredictable behavior in
-                case of invalid arguments.
-                In this case the user is responsible to argument validity
+    \warning    Removing argument check may cause unpredictable behavior in 
+                case of invalid arguments. 
+                In this case the user is responsible to argument validity 
                 (for example all handlers must not be NULL)
 */
 #define SL_INC_ARG_CHECK
@@ -157,96 +157,96 @@ typedef signed int _SlFd_t;
 /*!
     \brief      Defines whether to include extended API in SimpleLink driver
                 or not
-
-                When defined, the SimpleLink driver will include also all
+    
+                When defined, the SimpleLink driver will include also all 
                 exteded API of the included packages
 
     \sa         ext_api
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning    
 */
 #define SL_INC_EXT_API
 
 
 /*!
-    \brief      Defines whether to include WLAN package in SimpleLink driver
+    \brief      Defines whether to include WLAN package in SimpleLink driver 
                 or not
-
-                When defined, the SimpleLink driver will include also
+    
+                When defined, the SimpleLink driver will include also 
                 the WLAN package
 
-    \sa
+    \sa         
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 #define SL_INC_WLAN_PKG
 
 
 /*!
-    \brief      Defines whether to include SOCKET package in SimpleLink
+    \brief      Defines whether to include SOCKET package in SimpleLink 
                 driver or not
-
-                When defined, the SimpleLink driver will include also
+    
+                When defined, the SimpleLink driver will include also 
                 the SOCKET package
 
-    \sa
+    \sa         
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 #define SL_INC_SOCKET_PKG
 
 
 /*!
-    \brief      Defines whether to include NET_APP package in SimpleLink
+    \brief      Defines whether to include NET_APP package in SimpleLink 
                 driver or not
-
-                When defined, the SimpleLink driver will include also the
+    
+                When defined, the SimpleLink driver will include also the 
                 NET_APP package
 
-    \sa
+    \sa         
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 #define SL_INC_NET_APP_PKG
 
 
 /*!
-    \brief      Defines whether to include NET_CFG package in SimpleLink
+    \brief      Defines whether to include NET_CFG package in SimpleLink 
                 driver or not
-
-                When defined, the SimpleLink driver will include also
+    
+                When defined, the SimpleLink driver will include also 
                 the NET_CFG package
 
-    \sa
+    \sa         
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 #define SL_INC_NET_CFG_PKG
 
 
 /*!
-    \brief      Defines whether to include NVMEM package in SimpleLink
+    \brief      Defines whether to include NVMEM package in SimpleLink 
                 driver or not
-
-                When defined, the SimpleLink driver will include also the
+    
+                When defined, the SimpleLink driver will include also the 
                 NVMEM package
 
-    \sa
+    \sa         
 
     \note       belongs to \ref configuration_sec
 
-    \warning
-*/
+    \warning        
+*/ 
 #define SL_INC_NVMEM_PKG
 
 
@@ -267,65 +267,65 @@ typedef signed int _SlFd_t;
 
 
 /*!
-    \brief      Defines whether to include socket server side APIs
+    \brief      Defines whether to include socket server side APIs 
                 in SimpleLink driver or not
-
-                When defined, the SimpleLink driver will include also socket
+    
+                When defined, the SimpleLink driver will include also socket 
                 server side APIs
 
     \sa         server_side
 
-    \note
+    \note       
 
-    \warning
+    \warning        
 */
 #define SL_INC_SOCK_SERVER_SIDE_API
 
 
 /*!
-    \brief      Defines whether to include socket client side APIs in SimpleLink
+    \brief      Defines whether to include socket client side APIs in SimpleLink 
                 driver or not
-
-                When defined, the SimpleLink driver will include also socket
+    
+                When defined, the SimpleLink driver will include also socket 
                 client side APIs
 
     \sa         client_side
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 #define SL_INC_SOCK_CLIENT_SIDE_API
 
 
 /*!
-    \brief      Defines whether to include socket receive APIs in SimpleLink
+    \brief      Defines whether to include socket receive APIs in SimpleLink 
                 driver or not
-
-                When defined, the SimpleLink driver will include also socket
+    
+                When defined, the SimpleLink driver will include also socket 
                 receive side APIs
 
     \sa         recv_api
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 #define SL_INC_SOCK_RECV_API
 
 
 /*!
-    \brief      Defines whether to include socket send APIs in SimpleLink
+    \brief      Defines whether to include socket send APIs in SimpleLink 
                 driver or not
-
-                When defined, the SimpleLink driver will include also socket
+    
+                When defined, the SimpleLink driver will include also socket 
                 send side APIs
 
     \sa         send_api
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 #define SL_INC_SOCK_SEND_API
 
@@ -345,7 +345,7 @@ typedef signed int _SlFd_t;
 
     The enable/disable API provide mechanism to enable/disable the network processor
 
-
+   
     porting ACTION:
         - None
     @{
@@ -405,11 +405,11 @@ typedef signed int _SlFd_t;
 
 
     \note       	In CC32XX, SPI implementation uses DMA in order to increase the utilization
-			of the communication channel. If user prefers to user UART, these interfaces
-			need to be redefined
+ 			of the communication channel. If user prefers to user UART, these interfaces 
+ 			need to be redefined
 
 
-    porting ACTION:
+    porting ACTION:	
         - None
 
     @{
@@ -423,27 +423,27 @@ typedef signed int _SlFd_t;
 /*!
     \brief      Opens an interface communication port to be used for communicating
                 with a SimpleLink device
-
-	            Given an interface name and option flags, this function opens
-                the communication port and creates a file descriptor.
-                This file descriptor is used afterwards to read and write
+	
+	            Given an interface name and option flags, this function opens 
+                the communication port and creates a file descriptor. 
+                This file descriptor is used afterwards to read and write 
                 data from and to this specific communication channel.
-	            The speed, clock polarity, clock phase, chip select and all other
+	            The speed, clock polarity, clock phase, chip select and all other 
                 specific attributes of the channel are all should be set to hardcoded
                 in this function.
-
-	\param	 	ifName  -   points to the interface name/path. The interface name is an
+	
+	\param	 	ifName  -   points to the interface name/path. The interface name is an 
                             optional attributes that the SimpleLink driver receives
-                            on opening the driver (sl_Start).
-                            In systems that the spi channel is not implemented as
+                            on opening the driver (sl_Start). 
+                            In systems that the spi channel is not implemented as 
                             part of the os device drivers, this parameter could be NULL.
 
 	\param      flags   -   optional flags parameters for future use
 
-	\return     upon successful completion, the function shall open the channel
+	\return     upon successful completion, the function shall open the channel 
                 and return a non-negative integer representing the file descriptor.
-                Otherwise, -1 shall be returned
-
+                Otherwise, -1 shall be returned 
+					
     \sa         sl_IfClose , sl_IfRead , sl_IfWrite
 
 	\note       The prototype of the function is as follow:
@@ -458,12 +458,12 @@ typedef signed int _SlFd_t;
 
 /*!
     \brief      Closes an opened interface communication port
-
+	
 	\param	 	fd  -   file descriptor of opened communication channel
 
-	\return		upon successful completion, the function shall return 0.
-			    Otherwise, -1 shall be returned
-
+	\return		upon successful completion, the function shall return 0. 
+			    Otherwise, -1 shall be returned 
+					
     \sa         sl_IfOpen , sl_IfRead , sl_IfWrite
 
 	\note       The prototype of the function is as follow:
@@ -477,19 +477,19 @@ typedef signed int _SlFd_t;
 
 
 /*!
-    \brief      Attempts to read up to len bytes from an opened communication channel
+    \brief      Attempts to read up to len bytes from an opened communication channel 
                 into a buffer starting at pBuff.
-
+	
 	\param	 	fd      -   file descriptor of an opened communication channel
-
-	\param		pBuff   -   pointer to the first location of a buffer that contains enough
+	
+	\param		pBuff   -   pointer to the first location of a buffer that contains enough 
                             space for all expected data
 
 	\param      len     -   number of bytes to read from the communication channel
 
-	\return     upon successful completion, the function shall return the number of read bytes.
-                Otherwise, 0 shall be returned
-
+	\return     upon successful completion, the function shall return the number of read bytes. 
+                Otherwise, 0 shall be returned 
+					
     \sa         sl_IfClose , sl_IfOpen , sl_IfWrite
 
 
@@ -505,24 +505,24 @@ typedef signed int _SlFd_t;
 
 /*!
     \brief attempts to write up to len bytes to the SPI channel
-
+	
 	\param	 	fd      -   file descriptor of an opened communication channel
-
-	\param		pBuff   -   pointer to the first location of a buffer that contains
+	
+	\param		pBuff   -   pointer to the first location of a buffer that contains 
                             the data to send over the communication channel
 
 	\param      len     -   number of bytes to write to the communication channel
 
-	\return     upon successful completion, the function shall return the number of sent bytes.
-				therwise, 0 shall be returned
-
+	\return     upon successful completion, the function shall return the number of sent bytes. 
+				therwise, 0 shall be returned 
+					
     \sa         sl_IfClose , sl_IfOpen , sl_IfRead
 
 	\note       This function could be implemented as zero copy and return only upon successful completion
-                of writing the whole buffer, but in cases that memory allocation is not too tight, the
-                function could copy the data to internal buffer, return back and complete the write in
-                parallel to other activities as long as the other SPI activities would be blocked until
-                the entire buffer write would be completed
+                of writing the whole buffer, but in cases that memory allocation is not too tight, the 
+                function could copy the data to internal buffer, return back and complete the write in 
+                parallel to other activities as long as the other SPI activities would be blocked until 
+                the entire buffer write would be completed 
 
                The prototype of the function is as follow:
                     int xxx_IfWrite(Fd_t Fd , char* pBuff , int Len);
@@ -557,7 +557,7 @@ typedef signed int _SlFd_t;
 
     \warning
 */
-#define sl_IfRegIntHdlr(InterruptHdl , pValue)          NwpRegisterInterruptHandler(InterruptHdl , pValue)
+#define sl_IfRegIntHdlr(InterruptHdl , pValue)          NwpRegisterInterruptHandler(InterruptHdl , pValue)   
 
 
 /*!
@@ -589,7 +589,7 @@ typedef signed int _SlFd_t;
 
 
 /*!
-    \brief 		Write Handers for statistics debug on write
+    \brief 		Write Handers for statistics debug on write 
 
 	\param	 	interface handler	-	pointer to interrupt handler routine
 
@@ -602,7 +602,7 @@ typedef signed int _SlFd_t;
 
     \note       belongs to \ref configuration_sec
 
-    \warning
+    \warning        
 */
 /* #define SL_START_WRITE_STAT */
 
@@ -619,19 +619,19 @@ typedef signed int _SlFd_t;
 	\param	 	None.
 
 
-	\return		Returns 32-bit timer counter value (ticks unit)
+	\return		Returns 32-bit timer counter value (ticks unit) 
 
     \sa
 
-	\note
+	\note		 
 
     \note       belongs to \ref porting_sec
 
-    \warning
+    \warning        
 */
 #ifndef SL_TINY_EXT
 #undef slcb_GetTimestamp
-/* A timer must be started before using this function */
+/* A timer must be started before using this function */ 
 #define slcb_GetTimestamp           TimerGetCurrentTimestamp
 #endif
 
@@ -681,24 +681,24 @@ typedef signed int _SlFd_t;
 	The SimpleLink driver could run on two kind of platforms:
 	   -# Non-Os / Single Threaded (default)
 	   -# Multi-Threaded
-
-	CC32XX SimpleLink Host Driver is ported on both Non-Os and Multi Threaded OS enviroment.
-	The Host driver is made OS independent by implementing an OS Abstraction layer.
-	Reference implementation for OS Abstraction is available for FreeRTOS and TI-RTOS.
-
-
-	If you choose to work in multi-threaded environment under different operating system you
-	will have to provide some basic adaptation routines to allow the driver to protect access to
-	resources for different threads (locking object) and to allow synchronization between threads
+	
+	CC32XX SimpleLink Host Driver is ported on both Non-Os and Multi Threaded OS enviroment. 
+	The Host driver is made OS independent by implementing an OS Abstraction layer. 
+	Reference implementation for OS Abstraction is available for FreeRTOS and TI-RTOS. 
+	
+	
+	If you choose to work in multi-threaded environment under different operating system you 
+	will have to provide some basic adaptation routines to allow the driver to protect access to 
+	resources for different threads (locking object) and to allow synchronization between threads 
 	(sync objects). In additional the driver support running without dedicated thread allocated solely
 	to the SimpleLink driver. If you choose to work in this mode, you should also supply a spawn
 	method that will enable to run function on a temporary context.
 
-	\note - This Macro is defined in the IDE to generate Driver for both OS and Non-OS
-
-	 porting ACTION:
+	\note - This Macro is defined in the IDE to generate Driver for both OS and Non-OS 
+	
+	 porting ACTION: 
 		 - None
-
+	 
 	 @{
 
  ******************************************************************************
@@ -724,7 +724,7 @@ typedef signed int _SlFd_t;
     \note           belongs to \ref configuration_sec
     \warning
 */
-#define SL_OS_WAIT_FOREVER                      ((time_t)OS_WAIT_FOREVER)
+#define SL_OS_WAIT_FOREVER                      ((uint32_t)OS_WAIT_FOREVER)
 
 /*!
     \brief
@@ -732,7 +732,7 @@ typedef signed int _SlFd_t;
     \note           belongs to \ref configuration_sec
     \warning
 */
-#define SL_OS_NO_WAIT	                        ((time_t)OS_NO_WAIT)
+#define SL_OS_NO_WAIT	                        ((uint32_t)OS_NO_WAIT)
 
 /*!
 	\brief type definition for a time value
@@ -741,7 +741,7 @@ typedef signed int _SlFd_t;
 
     \note       belongs to \ref configuration_sec
 */
-#define _SlTime_t				time_t
+#define _SlTime_t				uint32_t
 
 
 #endif //SL_PLATFORM_MULTI_THREADED
@@ -761,7 +761,7 @@ typedef signed int _SlFd_t;
 */
 #define _SlSyncObj_t			    SemaphoreP_Handle
 
-
+    
 /*!
 	\brief 	This function creates a sync object
 
@@ -789,7 +789,7 @@ typedef signed int _SlFd_t;
     \note       belongs to \ref configuration_sec
     \warning
 */
-#define sl_SyncObjDelete(pSyncObj)                  SemaphoreP_delete(*(pSyncObj))
+#define sl_SyncObjDelete(pSyncObj)                  SemaphoreP_delete_handle(pSyncObj)
 
 
 /*!
@@ -804,7 +804,7 @@ typedef signed int _SlFd_t;
 	\note		the function could be called from ISR context
     \warning
 */
-#define sl_SyncObjSignal(pSyncObj)                SemaphoreP_post(*(pSyncObj))
+#define sl_SyncObjSignal(pSyncObj)                SemaphoreP_post_handle(pSyncObj)
 
 
 /*!
@@ -819,7 +819,7 @@ typedef signed int _SlFd_t;
 	\note		the function could be called from ISR context
 	\warning
 */
-#define sl_SyncObjSignalFromIRQ(pSyncObj)           SemaphoreP_post(*(pSyncObj))
+#define sl_SyncObjSignalFromIRQ(pSyncObj)           SemaphoreP_post_handle(pSyncObj)
 
 
 /*!
@@ -878,7 +878,7 @@ typedef signed int _SlFd_t;
     \note       belongs to \ref configuration_sec
     \warning
 */
-#define sl_LockObjDelete(pLockObj)                  MutexP_delete(*(pLockObj))
+#define sl_LockObjDelete(pLockObj)                  MutexP_delete_handle(pLockObj)
 
 
 /*!
@@ -931,14 +931,14 @@ typedef signed int _SlFd_t;
 			and could be returned before the execution is actually completed)
 			Otherwise, a negative value indicating the error code shall be returned
     \note       belongs to \ref configuration_sec
-
+    
     \warning                User must implement it's own 'os_Spawn' function.
 */
 #define SL_PLATFORM_EXTERNAL_SPAWN
 
 #ifdef SL_PLATFORM_EXTERNAL_SPAWN
 extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags);
-#define sl_Spawn(pEntry,pValue,flags)       os_Spawn(pEntry,pValue,flags)
+#define sl_Spawn(pEntry,pValue,flags)       os_Spawn(pEntry,pValue,flags)        
 #endif
 
 /*!
@@ -1013,7 +1013,7 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
     \brief
     \sa
     \note           belongs to \ref configuration_sec
-    \warning
+    \warning        
 */
 #define sl_Malloc(Size)                                 malloc(Size)
 
@@ -1021,11 +1021,11 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
     \brief
     \sa
     \note           belongs to \ref configuration_sec
-    \warning
+    \warning        
 */
 #define sl_Free(pMem)                                   free(pMem)
 #endif
-
+                        
 #endif
 
 /*!
@@ -1055,22 +1055,22 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
 /*!
     \brief      Fatal Error async event for inspecting fatal error events.
 				This event handles events/errors reported from the device/host driver
-
+	
 	\param[out]	pSlFatalErrorEvent
-
+	
 	\par
              Parameters:
-
+			 
 			 - <b> slFatalErrorEvent->Id = SL_DEVICE_EVENT_FATAL_DEVICE_ABORT </b>,
-
+			 
 			 - <b> slFatalErrorEvent->Id = SL_DEVICE_EVENT_FATAL_DRIVER_ABORT </b>,
-
+			 
 			 - <b> slFatalErrorEvent->Id = SL_DEVICE_EVENT_FATAL_NO_CMD_ACK </b>,
-
+			
 			 - <b> slFatalErrorEvent->Id = SL_DEVICE_EVENT_FATAL_SYNC_LOSS </b>,
-
+			
 			 - <b> slFatalErrorEvent->Id = SL_DEVICE_EVENT_FATAL_CMD_TIMEOUT </b>,
-
+			
 
     \note       belongs to \ref configuration_sec
 
@@ -1093,12 +1093,12 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
 
 /*!
     \brief WLAN Async event handler
-
-    \param[out]      pSlWlanEvent   pointer to SlWlanEvent_t data
-
+    
+    \param[out]      pSlWlanEvent   pointer to SlWlanEvent_t data 
+    
     \par
              Parameters:
-
+             
              - <b>pSlWlanEvent->Event = SL_WLAN_CONNECT_EVENT </b>, STA or P2P client connection indication event
                  - pSlWlanEvent->EventData.STAandP2PModeWlanConnected main fields:
                       - ssid_name
@@ -1106,14 +1106,14 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
                       - bssid
                       - go_peer_device_name
                       - go_peer_device_name_len
-
-             - <b>pSlWlanEvent->Event = SL_WLAN_DISCONNECT_EVENT </b>, STA or P2P client disconnection event
+                       
+             - <b>pSlWlanEvent->Event = SL_WLAN_DISCONNECT_EVENT </b>, STA or P2P client disconnection event                          
                  - pSlWlanEvent->EventData.STAandP2PModeDisconnected main fields:
                       - ssid_name
                       - ssid_len
                       - reason_code
 
-             - <b>pSlWlanEvent->Event = SL_WLAN_STA_CONNECTED_EVENT </b>, AP/P2P(Go) connected STA/P2P(Client)
+             - <b>pSlWlanEvent->Event = SL_WLAN_STA_CONNECTED_EVENT </b>, AP/P2P(Go) connected STA/P2P(Client)                  
                   - pSlWlanEvent->EventData.APModeStaConnected fields:
                       - go_peer_device_name
                       - mac
@@ -1121,8 +1121,8 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
                       - wps_dev_password_id
                       - own_ssid:  relevant for event sta-connected only
                       - own_ssid_len:  relevant for event sta-connected only
-
-             - <b>pSlWlanEvent->Event = SL_WLAN_STA_DISCONNECTED_EVENT </b>, AP/P2P(Go) disconnected STA/P2P(Client)
+                      
+             - <b>pSlWlanEvent->Event = SL_WLAN_STA_DISCONNECTED_EVENT </b>, AP/P2P(Go) disconnected STA/P2P(Client)                        
                   - pSlWlanEvent->EventData.APModestaDisconnected fields:
                       - go_peer_device_name
                       - mac
@@ -1131,19 +1131,19 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
                       - own_ssid:  relevant for event sta-connected only
                       - own_ssid_len:  relevant for event sta-connected only
 
-             - <b>pSlWlanEvent->Event = SL_WLAN_SMART_CONFIG_COMPLETE_EVENT </b>
+             - <b>pSlWlanEvent->Event = SL_WLAN_SMART_CONFIG_COMPLETE_EVENT </b>                             
                   - pSlWlanEvent->EventData.smartConfigStartResponse fields:
                      - status
                      - ssid_len
                      - ssid
                      - private_token_len
                      - private_token
-
-             - <b>pSlWlanEvent->Event = SL_WLAN_SMART_CONFIG_STOP_EVENT </b>
-                     - pSlWlanEvent->EventData.smartConfigStopResponse fields:
+                     
+             - <b>pSlWlanEvent->Event = SL_WLAN_SMART_CONFIG_STOP_EVENT </b>                 
+                     - pSlWlanEvent->EventData.smartConfigStopResponse fields:       
                          - status
-
-             - <b>pSlWlanEvent->Event = SL_WLAN_P2P_DEV_FOUND_EVENT </b>
+                         
+             - <b>pSlWlanEvent->Event = SL_WLAN_P2P_DEV_FOUND_EVENT </b>         
                      - pSlWlanEvent->EventData.P2PModeDevFound fields:
                          - go_peer_device_name
                          - mac
@@ -1151,18 +1151,18 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
                          - wps_dev_password_id
                          - own_ssid:  relevant for event sta-connected only
                          - own_ssid_len:  relevant for event sta-connected only
-
-             - <b>pSlWlanEvent->Event = SL_WLAN_P2P_NEG_REQ_RECEIVED_EVENT </b>
+                         
+             - <b>pSlWlanEvent->Event = SL_WLAN_P2P_NEG_REQ_RECEIVED_EVENT </b>                             
                       - pSlWlanEvent->EventData.P2PModeNegReqReceived fields
                           - go_peer_device_name
                           - mac
                           - go_peer_device_name_len
                           - wps_dev_password_id
                           - own_ssid:  relevant for event sta-connected only
-
+                           
              - <b>pSlWlanEvent->Event = SL_WLAN_CONNECTION_FAILED_EVENT </b>, P2P only
                        - pSlWlanEvent->EventData.P2PModewlanConnectionFailure fields:
-                           - status
+                           - status   
 
     \sa
 
@@ -1171,14 +1171,14 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
     \warning
 */
 
-#define slcb_WlanEvtHdlr                     SimpleLinkWlanEventHandler
+#define slcb_WlanEvtHdlr                     SimpleLinkWlanEventHandler         
 
 
 /*!
     \brief NETAPP Async event handler
-
-    \param[out]      pSlNetApp   pointer to SlNetAppEvent_t data
-
+    
+    \param[out]      pSlNetApp   pointer to SlNetAppEvent_t data    
+    
     \par
              Parameters:
               - <b>pSlWlanEvent->Event = SL_NETAPP_IPV4_IPACQUIRED_EVENT</b>, IPV4 acquired event
@@ -1186,7 +1186,7 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
                        - ip
                        - gateway
                        - dns
-
+                           
               - <b>pSlWlanEvent->Event = SL_NETAPP_IP_LEASED_EVENT</b>, AP or P2P go dhcp lease event
                   - pSlWlanEvent->EventData.ipLeased  fields:
                        - ip_address
@@ -1207,7 +1207,7 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
     \warning
 */
 
-#define slcb_NetAppEvtHdlr              		SimpleLinkNetAppEventHandler
+#define slcb_NetAppEvtHdlr              		SimpleLinkNetAppEventHandler              
 
 /*!
     \brief HTTP server async event
@@ -1226,15 +1226,15 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
              - pSlHttpServerResponse->ResponseData fields:
                      - data
                      - len
-
+             
           - <b>pSlHttpServerEvent->Event = SL_NETAPP_HTTPPOSTTOKENVALUE_EVENT</b>
               - pSlHttpServerEvent->EventData.httpPostData fields:
                      - action
                      - token_name
-                     - token_value
+                     - token_value                     
               - pSlHttpServerResponse->ResponseData fields:
                      - data
-                     - len
+                     - len  
 
 
     \sa
@@ -1288,9 +1288,9 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
 
 /*!
     \brief Socket Async event handler
-
-    \param[out]      pSlSockEvent   pointer to SlSockEvent_t data
-
+    
+    \param[out]      pSlSockEvent   pointer to SlSockEvent_t data 
+    
     \par
              Parameters:\n
              - <b>pSlSockEvent->Event = SL_SOCKET_TX_FAILED_EVENT</b>
@@ -1300,7 +1300,7 @@ extern  _i16 os_Spawn(P_OS_SPAWN_ENTRY pEntry, void *pValue, unsigned long flags
              - <b>pSlSockEvent->Event = SL_SOCKET_ASYNC_EVENT</b>
                 - pSlSockEvent->EventData fields:
                      - sd
-                     - type: SSL_ACCEPT  or RX_FRAGMENTATION_TOO_BIG or OTHER_SIDE_CLOSE_SSL_DATA_NOT_ENCRYPTED
+                     - type: SSL_ACCEPT  or RX_FRAGMENTATION_TOO_BIG or OTHER_SIDE_CLOSE_SSL_DATA_NOT_ENCRYPTED 
                      - val
 
     \sa

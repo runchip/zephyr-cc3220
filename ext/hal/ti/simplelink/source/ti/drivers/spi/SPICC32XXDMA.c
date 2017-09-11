@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016, Texas Instruments Incorporated
+ * Copyright (c) 2015-2017, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,11 +52,15 @@
 #include <ti/devices/cc32xx/inc/hw_mcspi.h>
 #include <ti/devices/cc32xx/inc/hw_types.h>
 #include <ti/devices/cc32xx/inc/hw_memmap.h>
+#include <ti/devices/cc32xx/inc/hw_ocp_shared.h>
 #include <ti/devices/cc32xx/driverlib/rom.h>
 #include <ti/devices/cc32xx/driverlib/rom_map.h>
 #include <ti/devices/cc32xx/driverlib/prcm.h>
 #include <ti/devices/cc32xx/driverlib/spi.h>
 #include <ti/devices/cc32xx/driverlib/udma.h>
+
+#define PAD_CONFIG_BASE (OCP_SHARED_BASE + OCP_SHARED_O_GPIO_PAD_CONFIG_0)
+#define PAD_RESET_STATE 0xC61
 
 void SPICC32XXDMA_close(SPI_Handle handle);
 int_fast16_t SPICC32XXDMA_control(SPI_Handle handle, uint_fast16_t cmd, void *arg);
@@ -446,6 +450,7 @@ static void transferCallback(SPI_Handle handle, SPI_Transaction *transaction)
 void SPICC32XXDMA_close(SPI_Handle handle)
 {
     uintptr_t                     key;
+    uint32_t                      padRegister;
     SPICC32XXDMA_Object          *object = handle->object;
     SPICC32XXDMA_HWAttrsV1 const *hwAttrs = handle->hwAttrs;
 
@@ -468,6 +473,29 @@ void SPICC32XXDMA_close(SPI_Handle handle)
 
     if (object->dmaHandle) {
         UDMACC32XX_close(object->dmaHandle);
+    }
+
+    /* Restore pin pads to their reset states */
+    if (hwAttrs->mosiPin != SPICC32XXDMA_PIN_NO_CONFIG) {
+        padRegister = (PinToPadGet((hwAttrs->mosiPin) & 0xff)<<2)
+            + PAD_CONFIG_BASE;
+        HWREG(padRegister) = PAD_RESET_STATE;
+    }
+    if (hwAttrs->misoPin != SPICC32XXDMA_PIN_NO_CONFIG) {
+        padRegister = (PinToPadGet((hwAttrs->misoPin) & 0xff)<<2)
+            + PAD_CONFIG_BASE;
+        HWREG(padRegister) = PAD_RESET_STATE;
+    }
+    if (hwAttrs->clkPin != SPICC32XXDMA_PIN_NO_CONFIG) {
+        padRegister = (PinToPadGet((hwAttrs->clkPin) & 0xff)<<2)
+            + PAD_CONFIG_BASE;
+        HWREG(padRegister) = PAD_RESET_STATE;
+    }
+    if ((hwAttrs->pinMode == SPI_4PIN_MODE) &&
+        (hwAttrs->csPin != SPICC32XXDMA_PIN_NO_CONFIG)) {
+        padRegister = (PinToPadGet((hwAttrs->csPin) & 0xff)<<2)
+            + PAD_CONFIG_BASE;
+        HWREG(padRegister) = PAD_RESET_STATE;
     }
 
     DebugP_log1("SPI:(%p) closed", hwAttrs->baseAddr);

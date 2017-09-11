@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 #ifndef __NETUTIL_H__
@@ -25,7 +25,7 @@ extern "C" {
 #endif
 
 /*!
-	\defgroup NetUtil
+	\defgroup NetUtil 
 	\short Networking related commands and configuration
 
 */
@@ -53,7 +53,7 @@ extern "C" {
 #define SL_NETUTIL_CRYPTO_CMD_VERIFY_MSG		    (3)
 #define SL_NETUTIL_CRYPTO_CMD_TEMP_KEYS			    (4)
 #define SL_NETUTIL_CRYPTO_CMD_INSTALL_OP            (5)
-
+        
 
 /*****************************************************************************/
 /* Errors returned from the general error async event                        */
@@ -170,7 +170,7 @@ typedef union
 
 /* Structure for holding the Elliptic Curve Key parameters */
 typedef struct
-{
+{	
     _u8									CurveType;			/* defines curve type - custom or named */
     SlNetUtilCryptoEcCurveParams_u		CurveParams;		/* specific parameters of the curve (depends on curve_type) */
 } SlNetUtilCryptoEcKeyParams_t;
@@ -246,24 +246,24 @@ typedef struct
 /*****************************************************************************/
 
 /*!
-    \brief     Function for setting configurations of utilities
-
-    \param[in] Option		Identifier of the specific "set" operation to perform
+    \brief     Function for setting configurations of utilities  
+   
+    \param[in] Option		Identifier of the specific "set" operation to perform 
     \param[in] ObjID	    ID of the relevant object that this set operation will be performed on
     \param[in] ValueLen		Length of the value parameter
     \param[in] pValues		Pointer to the buffer holding the configurations values
     \return    Zero on success, or negative error code on failure
     \sa       sl_NetUtilGet  sl_NetUtilCmd
-    \note
-    \warning
+    \note 
+    \warning     
 */
 #if _SL_INCLUDE_FUNC(sl_NetUtilSet)
 _i32 sl_NetUtilSet(const _u16 Option, const _u32 ObjID, const _u8 *pValues,  const _u16 ValueLen);
 #endif
 
 /*!
-    \brief     Function for getting configurations of utilities
-    \param[in]		Option		Identifier of the specific "get" operation to perform
+    \brief     Function for getting configurations of utilities  
+    \param[in]		Option		Identifier of the specific "get" operation to perform 
                                 - <b>SL_NETUTIL_CRYPTO_PUBLIC_KEY</b>  \n
                                          Used to retrieve the public key from an installed key-pair. \n
                                          Saved in a certain index.
@@ -278,7 +278,7 @@ _i32 sl_NetUtilSet(const _u16 Option, const _u32 ObjID, const _u8 *pValues,  con
                                 the received data.
     \return    Zero on success, or negative error code on failure.
     \sa        sl_NetUtilSet sl_NetUtilCmd
-    \note
+    \note 
     \warning
     \par   Examples
 
@@ -333,7 +333,7 @@ _i16 sl_NetUtilGet(const _u16 Option, const _u32 ObjID, _u8 *pValues, _u16 *pVal
                                     - <b>SL_NETUTIL_CRYPTO_CMD_VERIFY_MSG</b>  \n
                                              Verify a digital signature given with a data buffer using ECDSA algorithm. \n
     \param[in]		pAttrib	    	Pointer to the buffer holding the Attribute values
-    \param[in]		AttribLen		Length of the Attribute-values
+    \param[in]		AttribLen		Length of the Attribute-values 
     \param[in] 		pInputValues	Pointer to the buffer holding the input-value
     \param[in] 		InputLen 		Length of the input-value
     \param[out] 	pOutputValues	Pointer to the buffer that the application allocates, and will hold
@@ -341,9 +341,9 @@ _i16 sl_NetUtilGet(const _u16 Option, const _u32 ObjID, _u8 *pValues, _u16 *pVal
     \param[in,out]  pOutputLen 		Length of the output-value \n
 									On input - provides the length of the buffer that the application allocates, and
                                     will hold the output\n
-									On output - provides the actual length of the received output-values
+ 									On output - provides the actual length of the received output-values
     \return    Zero on success, or negative error code on failure
-    \sa       sl_NetUtilGet sl_NetUtilSet
+    \sa       sl_NetUtilGet sl_NetUtilSet  
     \note
     \warning
     \par   Examples
@@ -481,3 +481,5 @@ _i16 sl_NetUtilCmd(const _u16 Cmd,  const _u8 *pAttrib, const _u16 AttribLen,
 #endif /*  __cplusplus */
 
 #endif  /*  __NETUTIL_H__ */
+
+

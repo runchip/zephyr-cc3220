@@ -331,7 +331,6 @@ void _SlNetAppRequestMemFree (_u8 *buffer)
 }
 
 
-
 void _SlSocketTriggerEventHandler(SlSockTriggerEvent_t* pSlSockTriggerEvent)
 {
 	SlEventsListNode_t* currentNode = g_LibsEvents[SL_EVENT_HDL_SOCKET_TRIGGER];
@@ -355,4 +354,4 @@ void _SlSocketTriggerEventHandler(SlSockTriggerEvent_t* pSlSockTriggerEvent)
 #endif
 }
 
-#endif
+#endif /* SL_RUNTIME_EVENT_REGISTERATION */

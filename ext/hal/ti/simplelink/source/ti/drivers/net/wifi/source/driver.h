@@ -9,9 +9,9 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
-
+ 
 #ifndef __DRIVER_INT_H__
 #define __DRIVER_INT_H__
 
@@ -77,7 +77,7 @@ if (retVal)         \
 {                   \
 	return retVal;  \
 }                   \
-}
+}				   
 
 #define SL_DRV_LOCK_GLOBAL_UNLOCK(bDecrementApiInProgress) { \
 _SlReturnVal_t retVal;                \
@@ -104,7 +104,7 @@ if (retVal)         \
 	1. Device started
 	2. Restart device is not required
 	3. Provisioning is active
-	4. Provisioning was already initiated by the user
+	4. Provisioning was already initiated by the user 
 	5. Device is not locked
 */
 #define SL_IS_COMMAND_ALLOWED				 ((g_SlDeviceStatus & (_SL_DRV_STATUS_BIT_DEVICE_STARTED |              \
@@ -112,7 +112,7 @@ if (retVal)         \
 																   _SL_DEV_STATUS_BIT_PROVISIONING_ACTIVE |         \
 																   _SL_DEV_STATUS_BIT_PROVISIONING_USER_INITIATED | \
 																   _SL_DRV_STATUS_BIT_STOP_IN_PROGRESS            | \
-																   _SL_DEV_STATUS_BIT_LOCKED)) == 0x200)
+																   _SL_DEV_STATUS_BIT_LOCKED)) == 0x200) 
 
 #define SL_SET_RESTART_REQUIRED          (g_SlDeviceStatus |= _SL_DRV_STATUS_BIT_RESTART_REQUIRED) /* bit 8 indicates restart is required due to fatal error */
 #define SL_UNSET_RESTART_REQUIRED        (g_SlDeviceStatus &= (~_SL_DRV_STATUS_BIT_RESTART_REQUIRED)) /* bit 8 indicates restart is required due to fatal error */
@@ -181,9 +181,9 @@ typedef struct _SlPoolObj_t
 {
     _SlSyncObj_t	     SyncObj;
 	 _u8                *pRespArgs;
-	_u8			      ActionID;
+	_u8			      ActionID; 
 	_u8			      AdditionalData; /* use for socketID and one bit which indicate supprt IPV6 or not (1=support, 0 otherwise) */
-    _u8				  NextIndex;
+    _u8				  NextIndex;  
 
 } _SlPoolObj_t;
 
@@ -213,15 +213,15 @@ typedef enum
 #else
     CONNECT_ID = MAX_SOCKET_ENUM_IDX,
 #endif
-#ifndef SL_TINY
+#ifndef SL_TINY    
 	SELECT_ID,
 #endif
 	GETHOSYBYNAME_ID,
-#ifndef SL_TINY
+#ifndef SL_TINY    
 	GETHOSYBYSERVICE_ID,
 	PING_ID,
     NETAPP_RECEIVE_ID,
-#endif
+#endif	
     START_STOP_ID,
 	NETUTIL_CMD_ID,
 	CLOSE_ID,
@@ -233,7 +233,7 @@ typedef struct _SlActionLookup_t
 {
     _u8                     ActionID;
     _u16                    ActionAsyncOpcode;
-    _SlSpawnEntryFunc_t     AsyncEventHandler;
+    _SlSpawnEntryFunc_t     AsyncEventHandler; 
 
 } _SlActionLookup_t;
 
@@ -257,7 +257,7 @@ typedef enum
 typedef struct
 {
     _u8                     *pAsyncBuf;         /* place to write pointer to buffer with CmdResp's Header + Arguments */
-    _u8                     ActionIndex;
+    _u8                     ActionIndex; 
     _SlSpawnEntryFunc_t     AsyncEvtHandler;    /* place to write pointer to AsyncEvent handler (calc-ed by Opcode)   */
     _SlRxMsgClass_e         RxMsgClass;         /* type of Rx message                                                 */
 } AsyncExt_t;
@@ -325,12 +325,12 @@ typedef struct
     _u32                    ActiveActionsBitmap;
     _SlLockObj_t            ProtectionLockObj;
 
-    _SlSyncObj_t            CmdSyncObj;
+    _SlSyncObj_t            CmdSyncObj;  
     _u8                     WaitForCmdResp;
     _SlFlowContCB_t         FlowContCB;
     _u8                     TxSeqNum;
     _u8                     RxDoneCnt;
-    _u16                    SocketNonBlocking;
+    _u16                    SocketNonBlocking;   
     _u16                    SocketTXFailure;
     /* for stack reduction the parameters are globals */
     _SlFunctionParams_t     FunctionParams;
@@ -410,7 +410,7 @@ extern void _SlDeviceHandleAsync_Stop(void *pVoidBuf);
 extern void _SlNetUtilHandleAsync_Cmd(void *pVoidBuf);
 extern _u8  _SlDrvWaitForPoolObj(_u8 ActionID, _u8 SocketID);
 extern void _SlDrvReleasePoolObj(_u8 pObj);
-extern _u16 _SlDrvAlignSize(_u16 msgLen);
+extern _u16 _SlDrvAlignSize(_u16 msgLen); 
 extern _u8  _SlDrvProtectAsyncRespSetting(_u8 *pAsyncRsp, _SlActionID_e ActionID, _u8 SocketID);
 extern void _SlNetAppHandleAsync_NetAppReceive(void *pVoidBuf);
 

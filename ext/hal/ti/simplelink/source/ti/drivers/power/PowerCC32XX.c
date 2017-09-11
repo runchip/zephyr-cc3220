@@ -155,11 +155,14 @@ static void restoreParkedPins(void);
  *  ======== Power_disablePolicy ========
  *  Do not run the configured policy
  */
-void Power_disablePolicy(void)
+bool Power_disablePolicy(void)
 {
+    bool enablePolicy = PowerCC32XX_module.enablePolicy;
     PowerCC32XX_module.enablePolicy = FALSE;
 
     DebugP_log0("Power: disable policy");
+
+    return (enablePolicy);
 }
 
 /*
@@ -852,7 +855,7 @@ void PowerCC32XX_disableIORetention(unsigned long groupFlags)
 PowerCC32XX_ParkState PowerCC32XX_getParkState(PowerCC32XX_Pin pin)
 {
     PowerCC32XX_ParkInfo parkInfo;
-    PowerCC32XX_ParkState state = PowerCC32XX_DONT_PARK;
+    PowerCC32XX_ParkState state;
     uint32_t i;
 
     DebugP_assert(PowerCC32XX_config.numPins < PowerCC32XX_NUMPINS + 1);

@@ -14,9 +14,7 @@ uint32_t ClockP_getSystemTicks()
 	return (uint32_t)_ms_to_ticks(k_uptime_get_32());
 }
 
-ClockP_Status ClockP_usleep(uint32_t usec)
+void ClockP_usleep(uint32_t usec)
 {
 	k_sleep((s32_t)usec);
-
-	return (ClockP_OK);
 }

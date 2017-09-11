@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 /******************************************************************************
 *   cc_pal.h
@@ -27,7 +27,7 @@ extern "C" {
 #include <ti/drivers/dpl/SemaphoreP.h>
 #include <ti/drivers/dpl/MutexP.h>
 #include <ti/drivers/dpl/ClockP.h>
-#include <time.h>
+
 
 #define MAX_QUEUE_SIZE					(4)
 #define OS_WAIT_FOREVER   				(0xFFFFFFFF)
@@ -230,29 +230,65 @@ void NwpPowerOn(void);
 
 
 /*!
-    \brief Creates a semaphore handle, using the driver porting layer of the core SDK.
+    \brief Creates a semaphore handle, using the driver porting layer of the core SDK. 
 
 	\param	 		pSemHandle      -	pointer to a memory structure that would contain the handle.
 
 	\return			upon successful creation, the function shall return 0.
 					Otherwise, -1 shall be returned
 
-	\note           belongs to \ref ported_sec
+	\note           belongs to \ref ported_sec		
 */
 int Semaphore_create_handle(SemaphoreP_Handle* pSemHandle);
 
 
 /*!
-    \brief Creates a mutex object handle, using the driver porting layer of the core SDK.
+    \brief Deletes a semaphore handle, using the driver porting layer of the core SDK.
+
+    \param          pSemHandle      -   pointer to a memory structure that would contain the handle.
+
+    \return         The function shall return 0.
+
+    \note           belongs to \ref ported_sec
+*/
+int SemaphoreP_delete_handle(SemaphoreP_Handle* pSemHandle);
+
+
+/*!
+    \brief Post (signal) a semaphore handle, using the driver porting layer of the core SDK.
+
+    \param          pSemHandle      -   pointer to a memory structure that would contain the handle.
+
+    \return         The function shall return 0.
+
+    \note           belongs to \ref ported_sec
+*/
+int SemaphoreP_post_handle(SemaphoreP_Handle* pSemHandle);
+
+
+/*!
+    \brief Creates a mutex object handle, using the driver porting layer of the core SDK. 
 
 	\param	 		pMutexHandle    -	pointer to a memory structure that would contain the handle.
 
 	\return			upon successful creation, the function shall return 0.
 					Otherwise, -1 shall be returned
 
-	\note           belongs to \ref ported_sec
+	\note           belongs to \ref ported_sec	
 */
 int Mutex_create_handle(MutexP_Handle* pMutexHandle);
+
+
+/*!
+    \brief Deletes a mutex object handle, using the driver porting layer of the core SDK.
+
+    \param          pMutexHandle    -   pointer to a memory structure that would contain the handle.
+
+    \return         the function shall return 0.
+
+    \note           belongs to \ref ported_sec
+*/
+int  MutexP_delete_handle(MutexP_Handle* pMutexHandle);
 
 /*!
     \brief Unlocks a mutex object.
@@ -261,7 +297,7 @@ int Mutex_create_handle(MutexP_Handle* pMutexHandle);
 
 	\return			upon successful unlocking, the function shall return 0.
 
-	\note           belongs to \ref ported_sec
+	\note           belongs to \ref ported_sec	
 */
 int Mutex_unlock(MutexP_Handle pMutexHandle);
 
@@ -273,8 +309,8 @@ int Mutex_unlock(MutexP_Handle pMutexHandle);
 
 	\return			upon successful locking, the function shall return 0.
 
-	\note           belongs to \ref ported_sec
-
+	\note           belongs to \ref ported_sec	
+	
 	\warning        The lock will block until the mutex is available.
 */
 int Mutex_lock(MutexP_Handle pMutexHandle);
@@ -286,7 +322,7 @@ int Mutex_lock(MutexP_Handle pMutexHandle);
 	\return			32-bit value of the systick counter.
 
 	\sa
-
+	
 	\warning
 */
 unsigned long TimerGetCurrentTimestamp();
@@ -308,3 +344,4 @@ void NwpWaitForShutDownInd();
 #endif // __cplusplus
 
 #endif
+

@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -90,7 +90,7 @@ _i16 sl_NetUtilGet(const _u16 Option, const _u32 ObjID, _u8 *pValues, _u16 *pVal
 
 
 /***************************************************************************
-_SlNetUtilHandleAsync_Cmd - handles NetUtil Cmd response, signalling to
+_SlNetUtilHandleAsync_Cmd - handles NetUtil Cmd response, signalling to 
 a waiting object
 ****************************************************************************/
 void _SlNetUtilHandleAsync_Cmd(void *pVoidBuf)
@@ -99,7 +99,7 @@ void _SlNetUtilHandleAsync_Cmd(void *pVoidBuf)
     SlNetUtilCmdRsp_t   *pMsgArgs   = (SlNetUtilCmdRsp_t *)_SL_RESP_ARGS_START(pVoidBuf);
 
     SL_DRV_PROTECTION_OBJ_LOCK_FOREVER();
-
+	
     VERIFY_SOCKET_CB(NULL != g_pCB->ObjPool[g_pCB->FunctionParams.AsyncExt.ActionIndex].pRespArgs);
 
     pOutData = (_SlNetUtilCmdData_t*)g_pCB->ObjPool[g_pCB->FunctionParams.AsyncExt.ActionIndex].pRespArgs;
@@ -123,7 +123,7 @@ void _SlNetUtilHandleAsync_Cmd(void *pVoidBuf)
 			}
 		}
 	}
-
+    
 	_SlDrvSyncObjSignal(&g_pCB->ObjPool[g_pCB->FunctionParams.AsyncExt.ActionIndex].SyncObj);
     _SlDrvProtectionObjUnLock();
     return;
@@ -136,7 +136,7 @@ sl_NetUtilCmd
 typedef union
 {
     SlNetUtilCmd_t		Cmd;
-    _BasicResponse_t	Rsp;
+    _BasicResponse_t	Rsp;    
 } SlNetUtilCmdMsg_u;
 
 #if _SL_INCLUDE_FUNC(sl_NetUtilCmd)
@@ -166,6 +166,7 @@ _i16 sl_NetUtilCmd(const _u16 Cmd, const _u8 *pAttrib,  const _u16 AttribLen,
 	Msg.Cmd.OutputLen	= *pOutputLen;
 
 	_SlDrvResetCmdExt(&CmdExt);
+	_SlDrvMemZero(&OutData, sizeof(_SlNetUtilCmdData_t));
 
 	if(AttribLen > 0)
 	{
@@ -194,11 +195,11 @@ _i16 sl_NetUtilCmd(const _u16 Cmd, const _u8 *pAttrib,  const _u16 AttribLen,
 
     if(SL_OS_RET_CODE_OK == (_i16)Msg.Rsp.status)
     {
-	/* after the async event is signaled, the data will be copied to the pOutputValues buffer  */
-	SL_DRV_SYNC_OBJ_WAIT_FOREVER(&g_pCB->ObjPool[ObjIdx].SyncObj);
+    	/* after the async event is signaled, the data will be copied to the pOutputValues buffer  */
+    	SL_DRV_SYNC_OBJ_WAIT_FOREVER(&g_pCB->ObjPool[ObjIdx].SyncObj);
 
-	/* the response header status */
-	RetVal = OutData.Status;
+    	/* the response header status */
+    	RetVal = OutData.Status;
 
     }
 	else

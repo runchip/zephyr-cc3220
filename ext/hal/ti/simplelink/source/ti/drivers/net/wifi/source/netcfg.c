@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -116,10 +116,10 @@ _i16 sl_NetCfgGet(const _u16 ConfigId, _u16 *pConfigOpt,_u16 *pConfigLen, _u8 *p
     {
         *pConfigOpt = (_u8)Msg.Rsp.ConfigOpt;
     }
-    if (CmdExt.RxPayloadLen < CmdExt.ActualRxPayloadLen)
+    if (CmdExt.RxPayloadLen < CmdExt.ActualRxPayloadLen) 
     {
          *pConfigLen = (_u8)CmdExt.RxPayloadLen;
-
+        
          return SL_ESMALLBUF;
     }
     else
@@ -130,3 +130,4 @@ _i16 sl_NetCfgGet(const _u16 ConfigId, _u16 *pConfigOpt,_u16 *pConfigLen, _u8 *p
     return Msg.Rsp.Status;
 }
 #endif
+

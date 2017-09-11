@@ -22,7 +22,7 @@ extern "C"
 
 /*!
     \defgroup event_registration
-    \short Allows user to register event handlers dynamically.
+    \short Allows user to register event handlers dynamically. 
 
 */
 /*!
@@ -51,6 +51,8 @@ typedef struct SlEventsListNode_s
 	void *event;
 	struct SlEventsListNode_s *next;
 }SlEventsListNode_t;
+
+#ifdef SL_RUNTIME_EVENT_REGISTERATION
 
 /*!
     \brief register events in runtime
@@ -118,7 +120,7 @@ void _SlNetAppRequestHdlr(SlNetAppRequest_t *pNetAppRequest, SlNetAppResponse_t 
 void _SlNetAppRequestMemFree (_u8 *buffer);
 void _SlSocketTriggerEventHandler(SlSockTriggerEvent_t* pSlSockTriggerEvent);
 
-
+#endif /* SL_RUNTIME_EVENT_REGISTERATION */
 
 
 #ifdef  __cplusplus

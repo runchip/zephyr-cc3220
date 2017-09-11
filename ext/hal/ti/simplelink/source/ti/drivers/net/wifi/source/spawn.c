@@ -9,7 +9,7 @@
  *   Texas Instruments Incorporated or against the terms and conditions
  *   stipulated in the agreement under which this program has been supplied,
  *   and under no circumstances can it be used with non-TI connectivity device.
- *
+ *   
  */
 
 
@@ -23,31 +23,29 @@
 
 #if (defined (SL_PLATFORM_MULTI_THREADED)) && (!defined (SL_PLATFORM_EXTERNAL_SPAWN))
 
-#define _SL_MAX_INTERNAL_SPAWN_ENTRIES      10
+#define _SL_MAX_INTERNAL_SPAWN_ENTRIES     10
 
 typedef struct _SlInternalSpawnEntry_t
 {
-	_SlSpawnEntryFunc_t 		        pEntry;
-	void* 						        pValue;
+    _SlSpawnEntryFunc_t                 pEntry;
+    void*                               pValue;
     struct _SlInternalSpawnEntry_t*     pNext;
 }_SlInternalSpawnEntry_t;
 
 typedef struct
 {
-	_SlInternalSpawnEntry_t     SpawnEntries[_SL_MAX_INTERNAL_SPAWN_ENTRIES];
+    _SlInternalSpawnEntry_t     SpawnEntries[_SL_MAX_INTERNAL_SPAWN_ENTRIES];
     _SlInternalSpawnEntry_t*    pFree;
     _SlInternalSpawnEntry_t*    pWaitForExe;
     _SlInternalSpawnEntry_t*    pLastInWaitList;
     _SlSyncObj_t                SyncObj;
     _SlLockObj_t                LockObj;
-	_u8							IrqWriteCnt;
-	_u8							IrqReadCnt;
-	void*						pIrqFuncValue;
+    _u8                         IrqWriteCnt;
+    _u8                         IrqReadCnt;
+    void*                       pIrqFuncValue;
 }_SlInternalSpawnCB_t;
 
 _SlInternalSpawnCB_t g_SlInternalSpawnCB;
-
-
 
 void* _SlInternalSpawnTaskEntry()
 {
@@ -55,7 +53,7 @@ void* _SlInternalSpawnTaskEntry()
     _SlInternalSpawnEntry_t*    pEntry;
     _u8                         LastEntry;
 
-    /* create and lock the locking object. lock in order to avoid race condition
+    /* create and lock the locking object. lock in order to avoid race condition 
         on the first creation */
     sl_LockObjCreate(&g_SlInternalSpawnCB.LockObj,"SlSpawnProtect");
     sl_LockObjLock(&g_SlInternalSpawnCB.LockObj,SL_OS_NO_WAIT);
@@ -86,7 +84,7 @@ void* _SlInternalSpawnTaskEntry()
 
     while (TRUE)
     {
-        sl_SyncObjWait(&g_SlInternalSpawnCB.SyncObj,SL_OS_WAIT_FOREVER);
+        sl_SyncObjWait(&g_SlInternalSpawnCB.SyncObj, SL_OS_WAIT_FOREVER);
 
         /* handle IRQ requests */
         while (g_SlInternalSpawnCB.IrqWriteCnt != g_SlInternalSpawnCB.IrqReadCnt)
@@ -129,7 +127,7 @@ void* _SlInternalSpawnTaskEntry()
                 /* free the entry */
 
                 SL_DRV_OBJ_LOCK_FOREVER(&g_SlInternalSpawnCB.LockObj);
-
+                
                 pEntry->pNext = g_SlInternalSpawnCB.pFree;
                 g_SlInternalSpawnCB.pFree = pEntry;
 
@@ -141,7 +139,6 @@ void* _SlInternalSpawnTaskEntry()
                 }
 
                 SL_DRV_OBJ_UNLOCK(&g_SlInternalSpawnCB.LockObj);
-
             }
 
         }while (!LastEntry);
@@ -155,7 +152,7 @@ _i16 _SlInternalSpawn(_SlSpawnEntryFunc_t pEntry , void* pValue , _u32 flags)
     _SlInternalSpawnEntry_t*    pSpawnEntry;
 
 
-	/*	Increment the counter that specifies that async event has recived
+	/*	Increment the counter that specifies that async event has recived 
 		from interrupt context and should be handled by the internal spawn task */
 	if (flags & SL_SPAWN_FLAG_FROM_SL_IRQ_HANDLER)
 	{
@@ -164,7 +161,6 @@ _i16 _SlInternalSpawn(_SlSpawnEntryFunc_t pEntry , void* pValue , _u32 flags)
 		SL_DRV_SYNC_OBJ_SIGNAL(&g_SlInternalSpawnCB.SyncObj);
 		return Res;
 	}
-
 
     if (NULL == pEntry || (g_SlInternalSpawnCB.pFree == NULL))
     {
@@ -193,16 +189,12 @@ _i16 _SlInternalSpawn(_SlSpawnEntryFunc_t pEntry , void* pValue , _u32 flags)
         }
 
         SL_DRV_OBJ_UNLOCK(&g_SlInternalSpawnCB.LockObj);
-
+        
         /* this sync is called after releasing the lock object to avoid unnecessary context switches */
         SL_DRV_SYNC_OBJ_SIGNAL(&g_SlInternalSpawnCB.SyncObj);
     }
 
     return Res;
 }
-
-
-
-
 
 #endif
