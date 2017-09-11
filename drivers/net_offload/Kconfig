@@ -1,0 +1,30 @@
+
+
+menuconfig SIMPLELINK_WIFI
+	bool
+	prompt "TI SimpleLink WiFi offload driver"
+	select NET_OFFLOAD
+	select CC3200SDK_SIMPLELINK_OSI
+
+if SIMPLELINK_WIFI
+
+config	SIMPLELINK_DRV_NAME
+	string "SimpleLink Driver Name"
+	default "simplelink"
+	help
+	  This option sets the driver name
+
+config  SIMPLELINK_DEBUG
+	bool "SimpleLink driver debug"
+	default n
+	help
+	  This option enables debug support for SimpleLink driver.
+
+config SIMPLELINK_INIT_PRIO
+	int "SimpleLink driver intialization priority"
+	default 45
+	help
+	osi_zephyr_init must be (at priority 40) before the simplelink
+	driver initialization, which requires osi services.
+
+endif
