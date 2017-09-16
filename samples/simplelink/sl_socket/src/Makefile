@@ -9,4 +9,5 @@ $(info SSID is $(SSID))
 $(info PSK is $(PSK))
 
 obj-y += main.o
+obj-y += wlan.o
 
