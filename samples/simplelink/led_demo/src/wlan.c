@@ -387,7 +387,16 @@ void SimpleLinkNetAppEventHandler(SlNetAppEvent_t *pNetAppEvent) {
 }
 
 void SimpleLinkSockEventHandler(SlSockEvent_t *pSlSockEvent) {
-	UART_PRINT("[SOCKET] Event: %x\r\n", pSlSockEvent->Event);
+	switch (pSlSockEvent->Event) {
+		case SL_SOCKET_TX_FAILED_EVENT: {
+			UART_PRINT("[SOCKET] TX failed on sd: %d!\n", pSlSockEvent->SocketAsyncEvent.SockTxFailData.Sd);
+		} break;
+		case SL_SOCKET_ASYNC_EVENT: {
+			UART_PRINT("[SOCKET] Async socket event on sd: %d\n", pSlSockEvent->SocketAsyncEvent.SockAsyncData.Sd);
+		} break;
+		default:
+			UART_PRINT("[SOCKET] Event: %x\r\n", pSlSockEvent->Event);
+	}
 }
 
 void SimpleLinkHttpServerEventHandler(SlNetAppHttpServerEvent_t *pSlHttpServerEvent, SlNetAppHttpServerResponse_t *pSlHttpServerResponse) {
