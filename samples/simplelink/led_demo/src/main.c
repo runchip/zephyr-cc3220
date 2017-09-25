@@ -125,7 +125,7 @@ int recv_message(int sock, char* buffer, int buflen)
 {
 	int ret, count = 0;
 	while ((ret = recv(sock, &buffer[count], buflen - count, 0)) > 0) {
-		printf("send %d bytes\n", send(sock, &buffer[count], ret, 0));
+		// printf("send %d bytes\n", send(sock, &buffer[count], ret, 0));
 		count += ret;
 		if (count >= MSG_LENGTH(buffer)) {
 			break;
@@ -137,7 +137,7 @@ int recv_message(int sock, char* buffer, int buflen)
 	buffer[count] = '\0';
 	printf("receviced: ");
 	hexdump(buffer, count);
-	printf("length: %08X, magic: %08X\n", MSG_LENGTH(buffer), MSG_MAGIC(buffer));
+	printf("\nlength: %08X, magic: %08X\n", MSG_LENGTH(buffer), MSG_MAGIC(buffer));
 	if (!IS_VALID(buffer)) {
 		printf("ERROR: magic is %08X\n", MSG_MAGIC(buffer));
 		return -1;
@@ -151,54 +151,70 @@ int recv_message(int sock, char* buffer, int buflen)
 #define LED_PORT	LED0_GPIO_PORT
 
 /* Change this if you have an LED connected to a custom pin */
-#define LED0_PIN	LED0_GPIO_PIN
 #define LED1_PIN    2 /* GPIO_10 */
-#define LED2_PIN    1 /* GPIO_9 */
-
+#define LED2_PIN    3 /* GPIO_11 */
+#define LED3_PIN    1 /* GPIO_9 */
+const int LED_PINS[] = { LED1_PIN, LED2_PIN, LED3_PIN };
 
 #define NLEDS 3
-volatile char frequencies[NLEDS] = {0};
 
-const int LED_PINS[] = { LED0_PIN, LED1_PIN, LED2_PIN };
+typedef struct timer_data {
+	int pin;
+	int freq;
+	bool value;
+	struct device* dev;
+} timer_data_t;
+timer_data_t timer_data[NLEDS] = {0};
 
-#define LED_THREAD_STACK_SIZE 512
-K_THREAD_STACK_DEFINE(led_thread_stack, LED_THREAD_STACK_SIZE);
-struct k_thread led_thread;
 
-void led_thread_work(void* arg1, void* arg2, void* arg3)
+struct k_timer led_timers[NLEDS];
+
+void on_timer_expire(struct k_timer* timer)
 {
-	struct device* dev = (struct device*)arg1;
-	while (1) {
-		for (int i = 0; i < NLEDS; i++) {
-			if (0 == frequencies[i]) {
-				gpio_pin_write(dev, LED_PINS[i], 1); k_sleep(200);
-			} else {
-				int period = 1000/2 / (int)frequencies[i];
-				gpio_pin_write(dev, LED_PINS[i], 1); k_sleep(period);
-				gpio_pin_write(dev, LED_PINS[i], 0); k_sleep(period);
-			}
-		}
-	}
+	timer_data_t* data = (timer_data_t*) timer->user_data;
+	gpio_pin_write(data->dev, data->pin, data->value);
+	// printk("gpio_pin_write(%p, %d, %d)\n", data->dev, data->pin, data->value);
+	data->value = !data->value;
 }
 
-void start_led_thread()
+void on_timer_stop(struct k_timer* timer)
 {
+	timer_data_t* data = (timer_data_t*) timer->user_data;
+	data->value = 0;
+}
+
+void init_led_timers()
+{
+	int i;
 	struct device *dev;
 
 	dev = device_get_binding(LED_PORT);
-	/* Set LED pin as output */
-	gpio_pin_configure(dev, LED0_PIN, GPIO_DIR_OUT);
-	gpio_pin_configure(dev, LED1_PIN, GPIO_DIR_OUT);
-	gpio_pin_configure(dev, LED2_PIN, GPIO_DIR_OUT);
-
-	k_thread_create(&led_thread, led_thread_stack, LED_THREAD_STACK_SIZE,
-					led_thread_work, dev, NULL, NULL,
-					0, 0, 0);
+	for (i = 0; i < NLEDS; i++) {
+		gpio_pin_configure(dev, LED_PINS[i], GPIO_DIR_OUT); /* Set LED pin as output */
+		k_timer_init(&led_timers[i], on_timer_expire, on_timer_stop);
+		timer_data[i].pin = LED_PINS[i];
+		timer_data[i].freq = 1;
+		timer_data[i].value = 0;
+		timer_data[i].dev = dev;
+		led_timers[i].user_data = &timer_data[i];
+		k_timer_start(&led_timers[i], 0, 500);
+	}
 }
 
 void process_message(const char* msg, int msglen)
 {
-	if (msglen >= NLEDS) memcpy(frequencies, msg, NLEDS);
+	int i, len = msglen >= 3 ? 3 : msglen;
+	for (i = 0; i < len; i++) {
+		int freq = timer_data[i].freq = msg[i];
+		if (0 == freq) {
+			k_timer_stop(&led_timers[i]);
+			timer_data[i].value = 1;
+			on_timer_expire(&led_timers[i]);
+		} else {
+			int half_period = 500 / freq;
+			k_timer_start(&led_timers[i], 0, half_period);
+		}
+	}
 }
 
 #define WORKER_THREAD_STACK_SIZE 1024
@@ -214,16 +230,12 @@ pthread_t worker_threads[MAX_ACTIVE_CONNECTIONS];
 void* connection_thread_work(void* arg1)
 #endif // __ZEPHYR__
 {
-	char* txt = NULL;
 	int connfd;
 	client_info_t* info = (client_info_t*) arg1;
 
 	connfd = info->connfd;
 	
 	recv_message(connfd, BUFFER, sizeof(BUFFER));
-
-	txt = MSG_CONTENT(BUFFER);
-	printf("content: %s\n", txt);
 
 	process_message(MSG_CONTENT(BUFFER), MSG_LENGTH(BUFFER));
 
@@ -255,7 +267,7 @@ int main(int argc, char *argv[])
 	sock = listen_on_port(PORT, LISTEN_BACK);
 
 #ifdef __ZEPHYR__
-	start_led_thread();
+	init_led_timers();
 #endif
 
 	while (sock >= 0) {
