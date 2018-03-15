@@ -16,7 +16,7 @@
 #define AP_CHANNEL 9
 #endif
 
-#define SSID_NAME AP_SSID
+// #define SSID_NAME AP_SSID
 #define SECURITY_KEY AP_PSK
 #define SECURITY_TYPE SL_WLAN_SEC_TYPE_WPA_WPA2
 #define CHANNEL_MASK_ALL            (0x1FFF)
@@ -62,10 +62,27 @@ enum {
 		ret;                                                           \
 	})
 
+
+static _u8* get_mac_address()
+{
+	static _u8 macAddressVal[SL_MAC_ADDR_LEN] = {0};
+	if (macAddressVal[0]) return macAddressVal;
+
+	_u16 macAddressLen = SL_MAC_ADDR_LEN;
+	_u16 ConfigOpt = 0;
+	sl_NetCfgGet(SL_NETCFG_MAC_ADDRESS_GET,&ConfigOpt,&macAddressLen,(_u8 *)macAddressVal);
+	return macAddressVal;
+}
+
+static char SSID_NAME[SL_WLAN_SSID_MAX_LENGTH] = AP_SSID;
 static void fill_init_params()
 {
 	memset(&StartApParams, 0, sizeof(StartApParams));
 
+	// get MAC Address
+	_u8* mac = get_mac_address();
+
+	snprintf(SSID_NAME, sizeof(SSID_NAME), "%s_%02X%02X%02X", AP_SSID, mac[3], mac[4], mac[5]);
 	StartApParams.ssid = SSID_NAME;
 	StartApParams.secParams.KeyLen = strlen(SECURITY_KEY);
 	StartApParams.secParams.Key = SECURITY_KEY;
@@ -85,11 +102,11 @@ int32_t ConfigureSimpleLinkToDefaultState();
 void wlan_init_ap()
 {
 	int mode = -1;
-	fill_init_params();
 
 	SPI_init();  // init NWP control interface
-
 	ConfigureSimpleLinkToDefaultState();
+
+	fill_init_params();
 
     // /* Restart the NWP so the new configuration will take affect */
     // EXPECT_OK((mode = sl_Start(0, 0, 0)) >= 0);
